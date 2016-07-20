@@ -1,0 +1,39 @@
+﻿@using Du_Toan_Xay_Dung.Models
+@{
+    ViewBag.Title = "ExportToExcel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var congtrinh = ViewData["CongTrinh"] as CongTrinhViewModel;
+    var ct_hangmucs = ViewData["CT-HangMucs"] as List<HangMucViewModel>;
+    var hms_congviecs = ViewData["HangMucs-CongViec_Users"] as List<CongViec_User_ViewModel>;
+    var cvs_haophis = ViewData["CongViecs-HaoPhis"] as List<HaoPhi_User_ViewModel>;
+    
+}
+
+<section class="content-header">
+    <h1></h1>
+    <ol class="breadcrumb">
+        <li><a href="/CongTrinh/Index"><i class="fa fa-dashboard"></i>Công Trình</a></li>
+        <li class="active">Export to Excel</li>
+    </ol>
+</section>
+
+<section class="content" style="margin-top:100px">
+    <div class="container">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-info">@congtrinh.TenCT</li>
+            @foreach(var hm in ct_hangmucs)
+            {
+                <li class="list-group-item list-group-item-info"><span>&nbsp;&nbsp;</span>@hm.TenHM</li>
+                foreach(var cv in hms_congviecs)
+                {
+                    <li class="list-group-item list-group-item-info"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>@cv.TenCongViec</li>
+                    foreach(var hp in cvs_haophis)
+                    {
+                        <li class="list-group-item list-group-item-info"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>@hp.Ten</li>
+                    }
+                }
+            }
+            
+        </ul>
+</div>
+</section>

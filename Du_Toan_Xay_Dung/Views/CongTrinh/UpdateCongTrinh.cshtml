@@ -1,0 +1,83 @@
+﻿@using Du_Toan_Xay_Dung.Handlers
+@using Du_Toan_Xay_Dung.Models
+@{
+    ViewBag.Title = "Sửa công trình";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var congtrinh = ViewData["CongTrinh_Update"] as CongTrinhViewModel;
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#btn_submit').click(function () {
+                var postData = {
+                    MaCT: $('#MaCT').val(),
+                    TenCT: $('#TenCT').val(),
+                    MoTa: $('#MoTa').val(),
+                    Gia: $('#Gia').val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: '/congtrinh/post_updatecongtrinh',
+                    data: postData,
+                    dataType: "JSON",
+                    success: function (result) {
+                        if (result == 'login') {
+                            location.href = "";
+                        } else if (result == "ok") {
+                            location.reload();
+                        }
+                        else {
+                            alert("Loi");
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err.status + " - " + err.statusText);
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+<section class="content-header">
+    <h1>Sửa Công Trình</h1>
+    <ol class="breadcrumb">
+        <li><a href="/CongTrinh/Index"><i class="fa fa-dashboard"></i>Công Trình</a></li>
+        <li class="active">Sửa Công Trình</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="container body-content">
+        <div class="row">
+            <form id="form_update" class="form-horizontal" role="form">
+                <input type="hidden" value="@congtrinh.MaCT" id="MaCT" name="MaCT" />
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="email">Tên công trình:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="TenCT" name="TenCT" placeholder="Tên công trình" value="@congtrinh.TenCT">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="pwd">Mô tả:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="MoTa" name="MoTa" placeholder="Mô tả" value="@congtrinh.MoTa">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="pwd">Giá:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="Gia" name="Gia" placeholder="Giá" value="@congtrinh.Gia">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" id="btn_submit" class="btn btn-default">Lưu</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

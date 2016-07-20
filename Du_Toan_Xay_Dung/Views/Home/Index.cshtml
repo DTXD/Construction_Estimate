@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<script>
+    // Defining angularjs application.
+    var postApp = angular.module('postApp', []);
+    // Controller function and passing $http service and $scope var.
+    postApp.controller('postController', function ($scope, $http) {
+        // create a blank object to handle form data.
+        // calling our submit function.
+
+        $scope.getdata = function () {
+            // Posting data to controller
+            var MaHieuCV_DM = $scope.txtmahieucv;
+
+            $http({
+                method: 'POST',
+                url: '/Home/post_formAngular',
+                params: {
+                    MaHieuCV_DM: MaHieuCV_DM
+                },
+                headers: { 'Content-Type': 'application/json' }
+            })
+              .success(function (data) {
+                  if (data.errors) {
+                      // Showing errors.
+                      $scope.errorEmail = data.errors.email;
+                  } else {
+                      $scope.message = data.message;
+                      console.log(data);
+                  }
+              });
+
+        };
+    });
+</script>
+
+<div ng-app="postApp" ng-controller="postController">
+    <input type="text" name="txtmahieucv" ng-model="txtmahieucv" />
+    <button type="button" class="btn btn-primary" ng-click="getdata()">Submit</button>
+</div>
