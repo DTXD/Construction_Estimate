@@ -3,14 +3,32 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
     }
 <!-- bootstrap-wysiwyg -->
-<link href="~/Scripts/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet" />
+<link href="~/Content/admin/css/prettify.min.css" rel="stylesheet" />
 <!-- Select2 -->
-<link href="~/Scripts/vendors/select2/dist/css/select2.min.css" rel="stylesheet" />
+<link href="~/Content/admin/css/select2.min.css" rel="stylesheet" />
 <!-- Switchery -->
-<link href="~/Scripts/vendors/switchery/dist/switchery.min.css" rel="stylesheet" />
+<link href="~/Content/admin/css/switchery.min.css" rel="stylesheet" />
 <!-- starrr -->
-<link href="~/Scripts/vendors/starrr/dist/starrr.css" rel="stylesheet" />
-
+<link href="~/Content/admin/css/starrr.css" rel="stylesheet" />
+<!-- bootstrap-daterangepicker -->
+<!-- bootstrap-wysiwyg -->
+<script src="~/Scripts/Admin/bootstrap-wysiwyg.min.js"></script>
+<script src="~/Scripts/Admin/prettify.js"></script>
+<script src="~/Scripts/Admin/jquery.hotkeys.js"></script>
+<!-- jQuery Tags Input -->
+<script src="~/Scripts/Admin/jquery.tagsinput.js"></script>
+<!-- Switchery -->
+<script src="~/Scripts/Admin/switchery.min.js"></script>
+<!-- Select2 -->
+<script src="~/Scripts/Admin/select2.full.min.js"></script>
+<!-- Parsley -->
+<script src="~/Scripts/Admin/parsley.min.js"></script>
+<!-- Autosize -->
+<script src="~/Scripts/Admin/autosize.min.js"></script>
+<!-- jQuery autocomplete -->
+<script src="~/Scripts/Admin/jquery.autocomplete.min.js"></script>
+<!-- starrr -->
+<script src="~/Scripts/Admin/starrr.js"></script>
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -126,27 +144,6 @@
         </div>
     </div>
 </div>
-<!-- bootstrap-daterangepicker -->
-<!-- bootstrap-wysiwyg -->
-<script src="~/Scripts/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-<script src="~/Scripts/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-<script src="~/Scripts/vendors/google-code-prettify/src/prettify.js"></script>
-<!-- jQuery Tags Input -->
-<script src="~/Scripts/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-<!-- Switchery -->
-<script src="~/Scripts/vendors/switchery/dist/switchery.min.js"></script>
-<!-- Select2 -->
-<script src="~/Scripts/vendors/select2/dist/js/select2.full.min.js"></script>
-<!-- Parsley -->
-<script src="~/Scripts/vendors/parsleyjs/dist/parsley.min.js"></script>
-<!-- Autosize -->
-<script src="~/Scripts/vendors/autosize/dist/autosize.min.js"></script>
-<!-- jQuery autocomplete -->
-<script src="~/Scripts/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-<!-- starrr -->
-<script src="../vendors/starrr/dist/starrr.js"></script>
-<script src="~/Scripts/vendors/starrr/dist/starrr.js"></script>
-<!-- bootstrap-daterangepicker -->
 <script>
     $(document).ready(function () {
         $('#birthday').daterangepicker({
@@ -224,62 +221,13 @@
     });
 </script>
 <!-- /bootstrap-wysiwyg -->
-<!-- Select2 -->
-<script>
-    $(document).ready(function () {
-        $(".select2_single").select2({
-            placeholder: "Select a state",
-            allowClear: true
-        });
-        $(".select2_group").select2({});
-        $(".select2_multiple").select2({
-            maximumSelectionLength: 4,
-            placeholder: "With Max Selection limit 4",
-            allowClear: true
-        });
-    });
-</script>
-<!-- /Select2 -->
-<!-- jQuery Tags Input -->
-<script>
-    function onAddTag(tag) {
-        alert("Thêm vào thành phần: " + tag);
-    }
-
-    function onRemoveTag(tag) {
-        alert("Xóa thành phần: " + tag);
-    }
-
-    function onChangeTag(input, tag) {
-        alert("Thay đổi thành phần: " + tag);
-    }
-
-    $(document).ready(function () {
-        $('#tags_1').tagsInput({
-            width: 'auto'
-        });
-    });
-</script>
-<!-- /jQuery Tags Input -->
 <!-- Parsley -->
 <script>
     $(document).ready(function () {
         $.listen('parsley:field:validate', function () {
             validateFront();
-        });
-        $('#demo-form .btn').on('click', function () {
-            $('#demo-form').parsley().validate();
-            validateFront();
-        });
-        var validateFront = function () {
-            if (true === $('#demo-form').parsley().isValid()) {
-                $('.bs-callout-info').removeClass('hidden');
-                $('.bs-callout-warning').addClass('hidden');
-            } else {
-                $('.bs-callout-info').addClass('hidden');
-                $('.bs-callout-warning').removeClass('hidden');
-            }
-        };
+        })
+       
     });
 
     $(document).ready(function () {
@@ -304,50 +252,4 @@
         hljs.initHighlightingOnLoad();
     } catch (err) { }
 </script>
-<!-- /Parsley -->
-<!-- Autosize -->
-<script>
-    $(document).ready(function () {
-        autosize($('.resizable_textarea'));
-    });
-</script>
-<!-- /Autosize -->
-<!-- jQuery autocomplete -->
-<script>
-    $(document).ready(function () {
-        var countries = { AD: "Andorra", A2: "Andorra Test", AE: "United Arab Emirates", AF: "Afghanistan", AG: "Antigua and Barbuda", AI: "Anguilla", AL: "Albania", AM: "Armenia", AN: "Netherlands Antilles", AO: "Angola", AQ: "Antarctica", AR: "Argentina", AS: "American Samoa", AT: "Austria", AU: "Australia", AW: "Aruba", AX: "Åland Islands", AZ: "Azerbaijan", BA: "Bosnia and Herzegovina", BB: "Barbados", BD: "Bangladesh", BE: "Belgium", BF: "Burkina Faso", BG: "Bulgaria", BH: "Bahrain", BI: "Burundi", BJ: "Benin", BL: "Saint Barthélemy", BM: "Bermuda", BN: "Brunei", BO: "Bolivia", BQ: "British Antarctic Territory", BR: "Brazil", BS: "Bahamas", BT: "Bhutan", BV: "Bouvet Island", BW: "Botswana", BY: "Belarus", BZ: "Belize", CA: "Canada", CC: "Cocos [Keeling] Islands", CD: "Congo - Kinshasa", CF: "Central African Republic", CG: "Congo - Brazzaville", CH: "Switzerland", CI: "Côte d’Ivoire", CK: "Cook Islands", CL: "Chile", CM: "Cameroon", CN: "China", CO: "Colombia", CR: "Costa Rica", CS: "Serbia and Montenegro", CT: "Canton and Enderbury Islands", CU: "Cuba", CV: "Cape Verde", CX: "Christmas Island", CY: "Cyprus", CZ: "Czech Republic", DD: "East Germany", DE: "Germany", DJ: "Djibouti", DK: "Denmark", DM: "Dominica", DO: "Dominican Republic", DZ: "Algeria", EC: "Ecuador", EE: "Estonia", EG: "Egypt", EH: "Western Sahara", ER: "Eritrea", ES: "Spain", ET: "Ethiopia", FI: "Finland", FJ: "Fiji", FK: "Falkland Islands", FM: "Micronesia", FO: "Faroe Islands", FQ: "French Southern and Antarctic Territories", FR: "France", FX: "Metropolitan France", GA: "Gabon", GB: "United Kingdom", GD: "Grenada", GE: "Georgia", GF: "French Guiana", GG: "Guernsey", GH: "Ghana", GI: "Gibraltar", GL: "Greenland", GM: "Gambia", GN: "Guinea", GP: "Guadeloupe", GQ: "Equatorial Guinea", GR: "Greece", GS: "South Georgia and the South Sandwich Islands", GT: "Guatemala", GU: "Guam", GW: "Guinea-Bissau", GY: "Guyana", HK: "Hong Kong SAR China", HM: "Heard Island and McDonald Islands", HN: "Honduras", HR: "Croatia", HT: "Haiti", HU: "Hungary", ID: "Indonesia", IE: "Ireland", IL: "Israel", IM: "Isle of Man", IN: "India", IO: "British Indian Ocean Territory", IQ: "Iraq", IR: "Iran", IS: "Iceland", IT: "Italy", JE: "Jersey", JM: "Jamaica", JO: "Jordan", JP: "Japan", JT: "Johnston Island", KE: "Kenya", KG: "Kyrgyzstan", KH: "Cambodia", KI: "Kiribati", KM: "Comoros", KN: "Saint Kitts and Nevis", KP: "North Korea", KR: "South Korea", KW: "Kuwait", KY: "Cayman Islands", KZ: "Kazakhstan", LA: "Laos", LB: "Lebanon", LC: "Saint Lucia", LI: "Liechtenstein", LK: "Sri Lanka", LR: "Liberia", LS: "Lesotho", LT: "Lithuania", LU: "Luxembourg", LV: "Latvia", LY: "Libya", MA: "Morocco", MC: "Monaco", MD: "Moldova", ME: "Montenegro", MF: "Saint Martin", MG: "Madagascar", MH: "Marshall Islands", MI: "Midway Islands", MK: "Macedonia", ML: "Mali", MM: "Myanmar [Burma]", MN: "Mongolia", MO: "Macau SAR China", MP: "Northern Mariana Islands", MQ: "Martinique", MR: "Mauritania", MS: "Montserrat", MT: "Malta", MU: "Mauritius", MV: "Maldives", MW: "Malawi", MX: "Mexico", MY: "Malaysia", MZ: "Mozambique", NA: "Namibia", NC: "New Caledonia", NE: "Niger", NF: "Norfolk Island", NG: "Nigeria", NI: "Nicaragua", NL: "Netherlands", NO: "Norway", NP: "Nepal", NQ: "Dronning Maud Land", NR: "Nauru", NT: "Neutral Zone", NU: "Niue", NZ: "New Zealand", OM: "Oman", PA: "Panama", PC: "Pacific Islands Trust Territory", PE: "Peru", PF: "French Polynesia", PG: "Papua New Guinea", PH: "Philippines", PK: "Pakistan", PL: "Poland", PM: "Saint Pierre and Miquelon", PN: "Pitcairn Islands", PR: "Puerto Rico", PS: "Palestinian Territories", PT: "Portugal", PU: "U.S. Miscellaneous Pacific Islands", PW: "Palau", PY: "Paraguay", PZ: "Panama Canal Zone", QA: "Qatar", RE: "Réunion", RO: "Romania", RS: "Serbia", RU: "Russia", RW: "Rwanda", SA: "Saudi Arabia", SB: "Solomon Islands", SC: "Seychelles", SD: "Sudan", SE: "Sweden", SG: "Singapore", SH: "Saint Helena", SI: "Slovenia", SJ: "Svalbard and Jan Mayen", SK: "Slovakia", SL: "Sierra Leone", SM: "San Marino", SN: "Senegal", SO: "Somalia", SR: "Suriname", ST: "São Tomé and Príncipe", SU: "Union of Soviet Socialist Republics", SV: "El Salvador", SY: "Syria", SZ: "Swaziland", TC: "Turks and Caicos Islands", TD: "Chad", TF: "French Southern Territories", TG: "Togo", TH: "Thailand", TJ: "Tajikistan", TK: "Tokelau", TL: "Timor-Leste", TM: "Turkmenistan", TN: "Tunisia", TO: "Tonga", TR: "Turkey", TT: "Trinidad and Tobago", TV: "Tuvalu", TW: "Taiwan", TZ: "Tanzania", UA: "Ukraine", UG: "Uganda", UM: "U.S. Minor Outlying Islands", US: "United States", UY: "Uruguay", UZ: "Uzbekistan", VA: "Vatican City", VC: "Saint Vincent and the Grenadines", VD: "North Vietnam", VE: "Venezuela", VG: "British Virgin Islands", VI: "U.S. Virgin Islands", VN: "Vietnam", VU: "Vanuatu", WF: "Wallis and Futuna", WK: "Wake Island", WS: "Samoa", YD: "People's Democratic Republic of Yemen", YE: "Yemen", YT: "Mayotte", ZA: "South Africa", ZM: "Zambia", ZW: "Zimbabwe", ZZ: "Unknown or Invalid Region" };
 
-        var countriesArray = $.map(countries, function (value, key) {
-            return {
-                value: value,
-                data: key
-            };
-        });
-
-        // initialize autocomplete with custom appendTo
-        $('#autocomplete-custom-append').autocomplete({
-            lookup: countriesArray,
-            appendTo: '#autocomplete-container'
-        });
-    });
-</script>
-<!-- /jQuery autocomplete -->
-<!-- Starrr -->
-<script>
-    $(document).ready(function () {
-        $(".stars").starrr();
-
-        $('.stars-existing').starrr({
-            rating: 4
-        });
-
-        $('.stars').on('starrr:change', function (e, value) {
-            $('.stars-count').html(value);
-        });
-
-        $('.stars-existing').on('starrr:change', function (e, value) {
-            $('.stars-count-existing').html(value);
-        });
-    });
-</script>
-<!-- /Starrr -->

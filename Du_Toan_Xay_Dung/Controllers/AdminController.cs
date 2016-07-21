@@ -32,7 +32,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             ViewBag.Title = "Dự toán xây dựng";
             return View();
         }
-        public ViewResult themnguoidung(HttpPostedFileBase file)
+        public ActionResult themnguoidung()
         {
             if (SessionHandler.User != null)
             {

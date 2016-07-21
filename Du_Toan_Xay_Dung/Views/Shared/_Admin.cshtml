@@ -1,28 +1,30 @@
 ﻿@using Du_Toan_Xay_Dung.Handlers
 <!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Construction_Estimate</title>
     <!-- Bootstrap -->
     <link href="~/Content/Bootstrap/bootstrap.min.css" rel="stylesheet" />
+
     <!-- Font Awesome -->
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <!-- NProgress -->
     <link href="~/Content/nprogress.css" rel="stylesheet" />
     <!-- iCheck -->
     <link href="~/Content/green.css" rel="stylesheet" />
+
     <!-- bootstrap-progressbar -->
-    <link href="~/Content/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />
+    <link href="~/Content/Bootstrap/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />
     <!-- JQVMap -->
     <link href="~/Content/jqvmap.min.css" rel="stylesheet" />
     <!-- Custom Theme Style -->
     <link href="~/Content/custom.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-
+   
 </head>
 <body class="nav-md">
     <div class="container body">
@@ -61,9 +63,7 @@
                                     <a><i class="fa fa-edit"></i>Biểu mẫu <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="/Admin/themnguoidung">Thêm người dùng</a></li>
-                                        <li><a href="/Admin/suanguoidung">Sửa người dùng</a></li>
                                         <li><a href="/Admin/nhapdinhmuc">Thêm định mức</a></li>
-                                        <li><a href="/Admin/suadongia">Sửa đơn giá</a></li>
                                         <li><a href="/Admin/upload">Tải đơn giá</a></li>
                                         <li><a href="/Admin/uploadinhmuc">Tải định mức</a></li>
                                     </ul>
@@ -129,41 +129,42 @@
         </div>
     </div>
     <!-- jQuery -->
-    <script src="~/Scripts/Admin/vendors/jquery/jquery.min.js"></script>
+    <script src="~/Scripts/Admin/jquery.min.js"></script>
     <!-- Bootstrap -->
-    <script src="~/Scripts/Bootstrap/bootstrap.min.js"></script>
+    <script src="~/Scripts/Admin/bootstrap.min.js"></script>
     <!-- FastClick -->
-    <script src="~/Scripts/Admin/vendors/fastclick/fastclick.js"></script>
+    <script src="~/Scripts/Admin/fastclick.js"></script>
     <!-- NProgress -->
-    <script src="~/Scripts/Admin/vendors/nprogress/nprogress.js"></script>
+    <script src="~/Scripts/Admin/nprogress.js"></script>
     <!-- Chart.js -->
-    <script src="~/Scripts/Admin/vendors/Chart.js/Chart.min.js"></script>
+    <script src="~/Scripts/Admin/Chart.min.js"></script>
     <!-- gauge.js -->
-    <script src="~/Scripts/Admin/vendors/gauge.js/gauge.min.js"></script>
+    <script src="~/Scripts/Admin/gauge.min.js"></script>
     <!-- bootstrap-progressbar -->
-    <script src="~/Scripts/Admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <script src="~/Scripts/Admin/bootstrap-progressbar.min.js"></script>
     <!-- iCheck -->
-    <script src="~/Scripts/Admin/vendors/iCheck/icheck.min.js"></script>
+    <script src="~/Scripts/Admin/icheck.min.js"></script>
     <!-- Skycons -->
-    <script src="~/Scripts/Admin/vendors/skycons/skycons.js"></script>
-    <!-- Flot -->
-    <script src="~/Scripts/Admin/vendors/Flot/jquery.flot.js"></script>
-    <script src="~/Scripts/Admin/vendors/Flot/jquery.flot.pie.js"></script>
-    <script src="~/Scripts/Admin/vendors/Flot/jquery.flot.time.js"></script>
-    <script src="~/Scripts/Admin/vendors/Flot/jquery.flot.stack.js"></script>
-    <script src="~/Scripts/Admin/vendors/Flot/jquery.flot.resize.js"></script>
+    <script src="~/Scripts/Admin/skycons.js"></script>
+    <script src="~/Scripts/Admin/jquery.flot.pie.js"></script>
+    <script src="~/Scripts/Admin/jquery.flot.time.js"></script>
+    <script src="~/Scripts/Admin/jquery.flot.stack.js"></script>
+    <script src="~/Scripts/Admin/jquery.flot.resize.js"></script>
     <!-- Flot plugins -->
-    <script src="~/Scripts/Admin/js/flot/jquery.flot.orderBars.js"></script>
-    <script src="~/Scripts/Admin/js/flot/date.js"></script>
-    <script src="~/Scripts/Admin/js/flot/jquery.flot.spline.js"></script>
-    <script src="~/Scripts/Admin/js/flot/curvedLines.js"></script>
+    <script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="~/Scripts/Admin/jquery.flot.orderBars.js"></script>
+    <script src="~/Scripts/Admin/jquery.flot.spline.min.js"></script>
+    <script src="~/Scripts/Admin/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="~/Scripts/Admin/date.js"></script>
     <!-- JQVMap -->
-    <script src="~/Scripts/Admin/vendors/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/Scripts/Admin/jquery.vmap.js"></script>
+    <script src="~/Scripts/Admin/jquery.vmap.sampledata.js"></script>
     <!-- bootstrap-daterangepicker -->
-    <script src="~/Scripts/Admin/js/moment/moment.min.js"></script>
-    <script src="~/Scripts/Admin/js/datepicker/daterangepicker.js"></script>
+    <script src="~/Scripts/Admin/moment.min.js"></script>
+    <script src="~/Scripts/Admin/daterangepicker.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src="~/Scripts/build/js/custom.min.js"></script>
+    <script src="~/Scripts/Admin/custom.min.js"></script>
     <!-- Flot -->
     <script>
         $(document).ready(function () {
