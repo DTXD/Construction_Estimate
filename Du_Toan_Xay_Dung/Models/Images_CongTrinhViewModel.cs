@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
 namespace Du_Toan_Xay_Dung.Models
 {
     public class Images_CongTrinhViewModel

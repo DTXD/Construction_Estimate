@@ -19,7 +19,6 @@ namespace Du_Toan_Xay_Dung.Models
             SDT = obj.SDT;
             NoiLamViec = obj.NoiLamViec;
             ThanhPho = obj.ThanhPho;
-            Url_HinhAnh = obj.Url_HinhAnh;
             Quyen = obj.Quyen;
         }
         public string Email { get; set; }
@@ -29,8 +28,8 @@ namespace Du_Toan_Xay_Dung.Models
         public string SDT { get; set; }
         public string NoiLamViec { get; set; }
         public string ThanhPho { get; set; }
-        public string Url_HinhAnh { get; set; }
         public string Quyen { get; set; }
-         
+        public List<HttpPostedFileBase> img_user { get; set; }
+
     }
 }
