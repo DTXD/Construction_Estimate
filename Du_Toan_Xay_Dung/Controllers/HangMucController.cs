@@ -15,6 +15,11 @@ namespace Du_Toan_Xay_Dung.Controllers
         //
         // GET: /TT_D_KLCongViec/
 
+        public ActionResult Estimate_Work()
+        {
+            return View();
+        }
+
 
         public ActionResult Index_2(string ID)
         {

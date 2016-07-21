@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "Work_SPA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--
+<link href="~/Content/simple-sidebar.css" rel="stylesheet" />
+-->
+<!-- Menu Toggle Script -->
+<script>
+    
+    
+
+    $(document).ready(function () {
+        $("#body_content").removeClass("container");
+
+
+
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault(e);
+            $("#wrapper_content").toggleClass("toggled");
+        });
+
+        
+    });
+</script>
+
+<style>
+    .left_menu {
+        z-index: 1000;
+        position: fixed;
+        left: 250px;
+        width: 250px;
+        height: 100%;
+        margin-left: -250px;
+        overflow-y: auto;
+    }
+    .wrapper_content {
+        padding-left: 250px;
+    }
+    .page-content-wrapper {
+        padding: 20px;
+        position: relative;
+        width: 100%;
+    }
+
+    #wrapper_content.toggled {
+        padding-left: 250px;
+    }
+
+        #wrapper_content.toggled #left_menu {
+            width: 250px;
+        }
+
+    #wrapper_content.toggled {
+        padding-left: 0;
+    }
+
+    #wrapper_content.toggled #left_menu {
+        width: 0;
+    }
+</style>
+
+<section class="content-header">
+
+</section>
+
+<section class="content">
+    <!-- Sidebar -->
+    <div class="col-sm-12 wrapper_content" id="wrapper_content">
+        <div class="left_menu" id="left_menu">
+            <ul class="">
+                <li class="">
+                    <a href="#">
+                        Start Bootstrap
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#">Shortcuts</a>
+                </li>
+                <li>
+                    <a href="#">Overview</a>
+                </li>
+                <li>
+                    <a href="#">Events</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">Services</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <div id="page-content-wrapper" class="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>Simple Sidebar</h1>
+                        <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
+                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
+                        <span class="btn btn-default" id="menu-toggle">Toggle Menu</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
