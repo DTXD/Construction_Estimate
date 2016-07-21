@@ -266,6 +266,7 @@
     <Content Include="Content\jqvmap.min.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\simple-sidebar.css" />
     <Content Include="Content\Style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -345,6 +346,8 @@
     <Content Include="Scripts\DuToan\jquery.editable-select.min.js" />
     <Content Include="obj\x86\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="Scripts\jquery\jquery-3.0.0.intellisense.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work.js" />
+    <Content Include="Scripts\DuToan\Location_Mainmenu_CSS.js" />
     <Content Include="Scripts\jquery\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery\jquery-3.0.0.min.js" />
     <Content Include="Scripts\jquery\jquery-3.0.0.slim.js" />
@@ -358,12 +361,6 @@
     <Content Include="Scripts\jquery\jquery.validate.min.js" />
     <Content Include="Scripts\jquery\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\js\datepicker\daterangepicker.js" />
-    <Content Include="Scripts\js\flot\curvedLines.js" />
-    <Content Include="Scripts\js\flot\date.js" />
-    <Content Include="Scripts\js\flot\jquery.flot.orderBars.js" />
-    <Content Include="Scripts\js\flot\jquery.flot.spline.js" />
-    <Content Include="Scripts\js\moment\moment.min.js" />
     <Content Include="Scripts\Upload_File\jquery.uploadfile.js" />
     <Content Include="Views\HangMuc\Index_2.cshtml">
       <SubType>Code</SubType>
@@ -415,6 +412,7 @@
     <Content Include="Views\Admin\timkiem.cshtml" />
     <Content Include="Views\Admin\timkiemnguoidung.cshtml" />
     <Content Include="Views\Admin\suadongia.cshtml" />
+    <Content Include="Views\HangMuc\Estimate_Work.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

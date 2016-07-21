@@ -413,7 +413,6 @@ C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\Du_Toan
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\Du_Toan_Xay_Dung.pdb
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\Antlr3.Runtime.dll
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\DocumentFormat.OpenXml.dll
-C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\Dropbox.Api.dll
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\EntityFramework.dll
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\EntityFramework.SqlServer.dll
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\Microsoft.AspNet.Identity.Core.dll
@@ -442,7 +441,6 @@ C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\System.
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\System.Web.WebPages.dll
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\System.Web.WebPages.Razor.dll
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\WebGrease.dll
-C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\Dropbox.Api.xml
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\EntityFramework.xml
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\EntityFramework.SqlServer.xml
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\Microsoft.AspNet.Identity.Core.xml
