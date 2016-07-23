@@ -14,8 +14,9 @@
                     MaCT: $('#MaCT').val(),
                     TenCT: $('#TenCT').val(),
                     MoTa: $('#MoTa').val(),
-                    Gia: $('#Gia').val()
-                };
+                    Gia: $('#Gia').val(),
+                }
+
 
                 $.ajax({
                     type: "POST",
@@ -23,10 +24,9 @@
                     data: postData,
                     dataType: "JSON",
                     success: function (result) {
-                        if (result == 'login') {
-                            location.href = "";
-                        } else if (result == "ok") {
-                            location.reload();
+                        if (result == 'ok') {
+                            alert("Thành công");
+                            location.href = "/CongTrinh/Index";
                         }
                         else {
                             alert("Loi");
@@ -36,7 +36,7 @@
                         console.log(err.status + " - " + err.statusText);
                     }
                 });
-            });
+            });   
         });
     </script>
 }
@@ -70,6 +70,14 @@
                     <label class="control-label col-sm-2" for="pwd">Giá:</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="Gia" name="Gia" placeholder="Giá" value="@congtrinh.Gia">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="Url_HinhAnh">Hình Ảnh:</label>
+                    <div class="col-sm-10">
+                        <div id="listImage" class="listImage col-sm-12" style="display:none">
+                            <span class="closeall_images" id="closeall_images"><i class="fa fa-fw fa-remove"></i></span>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

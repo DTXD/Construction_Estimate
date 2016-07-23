@@ -90,6 +90,33 @@ namespace Du_Toan_Xay_Dung.Controllers
 
         [PageLogin]
         [HttpPost]
+        public JsonResult post_updatecongtrinh(CongTrinhViewModel obj)
+        {
+            int int_Id = Convert.ToInt32(obj.MaCT.Substring(2,1));
+            try
+            {
+                var congtrinh = _db.CongTrinhs.First(m => m.Id == int_Id);
+                var congtrinh1 = new CongTrinh();
+                congtrinh.Id = int_Id;
+                congtrinh.MaCT = "CT" + int_Id.ToString();
+                congtrinh.Email = SessionHandler.User.Email;
+                congtrinh.TenCT = obj.TenCT;
+                congtrinh.MoTa = obj.MoTa;
+                congtrinh.DiaChi = obj.DiaChi;
+                congtrinh.Gia = 0;
+                UpdateModel(congtrinh1);
+                _db.SubmitChanges();
+
+                return Json("ok");
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
+        }
+
+        /*[PageLogin]
+        [HttpPost]
         public ActionResult Post_UpdateCongTrinh(FormCollection form)
         {
             string ID = form["Ma"];
@@ -109,7 +136,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 }
             }
             return View();
-        }
+        }*/
 
         [PageLogin]
         public ActionResult UpdateHangMuc(string ID)
