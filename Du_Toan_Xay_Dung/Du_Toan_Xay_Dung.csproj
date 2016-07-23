@@ -242,7 +242,6 @@
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
     <Content Include="Content\custom.min.css" />
     <Content Include="Content\fileinput.min.css" />
-    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\font-awesome\css\font-awesome.css" />
     <Content Include="Content\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
@@ -268,6 +267,8 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\simple-sidebar.css" />
     <Content Include="Content\Style.css" />
+    <Content Include="Content\vendor\wijmo.min.css" />
+    <Content Include="Content\vendor\wijmo.theme.office.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -316,7 +317,9 @@
     <Content Include="Content\font-awesome\scss\_spinning.scss" />
     <Content Include="Content\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\font-awesome\scss\_variables.scss" />
+    <Content Include="Scripts\Angular\angular-route.min.js" />
     <Content Include="Scripts\Angular\angular.min.js" />
+    <Content Include="Scripts\Angular\ui-bootstrap-tpls-2.0.0.min.js" />
     <Content Include="Scripts\Bootstrap\bootstrap-select.js" />
     <Content Include="Scripts\Bootstrap\bootstrap-select.min.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
@@ -340,13 +343,24 @@
     <Content Include="Content\Bootstrap\bootstrap-select.css.map" />
     <None Include="Scripts\Difference\_references.js" />
     <Content Include="Scripts\Dropbox_API\dropins.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\App_work.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\Controllers\formatCellsCtrl.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\services\dataService.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.angular.min.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.grid.filter.min.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.grid.min.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.grid.sheet.filter.min.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.grid.sheet.min.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.grid.xlsx.min.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.input.min.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.min.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.xlsx.min.js" />
     <Content Include="Scripts\DuToan\HangMuc.js" />
     <Content Include="Scripts\DuToan\index_2.js" />
     <Content Include="Scripts\DuToan\jquery.editable-select.js" />
     <Content Include="Scripts\DuToan\jquery.editable-select.min.js" />
     <Content Include="obj\x86\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="Scripts\jquery\jquery-3.0.0.intellisense.js" />
-    <Content Include="Scripts\DuToan\Estimate_Work.js" />
     <Content Include="Scripts\DuToan\Location_Mainmenu_CSS.js" />
     <Content Include="Scripts\jquery\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery\jquery-3.0.0.min.js" />
@@ -365,6 +379,7 @@
     <Content Include="Views\HangMuc\Index_2.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Scripts\DuToan\Estimate_Work\views\formatCells.htm" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

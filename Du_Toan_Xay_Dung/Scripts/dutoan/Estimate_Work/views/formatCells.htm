@@ -1,0 +1,78 @@
+﻿<div>
+    <div class="copy">
+        <h3>Custom Function</h3>
+        <p>
+            FlexSheet allows user to add custom functions by the <b>addCustomFunction</b> method. <br />
+            FlexSheet will parse the cell reference parameter such as 'A1' or 'A1:B2' to a <b>
+                <a href="http://wijmo.com/5/docs/topic/wijmo.grid.CellRange.Class.html" target="_blank">CellRange</a>
+            </b> instance for the custom function.
+        </p>
+        <p>
+            FlexSheet also allows user to process non-supported functions met in cell expressions by the <b>unknownFuntion</b> event.  This event will pass the 'UnKnownFunctionEventArgs' to customer.<br />
+            This 'UnKnownFunctionEventArgs' provides the function name and the evaluated values list of the parameters. <br />
+            Customer can set the 'value' field of 'UnKnownFunctionEventArgs' to customize the miss formula result.
+            Otherwise the missed function will return the default error message: <i>'The function "funcName" has not supported in FlexSheet yet.'</i>.
+        </p>
+    </div>
+
+    <style>
+        .cell {
+            padding: 3px;
+            border-right: 1px solid #c6c6c6;
+            border-bottom: 1px solid #c6c6c6;
+            outline: none;
+        }
+    </style>
+
+    <div class="col-sm-12" style="height:500px">
+        <div style="width:100%; height:100%">
+            <!--Center-->
+            <div style="position: absolute; width: 100%; height: 100%; max-height: inherit; overflow: auto;">
+                <div style="position: relative; left: 35px; top: 28px; height: 560px; background-color: white;" id="sheet_cellcenter">
+                    <script>
+                        $(document).ready(function () {
+                            var cell_center = $("#sheet_cellcenter");
+                            for (var i = 0; i < 2; i++) {                          //column
+                                for (var j = 0; j < 3; j++)                                //row
+                                {
+                                    var div = '<div style="';
+                                    var css_left = "left:" + parseInt(i) * 100 + "px;";
+                                    var css_top = "top:" + parseInt(28) * j + "px;";
+                                    var div = div + css_left + css_top;
+                                    alert(div);
+                                    var div = div + 'height: 28px;" class="cell col-sm-2">' + i + j + '</div>';
+                                    cell_center.append(div);
+                                }
+                            }
+                            
+                        });
+                    </script>
+
+                </div>
+            </div>
+            <!--Left-->
+            <div style="position: absolute; overflow: hidden; outline: none; left: 0px; top: 28px; width: 35px; height: 543px;">
+                <div style="position: relative; top: 0px;" id="sheet_cellleft">
+
+                    <script>
+                        $(document).ready(function () {
+                            var cell_left = $("#sheet_cellleft");
+                            for (var i = 0; i < 10; i++) {
+                                var div = '<div style="left: 0px; top: 0px; width: 35px; height: 28px; text-align: center;">' + i + '</div>';
+                                cell_left.append(div);
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+            <!--Horizontal-->
+            <div style="position: absolute; overflow: hidden; outline: none; top: 0px; left: 35px; height: 28px; width: 930px;">
+                <div style="position: relative; left: 0px;">
+                    <div style="left: 0px; top: 0px; width: 340px; height: 28px; text-align: center;">A</div>
+                </div>
+            </div>
+            <!--Left-Horizontal-->
+            <div style="position: absolute; overflow: hidden; outline: none; left: 0px; top: 0px; width: 35px; height: 28px;"></div>
+        </div>
+    </div>
+</div>
