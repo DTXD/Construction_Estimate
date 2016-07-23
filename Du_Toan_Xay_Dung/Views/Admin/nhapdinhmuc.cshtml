@@ -5,21 +5,7 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
     var list_dongia = ViewData["DSDonGia"] as List<DonGiaViewModel>;
 }
-<!-- bootstrap-wysiwyg -->
-<link href="~/Scripts/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet" />
-<!-- Select2 -->
-<link href="~/Scripts/vendors/select2/dist/css/select2.min.css" rel="stylesheet" />
-<!-- Switchery -->
-<link href="~/Scripts/vendors/switchery/dist/switchery.min.css" rel="stylesheet" />
-<!-- starrr -->
-<link href="~/Scripts/vendors/starrr/dist/starrr.css" rel="stylesheet" />
-<!-- Datatables -->
-<link href="~/Scripts/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-<link href="~/Scripts/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet" />
-<link href="~/Scripts/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet" />
-<link href="~/Scripts/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
-<link href="~/Scripts/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet" />
-<script src="~/Content/angular/admin.js"></script>
+<script src="~/Scripts/Admin/admin.js"></script>
 <div class="right_col" role="main">
     <div class="">
         <div class="page-title">
@@ -178,23 +164,6 @@
     </div>
 </div>
 <!-- /page content -->
-<!-- Datatables -->
-<script src="~/Scripts/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="~/Scripts/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="~/Scripts/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="~/Scripts/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="~/Scripts/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="~/Scripts/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="~/Scripts/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="~/Scripts/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-<script src="~/Scripts/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-<script src="~/Scripts/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="~/Scripts/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="~/Scripts/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-<script src="~/Scripts/vendors/jszip/dist/jszip.min.js"></script>
-<script src="~/Scripts/vendors/pdfmake/build/pdfmake.min.js"></script>
-<script src="~/Scripts/vendors/pdfmake/build/vfs_fonts.js"></script>
-<!-- Datatables -->
 <script>
     $(document).ready(function () {
         var handleDataTableButtons = function () {
@@ -261,25 +230,7 @@
 </script>
 <!-- /Datatables -->
 <!-- bootstrap-daterangepicker -->
-<!-- bootstrap-wysiwyg -->
-<script src="~/Scripts/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-<script src="~/Scripts/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-<script src="~/Scripts/vendors/google-code-prettify/src/prettify.js"></script>
-<!-- jQuery Tags Input -->
-<script src="~/Scripts/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-<!-- Switchery -->
-<script src="~/Scripts/vendors/switchery/dist/switchery.min.js"></script>
-<!-- Select2 -->
-<script src="~/Scripts/vendors/select2/dist/js/select2.full.min.js"></script>
-<!-- Parsley -->
-<script src="~/Scripts/vendors/parsleyjs/dist/parsley.min.js"></script>
-<!-- Autosize -->
-<script src="~/Scripts/vendors/autosize/dist/autosize.min.js"></script>
-<!-- jQuery autocomplete -->
-<script src="~/Scripts/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-<!-- starrr -->
-<script src="../vendors/starrr/dist/starrr.js"></script>
-<script src="~/Scripts/vendors/starrr/dist/starrr.js"></script>
+
 <!-- bootstrap-daterangepicker -->
 <script>
     $(document).ready(function () {
@@ -397,25 +348,6 @@
 <!-- /jQuery Tags Input -->
 <!-- Parsley -->
 <script>
-    $(document).ready(function () {
-        $.listen('parsley:field:validate', function () {
-            validateFront();
-        });
-        $('#demo-form .btn').on('click', function () {
-            $('#demo-form').parsley().validate();
-            validateFront();
-        });
-        var validateFront = function () {
-            if (true === $('#demo-form').parsley().isValid()) {
-                $('.bs-callout-info').removeClass('hidden');
-                $('.bs-callout-warning').addClass('hidden');
-            } else {
-                $('.bs-callout-info').addClass('hidden');
-                $('.bs-callout-warning').removeClass('hidden');
-            }
-        };
-    });
-
     $(document).ready(function () {
         $.listen('parsley:field:validate', function () {
             validateFront();

@@ -1,4 +1,15 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using Du_Toan_Xay_Dung.Filter;
+using System.Web.Mvc;
+using Du_Toan_Xay_Dung.Models;
+using Du_Toan_Xay_Dung.Handlers;
+using System.Web.UI.WebControls;
+using System.IO;
+using System.Web.UI;
+//using CRUDDeom.Models;
+using OfficeOpenXml;
+using Du_Toan_Xay_Dung.Filter;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +43,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             ViewBag.Title = "Dự toán xây dựng";
             return View();
         }
-        public ViewResult themnguoidung(HttpPostedFileBase file)
+        public ViewResult themnguoidung()
         {
             if (SessionHandler.User != null)
             {
@@ -45,6 +56,61 @@ namespace Du_Toan_Xay_Dung.Controllers
             ViewBag.Title = "Dự toán xây dựng";
             return View();
         }
+        /*[PageLogin]
+        [HttpPost]
+        public JsonResult post_themnguoidung(UserViewModel obj)
+        {
+            try
+            {
+                var index = _db.Nguoi_Dungs.OrderByDescending(i => i.Ten).Select(i => i.Ten).FirstOrDefault();
+                index = index + 1;
+
+                if (obj.img_user.Count() > 0)
+                {
+                    string url_location = Server.MapPath("~/Images/Nguoidung");
+                    if (Directory.Exists(url_location))
+                    {
+                        foreach (var file in obj.img_user)
+                        {
+                            if (file != null && file.ContentLength > 0)
+                            {
+                                string fileLocation = Server.MapPath("~/Images/Admin/") + file.FileName;
+                                file.SaveAs(fileLocation);
+                            }
+                        }
+                    }
+                }
+                var nguoidung = new Nguoi_Dung();
+                nguoidung.Email = obj.Email;
+                nguoidung.Ten = obj.Ten;
+                nguoidung.Ho_TenLot = obj.Ho_TenLot;
+                nguoidung.Quyen = obj.Quyen;
+                nguoidung.ThanhPho = obj.ThanhPho;
+                nguoidung.SDT = obj.SDT;
+
+                _db.Nguoi_Dungs.InsertOnSubmit(nguoidung);
+
+                foreach (var file in obj.img_user)
+                {
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        //them image vao database
+                        var image = new img_user();
+
+                        image.Url = "~/Images/Admin/" + file.FileName;
+                        _db.iInsertOnSubmit(image);
+                    }
+                }
+                _db.SubmitChanges();
+
+                return Json("ok");
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
+        }*/
+
         public ActionResult suanguoidung(string Email)
         {
             var nguoidung = _db.Nguoi_Dungs.Where(i => i.Email.Equals(Email)).Select(i => new UserViewModel(i)).FirstOrDefault();
@@ -87,7 +153,7 @@ namespace Du_Toan_Xay_Dung.Controllers
         {
             return _db.Nguoi_Dungs.OrderByDescending(x => x.Ten).ToPagedList(page, pagesize);
         }
-        public ActionResult suaxoanguoidung( int page=1, int pagesize=10)
+        public ActionResult suaxoanguoidung(int page = 1, int pagesize = 10)
         {
             if (SessionHandler.User != null)
             {
@@ -100,9 +166,9 @@ namespace Du_Toan_Xay_Dung.Controllers
             ViewBag.Title = "Dự toán xây dựng";
             var model = ListAllPageging1(page, pagesize);
             return View(model);
-           
+
         }
-       
+
         public ActionResult upload()
         {
             if (SessionHandler.User != null)
@@ -482,7 +548,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             return View(listnguoidung.OrderBy(n => n.Ten).ToPagedList(pagenumber, pagesize));
         }
         [HttpPost]
-        public ActionResult timkiem(FormCollection f,int? page)
+        public ActionResult timkiem(FormCollection f, int? page)
         {
             if (SessionHandler.User != null)
             {
@@ -494,17 +560,17 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
             string tukhoa = f["txttimkiem"].ToString();
             ViewBag.tukhoa = tukhoa;
-            List<DonGia> listdongia=_db.DonGias.Where(n=>n.Ten.Contains(tukhoa)).ToList();
+            List<DonGia> listdongia = _db.DonGias.Where(n => n.Ten.Contains(tukhoa)).ToList();
             // phân trang
             int pagenumber = (page ?? 1);
             int pagesize = 10;
-            if(listdongia.Count==0)
+            if (listdongia.Count == 0)
             {
                 ViewBag.ThongBao = "Không tìm thấy bản ghi phù hợp";
-                return View(_db.DonGias.OrderBy(n => n.Ten).ToPagedList(pagenumber,pagesize));  
+                return View(_db.DonGias.OrderBy(n => n.Ten).ToPagedList(pagenumber, pagesize));
             }
-            ViewBag.ThongBao = "Đã tìm thấy"+  "    "   + listdongia.Count + "kết quả";
-            return View(listdongia.OrderBy(n=>n.Ten).ToPagedList(pagenumber,pagesize));
+            ViewBag.ThongBao = "Đã tìm thấy" + "    " + listdongia.Count + "kết quả";
+            return View(listdongia.OrderBy(n => n.Ten).ToPagedList(pagenumber, pagesize));
         }
         [HttpGet]
         public ActionResult timkiem(string tukhoa, int? page)
@@ -566,9 +632,9 @@ namespace Du_Toan_Xay_Dung.Controllers
         public ActionResult post_suadongia(string mathanhphan, FormCollection form)
         {
             var dongia = _db.DonGias.First(n => n.MaVL_NC_MTC.Equals(mathanhphan));
-            string gia1= form["dongia"];
+            string gia1 = form["dongia"];
             decimal gia;
-            gia= Convert.ToDecimal(gia1);
+            gia = Convert.ToDecimal(gia1);
             string donvi = form["donvi"];
             string mathanhphan1 = form["mathanhphan"];
             // gán dữ liệu
@@ -580,11 +646,11 @@ namespace Du_Toan_Xay_Dung.Controllers
             _db.SubmitChanges();
             return RedirectToAction("danhsachdongia");
         }
-   
+
     }
-}      
-  
-    
-        
-    
+}
+
+
+
+
 

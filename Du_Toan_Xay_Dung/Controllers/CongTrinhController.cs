@@ -121,7 +121,6 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
             return View();
         }
-
         [PageLogin]
         [HttpPost]
         public ActionResult Post_UpdateHangMuc(FormCollection form)
@@ -185,8 +184,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                             //file.SaveAs(string.Format("{0}/{1}", url_location, file.FileName));
                             con.UploadtoDropbox(token_dropbox, "/Image", file.FileName,file);
                         }
-                    }
-                     */
+                    }                    */
                 }
                 var congtrinh = new CongTrinh();
                 congtrinh.Id = index;
