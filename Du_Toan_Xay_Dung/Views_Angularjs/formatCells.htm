@@ -1,6 +1,7 @@
-﻿<div>
+﻿
+<div>
     <div class="copy">
-        <h3>Custom Function</h3>
+        <h3>haha</h3>
         <p>
             FlexSheet also allows user to process non-supported functions met in cell expressions by the <b>unknownFuntion</b> event.  This event will pass the 'UnKnownFunctionEventArgs' to customer.<br />
             This 'UnKnownFunctionEventArgs' provides the function name and the evaluated values list of the parameters. <br />
@@ -45,18 +46,46 @@
             position: absolute;
             height: 28px;
         }
+        .sheet_cellheader {
+            position: relative;
+            width: 98.3%;
+            height: 50px;
+            max-height: inherit;
+        }
     </style>
 
     <div class="col-sm-12" style="height:800px">
         <div style="width:100%; height:100%">
+            <!--row_header-->
+            <div class="sheet_cellheader" id="sheet_cellheader">
+                <div style="position: absolute; top: 0px; width: 100%; background-color: #eaeaea;">
+                    <div style="left:0%;width:3%;top:0px;border-left: 1px solid #c6c6c6;" class="row_header"></div>';
+                    <div style="left:3%;width:3%;top:0px;" class="row_header">STT</div>
+                    <div style="left:6%;width:6%;top:0px;" class="row_header">Mã Hiệu</div>
+                    <div style="left:12%;width:21%;top:0px;" class="row_header">Tên Công Việc</div>
+                    <div style="left:33%;width:6%;top:0px;" class="row_header">Đơn Vị</div>
+                    <div style="left:39%;width:5%;top:0px;" class="row_header">Số Lượng</div>
+                    <div style="left:44%;width:5%;top:0px;" class="row_header">Dài</div>
+                    <div style="left:49%;width:5%;top:0px;" class="row_header">Rộng</div>
+                    <div style="left:54%;width:5%;top:0px;" class="row_header">Cao</div>
+                    <div style="left:59%;width:5%;top:0px;" class="row_header">Khối Lượng</div>
+                    <div style="left:64%;width:6%;top:0px;" class="row_header">ĐGVL</div>
+                    <div style="left:70%;width:6%;top:0px;" class="row_header">ĐGNC</div>
+                    <div style="left:76%;width:6%;top:0px;" class="row_header">ĐGMTC</div>
+                    <div style="left:82%;width:6%;top:0px;" class="row_header">TTVL</div>
+                    <div style="left:88%;width:6%;top:0px;" class="row_header">TTNC</div>
+                    <div style="left:94%;width:6%;top:0px;" class="row_header">TTMTC</div>
+                </div>
+            </div>
             <!--Center-->
-            <div style="position: absolute; width: 100%; height: 100%; max-height: inherit; ">
-                <div style="position: relative; top: 28px; width: 100%; height: 100%; background-color: white;" id="sheet_cellcenter">
+            <div style="position: relative; width: 100%; height: 100%; max-height: inherit;">
+                <div style="position: absolute; top: 0px; width: 100%; height: 70%; background-color: white; overflow-y:auto" id="sheet_cellcenter">
 
                     <script>
                         $(document).ready(function () {
                             var cell_center = $("#sheet_cellcenter");
 
+                            /*
                             var column_clear = '<div style="left:0%;width:3%;top:0px;border-left: 1px solid #c6c6c6;" class="row_header"></div>';
                             var column_stt = '<div style="left:3%;width:3%;top:0px;" class="row_header">STT</div>';
                             var column_mahieu = '<div style="left:6%;width:6%;top:0px;" class="row_header">Mã Hiệu</div>';
@@ -89,12 +118,8 @@
                             cell_center.append(column_ttvl);
                             cell_center.append(column_ttnc);
                             cell_center.append(column_ttmtc);
+                            */
 
-
-
-
-                            
-                            
                             var d_left = 0;
                             for (var i = 0; i < 16; i++) {                                  //column
 
@@ -116,11 +141,11 @@
                                 var temp = '<div style="';
                                 temp = temp + css_left + css_width;
                                 var input = '<input type="text" style="width:100%; border:0px; height:27px;padding-left:4px"/>';
-                                for (var j = 1; j < 26; j++)                                //row
+                                for (var j = 0; j < 26; j++)                                //row
                                 {
                                     var div = temp;
-                                    var css_top = "top:" + parseInt(22 + (parseInt(28) * j)) + "px;";
-                                    
+                                    var css_top = "top:" + parseInt(28) * j + "px;";
+
                                     if (i == 0) {
                                         div = div + css_top + '"' + 'class="column_header">' + j + '</div>';
                                     }
@@ -133,11 +158,8 @@
                             }
                         });
                     </script>
-
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>

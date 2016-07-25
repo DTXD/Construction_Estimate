@@ -13,6 +13,7 @@
         $("#menu-toggle").click(function (e) {
             e.preventDefault(e);
             $("#wrapper_content").toggleClass("toggled");
+            $("#sheet_cellheader").toggleClass("toggled_sheet");
         });
     });
 </script>
@@ -84,6 +85,10 @@
             #wrapper_content.toggled #left_menu {
                 width: 0;
             }
+
+        #sheet_cellheader.toggled_sheet {
+            width: 98.64%;
+        }
     </style>
 }
 <section class="content-header"></section>
@@ -117,7 +122,7 @@
                     <a href="#">Services</a>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="#">haha</a>
                 </li>
             </ul>
         </div>

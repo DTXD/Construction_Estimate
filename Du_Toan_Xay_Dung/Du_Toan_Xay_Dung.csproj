@@ -379,7 +379,7 @@
     <Content Include="Views\HangMuc\Index_2.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Scripts\DuToan\Estimate_Work\views\formatCells.htm" />
+    <Content Include="Views_Angularjs\formatCells.htm" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
