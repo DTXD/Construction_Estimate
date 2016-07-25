@@ -217,6 +217,7 @@
     <Compile Include="Models\HangMucViewModel.cs" />
     <Compile Include="Models\HaoPhi_DM_ViewModel.cs" />
     <Compile Include="Models\HaoPhi_User_ViewModel.cs" />
+    <Compile Include="Models\Images_CongTrinhViewModel.cs" />
     <Compile Include="Models\Submit_CongViec_User_ViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
@@ -278,6 +279,8 @@
     <Content Include="Images\CongTrinh\1.PNG" />
     <Content Include="Images\CongTrinh\2.PNG" />
     <Content Include="Images\CongTrinh\3.PNG" />
+    <Content Include="Images\CongTrinh\doremon-de-thuong-12.jpg" />
+    <Content Include="Images\CongTrinh\dutoan.png" />
     <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.csproj.FileListAbsolute.txt" />
     <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.dll" />
     <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.pdb" />

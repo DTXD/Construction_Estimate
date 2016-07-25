@@ -3,12 +3,12 @@
     ViewBag.Title = "HinhAnhCT";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    var congtrinh = ViewData["CongTrinh"] as CongTrinhViewModel;
-
-    var images = Directory.EnumerateFiles(Server.MapPath(congtrinh.Url_HinhAnh)).Select(i => congtrinh.Url_HinhAnh +"/"+ Path.GetFileName(i));
+    var congtrinh = ViewData["image_congtrinh"] as Images_CongTrinhViewModel;
+    var congtrinh1 = ViewData["congtrinh"] as CongTrinhViewModel;
+    var images = Directory.EnumerateFiles(Server.MapPath(congtrinh.Url)).Select(i => congtrinh.Url +"/"+ Path.GetFileName(i));
 }
 
-<h2>@congtrinh.TenCT</h2>
+<h2>@congtrinh1.TenCT</h2>
 
 <span>Hinh Anh</span>
 @foreach (var i in images)

@@ -585,6 +585,6 @@ C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay
 C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay_Dung\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay_Dung\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay_Dung\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay_Dung\obj\Debug\Du_Toan_Xay_Dung.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay_Dung\obj\Debug\Du_Toan_Xay_Dung.dll
 C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay_Dung\obj\Debug\Du_Toan_Xay_Dung.pdb
+C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay_Dung\obj\Debug\Du_Toan_Xay_Dung.csprojResolveAssemblyReference.cache
