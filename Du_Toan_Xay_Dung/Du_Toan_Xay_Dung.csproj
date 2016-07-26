@@ -233,7 +233,15 @@
     <Content Include="bin\EPPlus.dll" />
     <Content Include="Content\AdminLTE.css" />
     <Content Include="Content\AdminLTE.min.css" />
-    <Content Include="Content\angular\admin.js" />
+    <Content Include="Content\admin\css\buttons.bootstrap.min.css" />
+    <Content Include="Content\admin\css\dataTables.bootstrap.min.css" />
+    <Content Include="Content\admin\css\fixedHeader.bootstrap.min.css" />
+    <Content Include="Content\admin\css\prettify.min.css" />
+    <Content Include="Content\admin\css\responsive.bootstrap.min.css" />
+    <Content Include="Content\admin\css\scroller.bootstrap.min.css" />
+    <Content Include="Content\admin\css\select2.min.css" />
+    <Content Include="Content\admin\css\starrr.css" />
+    <Content Include="Content\admin\css\switchery.min.css" />
     <Content Include="Content\Bootstrap\bootstrap-progressbar-3.3.4.min.css" />
     <Content Include="Content\Bootstrap\bootstrap-select.css" />
     <Content Include="Content\Bootstrap\bootstrap-select.min.css" />
@@ -320,6 +328,49 @@
     <Content Include="Content\font-awesome\scss\_spinning.scss" />
     <Content Include="Content\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\font-awesome\scss\_variables.scss" />
+    <Content Include="Scripts\Admin\admin.js" />
+    <Content Include="Scripts\Admin\autosize.min.js" />
+    <Content Include="Scripts\Admin\bootstrap-progressbar.min.js" />
+    <Content Include="Scripts\Admin\bootstrap-wysiwyg.min.js" />
+    <Content Include="Scripts\Admin\bootstrap.min.js" />
+    <Content Include="Scripts\Admin\buttons.bootstrap.min.js" />
+    <Content Include="Scripts\Admin\buttons.flash.min.js" />
+    <Content Include="Scripts\Admin\buttons.html5.min.js" />
+    <Content Include="Scripts\Admin\buttons.print.min.js" />
+    <Content Include="Scripts\Admin\Chart.min.js" />
+    <Content Include="Scripts\Admin\custom.min.js" />
+    <Content Include="Scripts\Admin\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\Admin\dataTables.buttons.min.js" />
+    <Content Include="Scripts\Admin\dataTables.fixedHeader.min.js" />
+    <Content Include="Scripts\Admin\dataTables.keyTable.min.js" />
+    <Content Include="Scripts\Admin\dataTables.responsive.min.js" />
+    <Content Include="Scripts\Admin\dataTables.scroller.min.js" />
+    <Content Include="Scripts\Admin\daterangepicker.js" />
+    <Content Include="Scripts\Admin\fastclick.js" />
+    <Content Include="Scripts\Admin\gauge.min.js" />
+    <Content Include="Scripts\Admin\icheck.min.js" />
+    <Content Include="Scripts\Admin\jquery.autocomplete.min.js" />
+    <Content Include="Scripts\Admin\jquery.dataTables.min.js" />
+    <Content Include="Scripts\Admin\jquery.flot.pie.js" />
+    <Content Include="Scripts\Admin\jquery.flot.resize.js" />
+    <Content Include="Scripts\Admin\jquery.flot.stack.js" />
+    <Content Include="Scripts\Admin\jquery.flot.time.js" />
+    <Content Include="Scripts\Admin\jquery.hotkeys.js" />
+    <Content Include="Scripts\Admin\jquery.min.js" />
+    <Content Include="Scripts\Admin\jquery.tagsinput.js" />
+    <Content Include="Scripts\Admin\jquery.vmap.js" />
+    <Content Include="Scripts\Admin\jquery.vmap.min.js" />
+    <Content Include="Scripts\Admin\jquery.vmap.sampledata.js" />
+    <Content Include="Scripts\Admin\jszip.min.js" />
+    <Content Include="Scripts\Admin\moment.min.js" />
+    <Content Include="Scripts\Admin\nprogress.js" />
+    <Content Include="Scripts\Admin\parsley.min.js" />
+    <Content Include="Scripts\Admin\pdfmake.min.js" />
+    <Content Include="Scripts\Admin\responsive.bootstrap.js" />
+    <Content Include="Scripts\Admin\select2.full.min.js" />
+    <Content Include="Scripts\Admin\skycons.js" />
+    <Content Include="Scripts\Admin\starrr.js" />
+    <Content Include="Scripts\Admin\switchery.min.js" />
     <Content Include="Scripts\Angular\angular-route.min.js" />
     <Content Include="Scripts\Angular\angular.min.js" />
     <Content Include="Scripts\Angular\ui-bootstrap-tpls-2.0.0.min.js" />
@@ -327,10 +378,6 @@
     <Content Include="Scripts\Bootstrap\bootstrap-select.min.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
-    <Content Include="Scripts\build\css\custom.css" />
-    <Content Include="Scripts\build\css\custom.min.css" />
-    <Content Include="Scripts\build\js\custom.js" />
-    <Content Include="Scripts\build\js\custom.min.js" />
     <Content Include="Scripts\Difference\bootbox.min.js" />
     <Content Include="Scripts\Difference\canvas-to-blob.min.js" />
     <Content Include="Scripts\Difference\ChunkFive_400.font.js" />
@@ -421,9 +468,6 @@
     <Content Include="Views\Admin\themnguoidung.cshtml" />
     <Content Include="Views\Admin\uploadinhmuc.cshtml" />
     <Content Include="Views\Shared\_Admin.cshtml" />
-    <Content Include="Views\Admin\uploaddongia.cshtml">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="Views\Admin\upload.cshtml" />
     <Content Include="Views\HangMuc\ChiTietHangMuc.cshtml" />
     <Content Include="Views\Admin\danhsachdongia.cshtml" />
@@ -434,20 +478,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\admin\" />
-    <Folder Include="Scripts\Admin\js\custom\" />
-    <Folder Include="Scripts\Admin\js\datepicker\" />
-    <Folder Include="Scripts\Admin\js\flot\" />
-    <Folder Include="Scripts\Admin\js\moment\" />
-    <Folder Include="Scripts\Admin\vendors\bootstrap-progressbar\" />
-    <Folder Include="Scripts\Admin\vendors\Chart.js\" />
-    <Folder Include="Scripts\Admin\vendors\fastclick\" />
-    <Folder Include="Scripts\Admin\vendors\Flot\" />
-    <Folder Include="Scripts\Admin\vendors\gauge.js\" />
-    <Folder Include="Scripts\Admin\vendors\iCheck\" />
-    <Folder Include="Scripts\Admin\vendors\jqvmap\" />
-    <Folder Include="Scripts\Admin\vendors\nprogress\" />
-    <Folder Include="Scripts\Admin\vendors\skycons\" />
+    <Folder Include="Content\angular\" />
     <Folder Include="Upload\" />
   </ItemGroup>
   <ItemGroup>

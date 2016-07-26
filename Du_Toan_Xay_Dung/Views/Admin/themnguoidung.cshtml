@@ -2,129 +2,12 @@
     ViewBag.Title = "themnguoidung";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
-    <script>
-        $(document).ready(function () {
-            $('#themnguoidung').click(function () {
-                var formData = new FormData();
-                formData.append("email", $('#email').val());
-                formData.append("middle-name", $('#middle-name').val());
-                formData.append("name", $('#name').val());
-                formData.append("security", $('security').val());
-                formData.append("placework", $('placework').val());
-                formData.append("city", $('city').val());
-                formData.app("phone", $('phone').val());
-                if (fileGallery) {
-                    for (var i = 0; i < Image.length; i++) {
-                        formData.append("img_user", fileGallery[i]);
-                    }
-                }
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/Admin/post_themnguoidung',
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function (result) {
-                        if (result == "ok") {
-                            alert("luu thanh cong");
-
-                            setTimeout(function () {
-                                window.location.href = "/Admin/suaxoanguoidung";
-                            }, 1000);
-                        }
-                    },
-                    error: function (error) {
-                    }
-                });
-
-            });
-            var fileGallery = new Array();
-            var max_fileGallery = 12;
-            var current_fileGallery = 0;
-            $('#image').change(function () {
-                readURL(this);
-            });
-
-            $('#listImage').on('click', '#closeall_images', function () {
-                //remove each image
-                $("#listImage .img_box").each(function () {
-                    $(this).remove();
-                });
-                fileGallery = new Array();                                              //set array = zero
-                $('#listImage').css("display", "none");                                 //set div include images display:none
-                $("#image").val("");                                           //set button choose file = null (because when delete image button still keep image previous)
-                current_fileGallery = 0;
-            });
-            function readURL(input) {
-                var files = input.files;
-                for (var i = 0; i < files.length; i++) {
-                    if (current_fileGallery > max_fileGallery - 1) {
-                        return;
-                    } else {
-                        current_fileGallery++;
-                        var url = input.value;
-                        var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-                        if (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg") {
-                            if (files[i].size < 10485760) {
-                                if (files.length > 0 && files[i]) {
-                                    var reader = new FileReader();
-
-                                    //check if file is image, set div display images should show
-                                    $("#listImage").css("display", "");
-
-                                    // Closure to capture the file information.
-                                    reader.onload = (function (theFile, sqe) {
-                                        return function (e) {
-                                            fileGallery.push(theFile);
-                                            var li = $("<div class='img_box'></div>");
-                                            var newAvatar = $("<img title='" + theFile.name + "' src='" + e.target.result + "' style='width:200px;height:200px'/>");
-                                            var image_name = $("<span class=\"image_name\">" + theFile.name + "</span>");
-                                            var newIconRemove = $("<span class=\"icon-delete kv-file-zoom btn btn-xs btn-default\" id=''><i class=\"fa fa-fw fa-trash-o\" aria-hidden=\"true\"></i></span>");
-                                            li.append(newAvatar).append(image_name).append(newIconRemove);
-                                            $("#listImage").append(li);
-                                            newIconRemove.bind("click", function () {
-                                                $(this).parent().remove();
-                                                fileGallery.splice(theFile, 1);
-                                                current_fileGallery--;
-                                                if (current_fileGallery == 0) {
-                                                    $("#listImage").css("display", "none");
-                                                    $("#image").val("");
-                                                }
-                                            });
-                                        };
-                                    })(files[i], i);
-                                    reader.readAsDataURL(files[i]);
-                                }
-                            } else {
-
-                            }
-                        }
-                        else {
-                            //chon anh
-                        }
-                    }
-                }
-            }
-        });
-    </script>
     <!-- page content -->
     <div class="right_col" role="main">
         <div class="">
             <div class="page-title">
                 <div class="title_left">
                     <h3>Thêm người dùng</h3>
-                </div>
-                <div class="title_right">
-                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Tìm kiếm...">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Thực hiện!</button>
-                            </span>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -231,7 +114,7 @@
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                         <button type="reset" class="btn btn-primary">Hủy</button>
-                                        <button type="button" class="btn btn-success" name="Themnguoidung" id="themnguoidung">Lưu</button>
+                                        <button type="submit" class="btn btn-success" name="Themnguoidung" id="themnguoidung">Lưu</button>
                                     </div>
                                 </div>
                             </form>

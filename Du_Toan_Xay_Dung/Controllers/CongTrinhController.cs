@@ -167,29 +167,6 @@ namespace Du_Toan_Xay_Dung.Controllers
         }
 
 
-        /*[PageLogin]
-        [HttpPost]
-        public ActionResult Post_UpdateCongTrinh(FormCollection form)
-        {
-            string ID = form["Ma"];
-            if (ID != null)
-            {
-                var congtrinh = _db.CongTrinhs.Single(i => i.MaCT.Equals(ID));
-                if (congtrinh != null)
-                {
-                    congtrinh.TenCT = form["TenCT"];
-                    congtrinh.MoTa = form["MoTa"];
-                    congtrinh.Gia = Convert.ToDecimal(form["Gia"]);
-
-                    //hinh anh
-
-                    _db.SubmitChanges();
-                    return RedirectToAction("Index", "CongTrinh");
-                }
-            }
-            return View();
-        }*/
-
         [PageLogin]
         public ActionResult UpdateHangMuc(string ID)
         {
@@ -200,7 +177,6 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
             return View();
         }
-        [PageLogin]
         [HttpPost]
         public ActionResult Post_UpdateHangMuc(FormCollection form)
         {
@@ -214,12 +190,11 @@ namespace Du_Toan_Xay_Dung.Controllers
                     hangmuc.TenHM = form["txttenhm"];
                     hangmuc.MoTa = form["txtmota"];
                     hangmuc.Gia = Convert.ToDecimal(form["txtgia"]);
-
+                    UpdateModel(hangmuc);
                     _db.SubmitChanges();
                 }
             }
-            ViewData["HangMuc_Update"] = _db.HangMucs.Where(i => i.MaHM.Equals(ID)).Select(i => new HangMucViewModel(i)).FirstOrDefault();
-            return View();
+            return RedirectToAction("ChiTiet_CongTrinh");
         }
 
         [PageLogin]
