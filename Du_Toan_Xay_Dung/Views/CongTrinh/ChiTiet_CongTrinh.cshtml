@@ -19,7 +19,6 @@
     </script>
 }
 
-
 <section class="content-header">
     <select class="selectpicker" name="combobox_congtrinh" id="combobox_congtrinh" data-width="200px">
         @foreach(var item in CongTrinhs)
@@ -82,9 +81,11 @@
                                 <td>
                                     <input type="hidden" value="@item.MaHM" />
                                     <button class="btn btn-danger btn-flat btn-xs">
-                                        <i class="fa fa-edit"></i> Xóa
-                                    </button>
-                                </td>
+                                        <i class="fa fa-edit">
+                                        @Html.ActionLink("Xóa", "Delete", "CongTrinh", new { @MaHM = @item.MaHM }, new { @onclick = "return deleteconfirm()" })
+                                     </i>
+                                </button>
+                            </td>
                             </tr>
                         }
                     </tbody>
@@ -92,6 +93,15 @@
             </div><!-- /.box-body -->
         </div>
     </div>
+    <script>
+    function deleteconfirm()
+    {
+    if (confirm("Bạn có chắc chắn muốn xóa hạng mục này"))
+    return true;
+    else
+    return false;
+    }
+    </script>
 
 
 </section>

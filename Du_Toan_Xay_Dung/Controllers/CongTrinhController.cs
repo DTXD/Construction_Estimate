@@ -171,30 +171,46 @@ namespace Du_Toan_Xay_Dung.Controllers
         public ActionResult UpdateHangMuc(string ID)
         {
 
-            if (ID != null)
-            {
-                ViewData["HangMuc_Update"] = _db.HangMucs.Where(i => i.MaHM.Equals(ID)).Select(i => new HangMucViewModel(i)).FirstOrDefault();
-            }
+            ViewData["HangMuc_Update"] = _db.HangMucs.Where(i => i.MaHM.Equals(ID)).Select(i => new HangMucViewModel(i)).FirstOrDefault();
             return View();
         }
         [HttpPost]
         public ActionResult Post_UpdateHangMuc(FormCollection form)
         {
             string ID = form["txtma"];
-            if (ID != null)
+            var hangmuc = _db.HangMucs.Single(i => i.MaHM.Equals(ID));
+            hangmuc.MaCT = form["txtmact"];
+            hangmuc.TenHM = form["txttenhm"];
+            hangmuc.MoTa = form["txtmota"];
+            hangmuc.Gia = Convert.ToDecimal(form["txtgia"]);
+            UpdateModel(hangmuc);
+           _db.SubmitChanges();
+            return RedirectToAction("ChiTiet_CongTrinh"+"/"+hangmuc.MaCT);
+        }
+        public ActionResult Delete(string MaHM)
+        {
+
+            if (SessionHandler.User != null)
             {
-                var hangmuc = _db.HangMucs.Single(i => i.MaHM.Equals(ID));
-                if (hangmuc != null)
-                {
-                    hangmuc.MaCT = form["txtmact"];
-                    hangmuc.TenHM = form["txttenhm"];
-                    hangmuc.MoTa = form["txtmota"];
-                    hangmuc.Gia = Convert.ToDecimal(form["txtgia"]);
-                    UpdateModel(hangmuc);
-                    _db.SubmitChanges();
-                }
+                var user = SessionHandler.User;
             }
-            return RedirectToAction("ChiTiet_CongTrinh");
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            HangMuc hangmuc = new HangMuc();
+            hangmuc = _db.HangMucs.Where(i => i.MaHM.Equals(MaHM)).FirstOrDefault();
+            var congtrinh = _db.HangMucs.Where(i => i.MaCT.Equals(hangmuc.MaCT)).ToList();
+            _db.HangMucs.DeleteOnSubmit(hangmuc);
+            _db.SubmitChanges();
+            if (congtrinh.Count == 1)
+            {
+                return RedirectToAction("index");
+            }
+            else
+            {
+                return RedirectToAction("ChiTiet_CongTrinh" + "/" + hangmuc.MaCT);
+            }
         }
 
         [PageLogin]
