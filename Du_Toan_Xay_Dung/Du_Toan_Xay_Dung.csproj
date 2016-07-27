@@ -395,6 +395,7 @@
     <Content Include="Scripts\Dropbox_API\dropins.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\App_work.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\Controllers\formatCellsCtrl.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\JQuery\sheet_mainwork.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\services\dataService.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.angular.min.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.grid.filter.min.js" />

@@ -84,6 +84,14 @@ namespace Du_Toan_Xay_Dung.Controllers
             return View();
         }
 
+
+        public JsonResult GetNormWorks()
+        {
+            var list_normwork = _db.DinhMucs.Select(i => new DinhMucViewModel(i)).ToList();
+
+            return Json(list_normwork);
+        }
+
         public JsonResult GetDSDonGia(string search)
         {
             var list = _db.DonGias.Select(i => new DonGiaViewModel(i));

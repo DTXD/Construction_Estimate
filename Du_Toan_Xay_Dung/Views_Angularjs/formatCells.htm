@@ -1,7 +1,9 @@
-﻿
+﻿<!--JQuery sheet-->
+<script src="../Scripts/DuToan/Estimate_Work/JQuery/sheet_mainwork.js"></script>
+
 <div>
     <div class="copy">
-        <h3>haha</h3>
+        <h3>hoho</h3>
         <p>
             FlexSheet also allows user to process non-supported functions met in cell expressions by the <b>unknownFuntion</b> event.  This event will pass the 'UnKnownFunctionEventArgs' to customer.<br />
             This 'UnKnownFunctionEventArgs' provides the function name and the evaluated values list of the parameters. <br />
@@ -52,6 +54,14 @@
             height: 50px;
             max-height: inherit;
         }
+        .popupsearch {
+            width: 700px;
+            height: 400px;
+            background-color: #F5F4EB;
+            -webkit-box-shadow: 1px 1px 3px 4px #E4DBBF; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+            -moz-box-shadow: 1px 1px 3px 4px #E4DBBF; /* Firefox 3.5 - 3.6 */
+            box-shadow: 1px 1px 3px 4px #E4DBBF; /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+        }
     </style>
 
     <div class="col-sm-12" style="height:800px">
@@ -80,7 +90,6 @@
             <!--Center-->
             <div style="position: relative; width: 100%; height: 100%; max-height: inherit;">
                 <div style="position: absolute; top: 0px; width: 100%; height: 70%; background-color: white; overflow-y:auto" id="sheet_cellcenter">
-
                     <script>
                         $(document).ready(function () {
                             var cell_center = $("#sheet_cellcenter");
@@ -120,37 +129,41 @@
                             cell_center.append(column_ttmtc);
                             */
 
-                            var d_left = 0;
-                            for (var i = 0; i < 16; i++) {                                  //column
+                            
+                            for (var i = 0; i < 25; i++) {                                  //column
 
-                                var d_width = 6;
-
-                                if (i >= 0 && i <= 1) {
-                                    d_width = 3;
-                                }
-                                if (i == 3) {
-                                    d_width = 21;
-                                }
-                                if (i >= 5 && i <= 9) {
-                                    d_width = 5;
-                                }
-
-                                var css_width = "width:" + d_width + "%;";
-                                var css_left = "left:" + d_left + "%;";
-                                d_left = d_left + d_width;
+                                var d_left = 0;
+                                var css_top = "top:" + parseInt(28 * i) + "px;";
                                 var temp = '<div style="';
-                                temp = temp + css_left + css_width;
-                                var input = '<input type="text" style="width:100%; border:0px; height:27px;padding-left:4px"/>';
-                                for (var j = 0; j < 26; j++)                                //row
-                                {
-                                    var div = temp;
-                                    var css_top = "top:" + parseInt(28) * j + "px;";
+                                var input = '<input type="text" style="width:100%; border:0px; height:27px;padding-left:4px"';
 
-                                    if (i == 0) {
-                                        div = div + css_top + '"' + 'class="column_header">' + j + '</div>';
+                                for (var j = 0; j < 16; j++)                                //row
+                                {
+                                    var d_width = 6;
+                                    if (j >= 0 && j <= 1) {
+                                        d_width = 3;
+                                    }
+                                    if (j == 3) {
+                                        d_width = 21;
+                                    }
+                                    if (j >= 5 && j <= 9) {
+                                        d_width = 5;
+                                    }
+                                    var css_width = "width:" + d_width + "%;";
+                                    var css_left = "left:" + d_left + "%;";
+                                    d_left = d_left + d_width;
+                                    var div = temp;
+                                    div = div + css_left + css_top + css_width;
+
+                                    if (j == 0) {
+                                        div = div + '"' + 'class="column_header">' + i + '</div>';
+                                    }
+                                    else if (j == 3) {
+                                        div = div + '"' + 'class="cell">' + input + 'name="txt_namework"' + '/>' + '</div>';
                                     }
                                     else {
-                                        div = div + css_top + '"' + 'class="cell">' + input + '</div>';
+                                        div = div + '"' + 'class="cell">' + input + '</div>';
+
                                     }
                                     cell_center.append(div);
 
@@ -160,6 +173,36 @@
                     </script>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div id="popupsearch" style="display:none"> 
+    <div class="form-group" style="margin-top:10px">
+        <div class="col-sm-12">
+            <input class="form-control" id="txt_search" name="txt_search" placeholder="Nhập công việc cần tìm kiếm..." />
+        </div>
+        <div class="col-sm-12" style="margin-top:10px;">
+            <div class="box-body table-responsive no-padding" style="height:300px; overflow-y:auto">
+                <table class="table table-hover">
+                    <tbody id="table_search_normwork">
+                        <tr>
+                            <th></th>
+                            <th>Mã Hiệu</th>
+                            <th>Công Tác</th>
+                            <th>Đơn Vị</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div>
+        <div class="col-sm-12" style="margin-top:5px">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3">
+                <button class="btn btn-block btn-primary" id="btn_search_normwork">Chọn</button>
+            </div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3"></div>
         </div>
     </div>
 </div>
