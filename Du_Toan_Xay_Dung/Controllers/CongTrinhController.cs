@@ -82,8 +82,8 @@ namespace Du_Toan_Xay_Dung.Controllers
         [HttpPost]
         public JsonResult post_updatecongtrinh(CongTrinhViewModel obj)
         {
-            try
-            {
+            //try
+            //{
                 int int_ma = Convert.ToInt32(obj.MaCT.Substring(2, 1));
                 var congtrinh = _db.CongTrinhs.First(m => m.MaCT == obj.MaCT);
                 var image = _db.Images_CongTrinhs.First(i => i.MaCT == obj.MaCT);
@@ -123,7 +123,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 congtrinh.MoTa = obj.MoTa;
                 congtrinh.DiaChi = obj.DiaChi;
                 congtrinh.Gia = obj.Gia;
-                UpdateModel(congtrinh);
+                //UpdateModel(congtrinh);
                 if (obj.img_congtrinh != null)
                 {
                     foreach (var file in obj.img_congtrinh)
@@ -132,18 +132,30 @@ namespace Du_Toan_Xay_Dung.Controllers
                         {
                             //cap nhat image vao database
                             image.Url = "~/Images/CongTrinh/" + file.FileName;
-                            UpdateModel(image);
+                            //UpdateModel(image);
                         }
                     }
                 }
+            if(obj.img_old!=null)
+            {
+                foreach(var file in obj.img_old)
+                {
+                    if(file != null && file.ContentLength>0)
+                    {
+                        //cap nhat image vao database
+                        image.Url = "~/Images/CongTrinh/" + file.FileName;
+                        //UpdateModel(image);
+                    }
+                }
+            }
                 _db.SubmitChanges();
 
                 return Json("ok");
-            }
-            catch (Exception)
-            {
-                return Json("error");
-            }
+            //}
+            //catch (Exception)
+            //{
+                //return Json("error");
+            //}
 
             //HttpPostedFileBase file;
             //if (Request.Files.AllKeys.Any())

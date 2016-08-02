@@ -289,6 +289,8 @@
     <Content Include="Images\CongTrinh\3.PNG" />
     <Content Include="Images\CongTrinh\doremon-de-thuong-12.jpg" />
     <Content Include="Images\CongTrinh\dutoan.png" />
+    <Content Include="Images\CongTrinh\hinh-nen-doraemon-de-thuong-3.jpg" />
+    <Content Include="Images\CongTrinh\hinh-nen-doraemon-de-thuong-4.jpg" />
     <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.csproj.FileListAbsolute.txt" />
     <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.dll" />
     <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.pdb" />

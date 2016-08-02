@@ -1,7 +1,7 @@
 ﻿@using Du_Toan_Xay_Dung.Handlers
 @using Du_Toan_Xay_Dung.Models
 @{
-    ViewBag.Title = "themcongtrinh";
+    ViewBag.Title = "suacongtrinh";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var congtrinh = ViewData["CongTrinh_Update"] as CongTrinhViewModel;
     var hinhanh = ViewData["image_congtrinh"] as List<Images_CongTrinhViewModel>;    
@@ -50,7 +50,11 @@
                     formData.append("img_congtrinh", fileGallery[i]);
                 }
             }
-
+            if (Arr_image) {
+                for (var i = 0; i < Arr_image.length; i++) {
+                    formData.append("img_old", Arr_image[i]);
+                }
+            }
             $.ajax({
                 type: 'POST',
                 url: '/congtrinh/post_updatecongtrinh',
@@ -73,7 +77,6 @@
                 error: function (error) {
                 }
             });
-
         });
         var fileGallery = new Array();
         var max_fileGallery = 12;
@@ -82,11 +85,27 @@
             readURL(this);
         });
 
+
+        var Arr_image = new Array();
+        $("#listImage .img_box").each(function () {
+            var image = $(this).find("img");
+            var imgurl = image.attr("src");
+            var imgname = image.attr("title");
+
+            var specify_image = {
+                url: imgurl,
+                filename: imgname,
+            };
+            Arr_image.push(specify_image);
+        });
+       
         $('#listImage').on('click', '#closeall_images', function () {
             //remove each image
             $("#listImage .img_box").each(function () {
                 $(this).remove();
             });
+
+
             fileGallery = new Array();                                              //set array = zero
             $('#listImage').css("display", "none");                                 //set div include images display:none
             $("#gallery_upload").val("");                                           //set button choose file = null (because when delete image button still keep image previous)
@@ -142,8 +161,28 @@
                 }
             }
         }
+        $("#listImage").on('click', '.btn-default', function () {
+            $("#listImage .img_box").each(function () {
+                var image = $(this).find("img");
+                var imgurl = image.attr("src");
+                var imgname = image.attr("title");
+            })
+            var hoi = confirm("Bạn có chắc chắn muốn xóa hình ảnh"+imgname);
+            if (hoi == true) {
+                $(this).parent().remove();
+                    var myObject;
+                    myObject = new ActiveXObject("Scripting.FileSystemObject");
+                    myObject.DeleteFile("~/Images/CongTrinh/" + imgname);
+                }
+            else {
+                return;
+            }
+        });
     });
 </script>
+<script>
+    
+</script> 
 <script>
     $(document).ready(function () {
         $("#btn_savetoDropbox").click(function () {
@@ -222,17 +261,17 @@
 </style>
 
 <section class="content-header">
-    <h1>Thêm Công Trình</h1>
+    <h1>Sửa Công Trình</h1>
     <ol class="breadcrumb">
         <li><a href="/CongTrinh/Index"><i class="fa fa-dashboard"></i>Công Trình</a></li>
-        <li class="active">Thêm Công Trình</li>
+        <li class="active">Sửa Công Trình</li>
     </ol>
 </section>
 
 <section class="content">
     <div class="container body-content">
         <div class="row">
-            <form class="form-horizontal" role="form" method="post">
+            <form class="form-horizontal" role="form" method="post" onload="i">
                 <input type="text" value="@congtrinh.MaCT" style="display:none" id="MaCT" name="MaCT"/>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="">Tên công trình:</label>
@@ -251,30 +290,34 @@
                         {
                             description = congtrinh.MoTa;
                         }
-                    }
-                       
-                    <label class="control-label col-sm-2" for="">Mô tả:</label>
-                    <div class="col-sm-10">
-                        <input type="text" value="@congtrinh.MoTa"  class="form-control" rows="3" id="MoTa" name="MoTa"></input>
-                    </div>
+                    }                     
+                <label class="control-label col-sm-2" for="">Mô tả:</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" rows="3" id="MoTa" name="MoTa"  placeholder="Công trình như thế nào ...">@congtrinh.MoTa</textarea>
                 </div>
+                    </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="">Địa chỉ:</label>
                     <div class="col-sm-10">
                         <input type="text" value="@congtrinh.DiaChi" class="form-control" id="DiaChi" name="DiaChi" placeholder="Địa chỉ">
                     </div>
-                </div>
+                </div>                    
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="Url_HinhAnh">Hình Ảnh:</label>
-                    @foreach (var k in hinhanh)
-                    {
-                        <img src="~/Images/CongTrinh/@k.Url.Substring(19, @k.Url.Length-19)" style="height:100px;width:100px" />
-                    }
-                </div>
-                <div class="form-group" style="padding-left:200px">
                     <div class="col-sm-10">
-                        <div id="listImage" class="listImage col-sm-12" style="display:none">
-                            <span class="closeall_images" id="closeall_images"><i class="fa fa-fw fa-remove"></i></span>
+                        <div id="listImage" class="listImage col-sm-12">     
+                        <span class="closeall_images" id="closeall_images"><i class="fa fa-fw fa-remove"></i></span>
+                            @foreach (var k in hinhanh)
+                            { 
+                            <div class="img_box">                    
+                                <img title="hinh-nen-doraemon-de-thuong-7.jpg" src="~/Images/CongTrinh/@k.Url.Substring(19, @k.Url.Length-19)" style="width:200px;height:200px">
+                                <span class="image_name">@k.Url.Substring(19, @k.Url.Length - 19)</span>
+                                <span class="icon-delete kv-file-zoom btn btn-xs btn-default">
+                                <i class="fa fa-fw fa-trash-o" aria-hidden="true">  
+                                </i>
+                                </span>
+                            </div>
+                            }
                         </div>
                         <div class="button_choosefile col-sm-2">
                             <label for="gallery_upload" class="custom-file-upload" id="gallery_upload_choose">

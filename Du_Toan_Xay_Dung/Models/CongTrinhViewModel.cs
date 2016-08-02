@@ -27,6 +27,7 @@ namespace Du_Toan_Xay_Dung.Models
         public string DiaChi { get; set; }
         public decimal Gia { get; set; }
         public List<HttpPostedFileBase> img_congtrinh { get; set; }
+        public List<HttpPostedFileBase> img_old { get; set; }
     }
 
     /*
