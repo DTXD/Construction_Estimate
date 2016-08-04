@@ -82,8 +82,8 @@ namespace Du_Toan_Xay_Dung.Controllers
         [HttpPost]
         public JsonResult post_updatecongtrinh(CongTrinhViewModel obj)
         {
-            //try
-            //{
+            try
+            {
                 int int_ma = Convert.ToInt32(obj.MaCT.Substring(2, 1));
                 var congtrinh = _db.CongTrinhs.First(m => m.MaCT == obj.MaCT);
                 var image = _db.Images_CongTrinhs.First(i => i.MaCT == obj.MaCT);
@@ -136,47 +136,52 @@ namespace Du_Toan_Xay_Dung.Controllers
                         }
                     }
                 }
-            if(obj.img_old!=null)
-            {
-                foreach(var file in obj.img_old)
+                if (obj.img_old != null)
                 {
-                    if(file != null && file.ContentLength>0)
+                    foreach (var file in obj.img_old)
                     {
-                        //cap nhat image vao database
-                        image.Url = "~/Images/CongTrinh/" + file.FileName;
-                        //UpdateModel(image);
+                        if (file != null && file.ContentLength > 0)
+                        {
+                            //cap nhat image vao database
+                            image.Url = "~/Images/CongTrinh/" + file.FileName;
+                            //UpdateModel(image);
+                        }
                     }
                 }
-            }
                 _db.SubmitChanges();
 
                 return Json("ok");
-            //}
-            //catch (Exception)
-            //{
-                //return Json("error");
-            //}
+                }
+                catch (Exception)
+                {
+                return Json("error");
+                }
 
-            //HttpPostedFileBase file;
-            //if (Request.Files.AllKeys.Any())
-            //{
-            //    string url_location = Server.MapPath("~/Images/CongTrinh/CT" + index);
-            //    if(!Directory.Exists(url_location))
-            //    {
-            //        Directory.CreateDirectory(url_location);
-            //    }
-            //    for (var i = 0; i < Request.Files.Count; i++)
-            //    {
-            //        var fileData = Request.Files[i];//["Avatar"];
-            //        if (fileData != null && fileData.ContentLength > 0)
-            //        {
-            //            string fileLocation = Server.MapPath("~/Images/CongTrinh/CT" + index + "/") + fileData.FileName;
-            //            fileData.SaveAs(fileLocation);
-            //        }
-            //    }
-            //}
+                //HttpPostedFileBase file;
+                //if (Request.Files.AllKeys.Any())
+                //{
+                //    string url_location = Server.MapPath("~/Images/CongTrinh/CT" + index);
+                //    if(!Directory.Exists(url_location))
+                //    {
+                //        Directory.CreateDirectory(url_location);
+                //    }
+                //    for (var i = 0; i < Request.Files.Count; i++)
+                //    {
+                //        var fileData = Request.Files[i];//["Avatar"];
+                //        if (fileData != null && fileData.ContentLength > 0)
+                //        {
+                //            string fileLocation = Server.MapPath("~/Images/CongTrinh/CT" + index + "/") + fileData.FileName;
+                //            fileData.SaveAs(fileLocation);
+                //        }
+                //    }
+                //}
 
-        }
+            }
+        
+    
+
+
+        
 
 
         [PageLogin]
@@ -186,7 +191,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             ViewData["HangMuc_Update"] = _db.HangMucs.Where(i => i.MaHM.Equals(ID)).Select(i => new HangMucViewModel(i)).FirstOrDefault();
             return View();
         }
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult Post_UpdateHangMuc(FormCollection form)
         {
             string ID = form["txtma"];
@@ -198,6 +203,24 @@ namespace Du_Toan_Xay_Dung.Controllers
             UpdateModel(hangmuc);
            _db.SubmitChanges();
             return RedirectToAction("ChiTiet_CongTrinh"+"/"+hangmuc.MaCT);
+        }*/
+        [PageLogin]
+        [HttpPost]
+        public JsonResult updatehangmuc(HangMucViewModel obj)
+        {
+            try
+            {
+                var hangmuc = _db.HangMucs.Where(i => i.MaHM.Equals(obj.MaHM)).FirstOrDefault();
+                hangmuc.Gia = obj.Gia;
+                hangmuc.MoTa = obj.MoTa;
+                hangmuc.TenHM = obj.TenHM;
+                _db.SubmitChanges();
+                return Json("ok");
+            }
+            catch(Exception)
+            {
+                return Json("error");
+            }
         }
         public ActionResult Delete(string MaHM)
         {
@@ -326,11 +349,34 @@ namespace Du_Toan_Xay_Dung.Controllers
             ViewData["MaCT_ThemHangMuc"] = id;
             return View();
         }
-
-
         [PageLogin]
         [HttpPost]
-        public ActionResult Post_ThemHangMuc(HangMucViewModel obj)
+        public JsonResult post_themhangmuc(HangMucViewModel obj)
+        {
+            try
+            {
+                    string ID = obj.MaCT;
+                    //lay dong cuoi cung bang hangmuc
+                    var idhm_last = _db.HangMucs.OrderByDescending(i => i.Id).Select(i => i.Id).FirstOrDefault();
+                    idhm_last = idhm_last + 1;
+                    HangMuc hm = new HangMuc();
+                    hm.Id = idhm_last;
+                    hm.MaHM = "HM" + idhm_last.ToString();
+                    hm.MaCT = ID;
+                    hm.TenHM = obj.TenHM;
+                    hm.MoTa = obj.MoTa;
+                    hm.Gia = 0;
+                    _db.HangMucs.InsertOnSubmit(hm);
+                    _db.SubmitChanges();
+                
+                return Json("ok");
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
+        }
+        /*public ActionResult Post_ThemHangMuc(HangMucViewModel obj)
         {
             string ID = obj.MaCT;
             if (ID != null)
@@ -352,7 +398,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
 
             return RedirectToAction("ChiTiet_CongTrinh", "CongTrinh", new { Id = ID });
-        }
+        }*/
 
         public ActionResult ExportToExcel(string ID)
         {

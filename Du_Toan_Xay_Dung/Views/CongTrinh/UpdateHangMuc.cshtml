@@ -3,45 +3,73 @@
 @{
     ViewBag.Title = "UpdateHangMuc";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var hangmuc = ViewData["HangMuc_Update"] as HangMucViewModel;
+    var hangmuc1 = ViewData["HangMuc_Update"] as HangMucViewModel;
 }
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 <section class="content-header">
     <h1>Sửa Hạng Mục</h1>
     <ol class="breadcrumb">
         <li><a href="/CongTrinh/Index"><i class="fa fa-dashboard"></i>Công Trình</a></li>
-        <li><a href="/CongTrinh/ChiTiet_CongTrinh/?ID=@hangmuc.MaCT"><i class="fa fa-dashboard"></i>Hạng Mục</a></li>
+        <li><a href="/CongTrinh/ChiTiet_CongTrinh/?ID=@hangmuc1.MaCT"><i class="fa fa-dashboard"></i>Hạng Mục</a></li>
         <li class="active">Sửa Hạng Mục</li>
     </ol>
 </section>
-
-<section class="content">
+<script>
+    angular.module('postApp', [])
+     .controller('postController', ['$scope','$http', function ($scope,$http) {
+         $scope.master = {};
+         $scope.submitForm = function (hangmuc) {
+             $scope.master = angular.copy(hangmuc);
+             $http({
+                 method: 'POST',
+                 url: '/CongTrinh/updatehangmuc',
+                 data: JSON.stringify($scope.master),
+                 headers: { 'Content-Type': 'application/json' }
+             })
+                 .success(function (result) {
+                     if (result=="error") {
+                         // Showing errors.
+                         //$scope.errorEmail = data.errors.email;
+                         alert("Xảy ra lỗi");
+                         return;
+                     } else {
+                         //$scope.message = data.message;
+                         alert("Lưu thành công");
+                         window.location.href = "/CongTrinh/ChiTiet_CongTrinh/@hangmuc1.MaCT";
+                     }
+                 });
+         };
+        
+     }]);
+</script>
+<section class="content" ng-app="postApp" ng-controller="postController"
+         ng-init="hangmuc.MaHM='@hangmuc1.MaHM';hangmuc.MaCT='@hangmuc1.MaCT';hangmuc.TenHM='@hangmuc1.TenHM';hangmuc.MoTa='@hangmuc1.MoTa';hangmuc.Gia='@hangmuc1.Gia'">
     <div class="container body-content">
         <div class="row">
-            <form class="form-horizontal" method="post" action="/CongTrinh/Post_UpdateHangMuc">
-                <input type="hidden" value="@hangmuc.MaHM" id="txtma" name="txtma" />
-                <input type="hidden" value="@hangmuc.MaCT" id="txtmact" name="txtmact" />
+            <form class="form-horizontal" enctype="multipart/form-data" method="post">
+                <input type="hidden" id="txtma" name="txtma" ng-model="hangmuc.MaHM" />
+                <input type="hidden" id="txtmact" name="txtmact" ng-model="hangmuc.MaCT" />
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="">Tên hạng mục:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="txttenhm" name="txttenhm" placeholder="Tên công trình" value="@hangmuc.TenHM">
+                        <input type="text" class="form-control" id="txttenhm" name="txttenhm" ng-model="hangmuc.TenHM" placeholder="Tên công trình">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="">Mô tả:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="txtmota" name="txtmota" placeholder="Mô tả" value="@hangmuc.MoTa">
+                        <input type="text" class="form-control" ng-model="hangmuc.MoTa" id="txtmota" name="txtmota" placeholder="Mô tả" >
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="">Giá:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="txtgia" name="txtgia" placeholder="Giá" value="@hangmuc.Gia">
+                        <input type="text" class="form-control" id="txtgia" ng-model="hangmuc.Gia" name="txtgia" placeholder="Giá" >
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="reset" id="btn_submit" class="btn btn-default">Hủy</button>
-                        <button type="submit" id="btn_submit" class="btn btn-default" name="UpdateHangMuc">Lưu</button>
+                    <div class="col-sm-offset-4 col-sm-4">
+                        <input type="submit" class="btn btn-block btn-primary btn-lg" ng-click="submitForm(hangmuc)" id="btn_submit" value="Lưu" />
                     </div>
                 </div>
             </form>
