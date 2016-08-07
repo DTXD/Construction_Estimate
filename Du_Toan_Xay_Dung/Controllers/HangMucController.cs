@@ -117,31 +117,40 @@ namespace Du_Toan_Xay_Dung.Controllers
         [HttpPost]
         public JsonResult getAllPrice(string idDinhMuc)
         {
-            decimal totalGiaVL = 0;
-            decimal totalGiaNC = 0;
-            decimal totalGiaMay = 0;
+            idDinhMuc = idDinhMuc.Substring(0,idDinhMuc.Length-1);
+            var Arr_id = idDinhMuc.Split(',');
+            List<All_PriceMaterialViewModel> list = new List<All_PriceMaterialViewModel>();
 
-            var giaVL = _db.ChiTiet_DinhMucs
-                .Where(i => i.MaHieuCV_DM.Equals(idDinhMuc) && i.MaVL_NC_MTC.Contains("V")).ToList();
-            foreach (var item in giaVL)
+            foreach(var id in Arr_id)
             {
-                var _temGia = _db.DonGias.Where(i => i.MaVL_NC_MTC.Equals(item.MaVL_NC_MTC)).FirstOrDefault();
-                totalGiaVL += _temGia.Gia * item.SoLuong;
-            }
-            var giaNC = _db.ChiTiet_DinhMucs.Where(i => i.MaHieuCV_DM.Equals(idDinhMuc) && i.MaVL_NC_MTC.Contains("N")).ToList();
-            foreach (var item in giaNC)
-            {
-                var _temGia = _db.DonGias.Where(i => i.MaVL_NC_MTC.Equals(item.MaVL_NC_MTC)).FirstOrDefault();
-                totalGiaNC += _temGia.Gia * item.SoLuong;
-            }
+                decimal totalGiaVL = 0;
+                decimal totalGiaNC = 0;
+                decimal totalGiaMay = 0;
 
-            var giaMay = _db.ChiTiet_DinhMucs.Where(i => i.MaHieuCV_DM.Equals(idDinhMuc) && i.MaVL_NC_MTC.Contains("M")).ToList();
-            foreach (var item in giaMay)
-            {
-                var _temGia = _db.DonGias.Where(i => i.MaVL_NC_MTC.Equals(item.MaVL_NC_MTC)).FirstOrDefault();
-                totalGiaMay += _temGia.Gia * item.SoLuong;
-            }
+                var giaVL = _db.ChiTiet_DinhMucs
+                    .Where(i => i.MaHieuCV_DM.Equals(id) && i.MaVL_NC_MTC.Contains("V")).ToList();
+                foreach (var item in giaVL)
+                {
+                    var _temGia = _db.DonGias.Where(i => i.MaVL_NC_MTC.Equals(item.MaVL_NC_MTC)).FirstOrDefault();
+                    totalGiaVL += _temGia.Gia * item.SoLuong;
+                }
+                var giaNC = _db.ChiTiet_DinhMucs.Where(i => i.MaHieuCV_DM.Equals(id) && i.MaVL_NC_MTC.Contains("N")).ToList();
+                foreach (var item in giaNC)
+                {
+                    var _temGia = _db.DonGias.Where(i => i.MaVL_NC_MTC.Equals(item.MaVL_NC_MTC)).FirstOrDefault();
+                    totalGiaNC += _temGia.Gia * item.SoLuong;
+                }
 
+                var giaMay = _db.ChiTiet_DinhMucs.Where(i => i.MaHieuCV_DM.Equals(id) && i.MaVL_NC_MTC.Contains("M")).ToList();
+                foreach (var item in giaMay)
+                {
+                    var _temGia = _db.DonGias.Where(i => i.MaVL_NC_MTC.Equals(item.MaVL_NC_MTC)).FirstOrDefault();
+                    totalGiaMay += _temGia.Gia * item.SoLuong;
+                }
+                list.Add(new All_PriceMaterialViewModel(id,totalGiaVL,totalGiaNC,totalGiaMay));
+
+            }
+            /*
             var list_haophi = _db.ChiTiet_DinhMucs.Where(i => i.MaHieuCV_DM.Equals(idDinhMuc)).Select(i => new HaoPhi_DM_ViewModel()
             {
                 MaHP = i.MaVL_NC_MTC,
@@ -151,8 +160,8 @@ namespace Du_Toan_Xay_Dung.Controllers
                 SoLuong_DM = i.SoLuong,
                 Gia = i.DonGia.Gia
             }).ToList();
-
-            return Json(new { totalGiaVL = totalGiaVL, totalGiaNC = totalGiaNC, totalGiaMay = totalGiaMay, idDinhMuc, list_haophi });
+            */
+            return Json(list);
         }
         public ActionResult DonGiaChiTiet(string ID)
         {

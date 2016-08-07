@@ -205,6 +205,7 @@
     <Compile Include="Models\ChiTiet_DinhMucViewModel.cs" />
     <Compile Include="Models\DonGiaChiTiet_DM_ViewModel.cs" />
     <Compile Include="Models\CongTrinhViewModel.cs" />
+    <Compile Include="Models\All_PriceMaterialViewModel.cs" />
     <Compile Include="Models\Export_CongViec_ViewModel.cs" />
     <Compile Include="Models\CongViec_User_ViewModel.cs" />
     <Compile Include="Models\DataDTXD.designer.cs">
@@ -373,7 +374,7 @@
     <Content Include="Scripts\Admin\skycons.js" />
     <Content Include="Scripts\Admin\starrr.js" />
     <Content Include="Scripts\Admin\switchery.min.js" />
-    <Content Include="Scripts\Angular\angular-route.min.js" />
+    <Content Include="Scripts\Angular\angular-ui-router.min.js" />
     <Content Include="Scripts\Angular\angular.min.js" />
     <Content Include="Scripts\Angular\ui-bootstrap-tpls-2.0.0.min.js" />
     <Content Include="Scripts\Bootstrap\bootstrap-select.js" />
@@ -396,7 +397,7 @@
     <None Include="Scripts\Difference\_references.js" />
     <Content Include="Scripts\Dropbox_API\dropins.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\App_work.js" />
-    <Content Include="Scripts\DuToan\Estimate_Work\Controllers\formatCellsCtrl.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\Controllers\EstimateCtrl.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\JQuery\sheet_mainwork.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\services\dataService.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.angular.min.js" />
@@ -432,7 +433,10 @@
     <Content Include="Views\HangMuc\Index_2.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views_Angularjs\formatCells.htm" />
+    <Content Include="Views_Angularjs\Estimate.htm" />
+    <Content Include="Views_Angularjs\General.htm" />
+    <Content Include="Views_Angularjs\Specification.htm" />
+    <Content Include="Views_Angularjs\Material.htm" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

@@ -1,10 +1,36 @@
-﻿var app = angular.module('app_work', ['ui.bootstrap', 'ngRoute']);
+﻿var app = angular.module("app_work", ["ui.router", "ui.bootstrap"]);
 
-app.config(['$routeProvider', function ($routeProvider) {
+app.config(function ($stateProvider, $urlRouterProvider) {
 
-    $routeProvider
-		.when('/formatCells', { templateUrl: '/Views_Angularjs/formatCells.htm', controller: 'formatCellsCtrl' })
-		// default...
-        .when('/', { templateUrl: '/Views_Angularjs/formatCells.htm', controller: 'formatCellsCtrl' })
-		.otherwise({ redirectTo: '/' });
+    $urlRouterProvider.otherwise('/');              //home
+    $stateProvider
+
+        // HOME STATES AND NESTED VIEWS ========================================
+        .state('DuToan', {
+            url: '/',
+            templateUrl: '/Views_Angularjs/Estimate.htm'
+        })
+        .state('HaoPhi', {
+            url: '/HaoPhi',
+            templateUrl: '/Views_Angularjs/Material.htm'
+        })
+        .state('PhanTich', {
+            url: '/PhanTich',
+            templateUrl: '/Views_Angularjs/Specification.htm'
+        })
+        .state('TongHop', {
+            url: '/TongHop',
+            templateUrl: '/Views_Angularjs/General.htm'
+        })
+});
+
+
+app.controller("mainController", ['$scope', function ($scope) {
+
+    /*
+    $scope.tabs = [
+        { heading: "Tab 1", route: "/Views_Angularjs/Estimate.htm", active: true },
+        { heading: "Tab 2", route: "/Views_Angularjs/Estimate.htm", active: true }
+    ];
+    */
 }]);
