@@ -84,7 +84,6 @@
     </style>
 
     <div class="col-sm-12">
-        {{works}}
         <div class="col-sm-12" style="margin-top:10px">
             <div class="input_zoomdata">
                 <div class="input-group-btn">
@@ -126,7 +125,7 @@
                             <div style="left:0%;width:3%;border-left: 1px solid #c6c6c6;" class="column_header">{{work.index}}</div>
                             <div style="left:3%;width:3%;" class="cell"><input type="text" ng-model="work.id" class="input_sheet" /></div>
                             <div style="left:6%;width:6%;" class="cell"><input type="text" ng-model="work.key" class="input_sheet" /></div>
-                            <div style="left:12%;width:21%;" class="cell"><input type="text" ng-model="work.name" class="input_sheet" /></div>
+                            <div style="left:12%;width:21%;" class="cell"><input type="text" ng-model="work.name" ng-dblclick="search_work($event);" class="input_sheet" /></div>
                             <div style="left:33%;width:6%;" class="cell"><input type="text" ng-model="work.unit" class="input_sheet" /></div>
                             <div style="left:39%;width:5%;" class="cell"><input type="text" ng-model="work.number" class="input_sheet" /></div>
                             <div style="left:44%;width:5%;" class="cell"><input type="text" ng-model="work.horizontal" class="input_sheet" /></div>
@@ -145,33 +144,40 @@
             </div>
         </div>
     </div>
-</div>
-<div id="popupsearch" style="display:none">
-    <div class="form-group" style="margin-top:10px">
-        <div class="col-sm-12">
-            <input class="form-control" id="txt_search" name="txt_search" placeholder="Nhập công việc cần tìm kiếm..." />
-        </div>
-        <div class="col-sm-12" style="margin-top:10px;">
-            <div class="box-body table-responsive no-padding" style="height:300px; overflow-y:auto">
-                <table class="table table-hover">
-                    <tbody id="table_search_normwork">
-                        <tr>
-                            <th></th>
-                            <th>Mã Hiệu</th>
-                            <th>Công Tác</th>
-                            <th>Đơn Vị</th>
-                        </tr>
-                    </tbody>
-                </table>
-            </div><!-- /.box-body -->
-        </div>
-        <div class="col-sm-12" style="margin-top:5px">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-3">
-                <button class="btn btn-block btn-primary" id="btn_search_normwork">Chọn</button>
+    <div id="popupsearch" ng-show="popupsearch" ng-class="popupsearchclass" ng-style="popupsearchcss">
+        <div class="form-group" style="margin-top:10px">
+            <div class="col-sm-12">
+                <input class="form-control" id="txt_search" ng-model="keysearch" autofocus placeholder="Nhập công việc cần tìm kiếm..." />
             </div>
-            <div class="col-sm-3"></div>
-            <div class="col-sm-3"></div>
+            <div class="col-sm-12" style="margin-top:10px;">
+                <div class="box-body table-responsive no-padding" style="height:300px; overflow-y:auto">
+                    <table class="table table-hover">
+                        <tbody id="table_search_normwork">
+                            <tr>
+                                <th></th>
+                                <th>Mã Hiệu</th>
+                                <th>Công Tác</th>
+                                <th>Đơn Vị</th>
+                            </tr>
+                            <tr ng-repeat="x in list_Normwork | filter: {ID:keysearch}">
+                                <td><input type="checkbox" value="{{x}}" ng-click="checkbox_search(x)" /></td>
+                                <td>{{x.ID}}</td>
+                                <td>{{x.Name}}</td>
+                                <td>{{x.Unit}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div>
+            <div class="col-sm-12" style="margin-top:5px">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3">
+                    <button class="btn btn-block btn-primary" id="btn_search_normwork" ng-click="save_search()">Chọn</button>
+                </div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3"></div>
+            </div>
         </div>
     </div>
 </div>
+

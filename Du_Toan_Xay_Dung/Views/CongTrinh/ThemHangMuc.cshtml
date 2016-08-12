@@ -10,7 +10,6 @@
          $scope.master = {};
          $scope.submitForm = function (hangmuc) {
              $scope.master = angular.copy(hangmuc);
-             alert(hangmuc.MaCT)
              $http({
                  method: 'POST',
                  url: '/CongTrinh/post_themhangmuc',

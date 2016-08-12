@@ -84,7 +84,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             return View();
         }
 
-
+        [HttpPost]
         public JsonResult GetNormWorks()
         {
             var list_normwork = _db.DinhMucs.Select(i => new DinhMucViewModel(i)).ToList();
@@ -92,9 +92,22 @@ namespace Du_Toan_Xay_Dung.Controllers
             return Json(list_normwork);
         }
 
-        public JsonResult GetDSDonGia(string search)
+        public JsonResult GetDSDonGia()
         {
-            var list = _db.DonGias.Select(i => new DonGiaViewModel(i));
+            var list = _db.DonGias.Select(i => new DonGiaViewModel(i)).ToList();
+            return Json(list);
+        }
+
+        public JsonResult GetDetailNormWork_Price()
+        {
+            var list = _db.ChiTiet_DinhMucs.Join(_db.DonGias, i => i.MaVL_NC_MTC, o => o.MaVL_NC_MTC, (i, o) => new {
+                Key_NormWork = i.MaHieuCV_DM,
+                Key_Material = i.MaVL_NC_MTC,
+                Number = i.SoLuong,
+                Unit = i.DonVi,
+                Name_Material = o.Ten,
+                Price = o.Gia
+            });
             return Json(list);
         }
 
@@ -114,10 +127,10 @@ namespace Du_Toan_Xay_Dung.Controllers
             return Json(list);
         }
 
+        /*
         [HttpPost]
-        public JsonResult getAllPrice(string idDinhMuc)
+        public JsonResult getPrice_Norm(string idDinhMuc)
         {
-            idDinhMuc = idDinhMuc.Substring(0,idDinhMuc.Length-1);
             var Arr_id = idDinhMuc.Split(',');
             List<All_PriceMaterialViewModel> list = new List<All_PriceMaterialViewModel>();
 
@@ -160,9 +173,10 @@ namespace Du_Toan_Xay_Dung.Controllers
                 SoLuong_DM = i.SoLuong,
                 Gia = i.DonGia.Gia
             }).ToList();
-            */
+            
             return Json(list);
         }
+    */
         public ActionResult DonGiaChiTiet(string ID)
         {
             if (ID != null)
