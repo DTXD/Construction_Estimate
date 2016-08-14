@@ -6,10 +6,9 @@
     var list_congtrinh = ViewData["List_CongTrinh"] as List<CongTrinhViewModel>;
     var congtrinhs_null = ViewData["List_CongTrinh_Null"] as List<string>;
 }
-
 <script>
     $(document).ready(function () {
-        $('#container ').on('click', '.btn_deleteproject', function () {
+        /*$('#container ').on('click', '.btn_deleteproject', function () {
             var s = $(this).parent();
             var _txtID = s.find('input').val();
             var mess = confirm("Bạn có thật sự muốn Xóa...!!!");
@@ -80,7 +79,37 @@
 
     });
 </script>
+<script>
+    angular.module('postApp', [])
+   .controller('postController', ['$scope', '$http', function ($scope, $http) {
+       $scope.master = {};
+       $scope.submitForm = function (congtrinh) {
+           $scope.hoi = confirm("Bạn có chắc chắn muốn xóa công trình này!!!!");
+           if ($scope.hoi == true) {
+               $scope.master = angular.copy(congtrinh);
+               $http({
+                   method: 'POST',
+                   url: '/CongTrinh/Delete_CongTrinh',
+                   data: JSON.stringify($scope.master),
+                   headers: { 'Content-Type': 'application/json' }
+               })
+                   .success(function (result) {
+                       if (result == "error") {
+                           // Showing errors.
+                           //$scope.errorEmail = data.errors.email;
+                           alert("Xảy ra lỗi");
+                           return;
+                       } else {
+                           //$scope.message = data.message;
+                           alert("Xóa thành công");
+                           window.location.href = "/CongTrinh/Index";
+                       }
+                   });
+           };
+       };
 
+   }]);
+</script>
 @section CSS {
     <style>
         .description_project {
@@ -100,7 +129,7 @@
 </section>
 @if (SessionHandler.User != null)
 {
-    <section class="content">
+    <section class="content" ng-app="postApp" ng-controller="postController">
         <div class="col-lg-3">
             <a class="btn btn-primary" id="btn_themhm" href="/Congtrinh/themcongtrinh"><i class="fa fa-fw fa-plus"></i>Thêm Công Trình</a>
         </div>
@@ -119,7 +148,7 @@
                         {
                             description = item.MoTa;
                         }
-                        <div class="col-md-4 col-sm-6 each_project">
+                        <div class="col-md-4 col-sm-6 each_project" ng-init="congtrinh.MaCT='@item.MaCT'">
                             <div class="panel panel-info">
                                 <div class="panel-heading">@item.TenCT</div>
                                 <div class="panel-body" style="text-align:center; height:260px">
@@ -156,8 +185,8 @@
                                             <a class="btn btn-default" href="/CongTrinh/ThemHangMuc/@item.MaCT" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
                                         }
                                         <a class="btn btn-default" href="/CongTrinh/ExportToExcel/@item.MaCT"><i class="fa fa-fw fa-file-excel-o" style="font-size: initial"></i></a>
-                                      <input type="hidden" value="@item.MaCT" />
-                                        <button class="btn btn-danger btn_deleteproject" style="float:right"><i class="fa fa-fw fa-trash-o" style="font-size: initial"></i></button>
+                                        <input type="hidden" ng-model="congtrinh.MaCT" />
+                                        <button class="btn btn-danger btn_deleteproject" ng-click="submitForm(congtrinh)" style="float:right"><i class="fa fa-fw fa-trash-o" style="font-size: initial"></i></button>
                                     </div>
                                 </div>
                             </div>

@@ -290,8 +290,11 @@
     <Content Include="Images\CongTrinh\3.PNG" />
     <Content Include="Images\CongTrinh\doremon-de-thuong-12.jpg" />
     <Content Include="Images\CongTrinh\dutoan.png" />
+    <Content Include="Images\CongTrinh\hinh-nen-doraemon-de-thuong-12.jpg" />
     <Content Include="Images\CongTrinh\hinh-nen-doraemon-de-thuong-3.jpg" />
     <Content Include="Images\CongTrinh\hinh-nen-doraemon-de-thuong-4.jpg" />
+    <Content Include="Images\CongTrinh\hinh-nen-doraemon-de-thuong-5.jpg" />
+    <Content Include="Images\CongTrinh\hinh-nen-doraemon-de-thuong-7.jpg" />
     <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.csproj.FileListAbsolute.txt" />
     <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.dll" />
     <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.pdb" />
@@ -376,6 +379,7 @@
     <Content Include="Scripts\Admin\switchery.min.js" />
     <Content Include="Scripts\Angular\angular-ui-router.min.js" />
     <Content Include="Scripts\Angular\angular.min.js" />
+    <Content Include="Scripts\Angular\bootstrap.min.js" />
     <Content Include="Scripts\Angular\ui-bootstrap-tpls-2.0.0.min.js" />
     <Content Include="Scripts\Bootstrap\bootstrap-select.js" />
     <Content Include="Scripts\Bootstrap\bootstrap-select.min.js" />
@@ -466,7 +470,6 @@
     <Content Include="Views\HangMuc\DonGiaChiTiet.cshtml" />
     <Content Include="Views\CongTrinh\UpdateHangMuc.cshtml" />
     <Content Include="Views\CongTrinh\ThemHangMuc.cshtml" />
-    <Content Include="Views\CongTrinh\ExportToExcel.cshtml" />
     <Content Include="Views\CongTrinh\HinhAnhCT.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\nhapdinhmuc.cshtml" />

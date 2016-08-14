@@ -10,11 +10,13 @@
     <script>
 
         $(document).ready(function () {
-            $('#btn_href_dutoan').click(function () {
-                var s = $('#txtmact').val();
+            $('#btn_href_dutoan').clickal();
                 $(this).attr('href', '/HangMuc/Index/' + s);
             });
         });
+
+    </script>
+    <script>
 
     </script>
 }
@@ -78,12 +80,12 @@
                                         <i class="fa fa-edit"></i>Dự Toán
                                     </a>
                                 </td>
-                                <td>
-                                    <input type="hidden" value="@item.MaHM" />
-                                    <button class="btn btn-danger btn-flat btn-xs">
+                                <td ng-init="hangmuc.MaHM='@item.MaHM'">
+                                    <input type="hidden" ng-model="hangmuc.MaHM" />
+                                    <button class="btn btn-danger btn-flat btn-xs" ng-click="submitForm(hangmuc)">
                                         <i class="fa fa-edit">
-                                        @Html.ActionLink("Xóa", "Delete", "CongTrinh", new { @MaHM = @item.MaHM }, new { @onclick = "return deleteconfirm()" })
-                                     </i>
+                                          Xóa
+                                        </i>
                                 </button>
                             </td>
                             </tr>

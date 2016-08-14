@@ -32,159 +32,7 @@
         display: block;
         margin-top: 10px;
     }
-</style>
-<script>
-    $(document).ready(function () {
-        $('#btn_submit').click(function () {
-            var formData = new FormData();
-            formData.append("TenCT", $('#TenCT').val());
-            formData.append("MoTa", $('#MoTa').val());
-            formData.append("DiaChi", $('#DiaChi').val());
-
-            if (fileGallery) {
-                for (var i = 0; i < fileGallery.length; i++) {
-                    formData.append("img_congtrinh", fileGallery[i]);
-                }
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: '/congtrinh/post_themcongtrinh',
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (result) {
-                    if (result == "ok") {
-                        alert("luu thanh cong");
-                        setTimeout(function () {
-                            window.location.href = "/CongTrinh/Index";
-                        }, 1000);
-                    }
-                },
-                error: function (error) {
-                }
-            });
-
-        });
-        var fileGallery = new Array();
-        var max_fileGallery = 12;
-        var current_fileGallery = 0;
-        $('#gallery_upload').change(function () {
-            readURL(this);
-        });
-
-        $('#listImage').on('click', '#closeall_images', function () {
-            //remove each image
-            $("#listImage .img_box").each(function () {
-                $(this).remove();
-            });
-            fileGallery = new Array();                                              //set array = zero
-            $('#listImage').css("display", "none");                                 //set div include images display:none
-            $("#gallery_upload").val("");                                           //set button choose file = null (because when delete image button still keep image previous)
-            current_fileGallery = 0;
-        });
-        function readURL(input) {
-            var files = input.files;
-            for (var i = 0; i < files.length; i++) {
-                if (current_fileGallery > max_fileGallery - 1) {
-                    return;
-                } else {
-                    current_fileGallery++;
-                    var url = input.value;
-                    var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-                    if (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg") {
-                        if (files[i].size < 10485760) {
-                            if (files.length > 0 && files[i]) {
-                                var reader = new FileReader();
-
-                                //check if file is image, set div display images should show
-                                $("#listImage").css("display", "");
-
-                                // Closure to capture the file information.
-                                reader.onload = (function (theFile, sqe) {
-                                    return function (e) {
-                                        fileGallery.push(theFile);
-                                        var li = $("<div class='img_box'></div>");
-                                        var newAvatar = $("<img title='" + theFile.name + "' src='" + e.target.result + "' style='width:200px;height:200px'/>");
-                                        var image_name = $("<span class=\"image_name\">" + theFile.name + "</span>");
-                                        var newIconRemove = $("<span class=\"icon-delete kv-file-zoom btn btn-xs btn-default\" id=''><i class=\"fa fa-fw fa-trash-o\" aria-hidden=\"true\"></i></span>");
-                                        li.append(newAvatar).append(image_name).append(newIconRemove);
-                                        $("#listImage").append(li);
-                                        newIconRemove.bind("click", function () {
-                                            $(this).parent().remove();
-                                            fileGallery.splice(theFile, 1);
-                                            current_fileGallery--;
-                                            if (current_fileGallery == 0) {
-                                                $("#listImage").css("display", "none");
-                                                $("#gallery_upload").val("");
-                                            }
-                                        });
-                                    };
-                                })(files[i], i);
-                                reader.readAsDataURL(files[i]);
-                            }
-                        } else {
-
-                        }
-                    }
-                    else {
-                        //chon anh
-                    }
-                }
-            }
-        }
-    });
-</script>
-
-
-<script>
-    $(document).ready(function () {
-        $("#btn_savetoDropbox").click(function () {
-            var Arr_image = [];
-            $("#listImage .img_box").each(function () {
-                var image = $(this).find("img");
-                var imgurl = image.attr("src");
-                var imgname = image.attr("title");
-                 
-                var specify_image = {
-                    url: imgurl,
-                    filename: imgname,
-                };
-                Arr_image.push(specify_image);
-            });
-            var options = {
-                files: Arr_image,
-
-                // Success is called once all files have been successfully added to the user's
-                // Dropbox, although they may not have synced to the user's devices yet.
-                success: function () {
-                    // Indicate to the user that the files have been saved.
-                    alert("Success! Files saved to your Dropbox.");
-                },
-
-                // Progress is called periodically to update the application on the progress
-                // of the user's downloads. The value passed to this callback is a float
-                // between 0 and 1. The progress callback is guaranteed to be called at least
-                // once with the value 1.
-                progress: function (progress) { },
-
-                // Cancel is called if the user presses the Cancel button or closes the Saver.
-                cancel: function () { },
-
-                // Error is called in the event of an unexpected response from the server
-                // hosting the files, such as not being able to find a file. This callback is
-                // also called if there is an error on Dropbox or if the user is over quota.
-                error: function (errorMessage) {
-                }
-            };
-            Dropbox.save(options);
-        });
-    });
-</script>
-
-<style>
-    .listImage {
+     .listImage {
         border-radius: 5px;
         border: 1px solid #ddd;
         margin-bottom: 20px;
@@ -214,8 +62,81 @@
         padding-left: 0px;
     }
 </style>
+<script>
+    angular.module('postApp', [])
+   .controller('postController', ['$scope', '$http', function ($scope, $http) {
+       $scope.stepsModel = [];
+       $scope.imageUpload = function (event) {
+           $scope.stepsModel = [];
+           var files = event.target.files; //FileList object
 
-<section class="content-header">
+           for (var i = 0; i < files.length; i++) {
+               var file = files[i];
+               var reader = new FileReader();
+               reader.onload = $scope.imageIsLoaded;
+               reader.readAsDataURL(file);
+           }
+           console.log($scope.stepsModel);
+       }
+       $scope.imageIsLoaded = function (e) {
+           $scope.$apply(function () {
+               var image = { image: e.target.result };
+               $scope.stepsModel.push(image);
+           });
+       }
+       $scope.master = {};
+       $scope.submitForm = function (congtrinh) {
+           congtrinh.img_congtrinh = angular.copy($scope.stepsModel);
+           $scope.master = angular.copy(congtrinh);
+           $http({
+               method: 'POST',
+               url: '/CongTrinh/Post_ThemCongTrinh',
+               data: JSON.stringify($scope.master),
+               headers: { 'Content-Type': 'application/json' }
+           })
+               .success(function (result) {
+                   if (result == "error") {
+                       // Showing errors.
+                       //$scope.errorEmail = data.errors.email;
+                       alert("Xảy ra lỗi");
+                       return;
+                   }
+                   else {
+                       //$scope.message = data.message;
+                       alert("Lưu thành công");
+                       window.location.href = "/CongTrinh/Index";
+                   }
+               });
+
+       };
+       $("#listImage").on('click', '.btn-default', function () {
+           var hoi = confirm("Bạn có chắc chắn muốn xóa hình ảnh");
+           $("#listImage .img_box").each(function () {
+               var image = $(this).find("img");
+               var imgurl = image.attr("src");
+               var imgname = image.attr("title");
+           })
+           if (hoi == true) {
+               $(this).parent().remove();
+               var myObject;
+               myObject = new ActiveXObject("Scripting.FileSystemObject");
+               myObject.DeleteFile("~/Images/CongTrinh/" + imgname);
+           }
+           else {
+               return;
+           }
+       });
+       
+       $('#listImage').on('click', '#closeall_images', function () {
+           //remove each image
+           $("#listImage .img_box").each(function () {
+               $(this).remove();
+           });
+       });
+   }]);
+</script>
+
+<section class="content-header" >
     <h1>Thêm Công Trình</h1>
     <ol class="breadcrumb">
         <li><a href="/CongTrinh/Index"><i class="fa fa-dashboard"></i>Công Trình</a></li>
@@ -223,42 +144,51 @@
     </ol>
 </section>
 
-<section class="content">
+<section class="content" ng-app="postApp" ng-controller="postController">
     <div class="container body-content">
         <div class="row">
-            <form class="form-horizontal" role="form" method="post">
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="">Tên công trình:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="TenCT" name="TenCT" placeholder="Tên công trình">
-                    </div>
-                </div>
+             <form class="form-horizontal">
+                 <div class="form-group">
+                 <label class="control-label col-sm-2" for="">Tên công trình:</label>
+                 <div class="col-sm-10">
+                 <input type="text" class="form-control" ng-model="congtrinh.TenCT" placeholder="Tên công trình">
+                  </div>
+                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="">Mô tả:</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" rows="3" id="MoTa" name="MoTa" placeholder="Công trình như thế nào ..."></textarea>
+                        <textarea class="form-control" rows="3" ng-model="congtrinh.MoTa" placeholder="Công trình như thế nào ..."></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="">Địa chỉ:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="DiaChi" name="DiaChi" placeholder="Địa chỉ">
+                        <input type="text" class="form-control" ng-model="congtrinh.DiaChi" placeholder="Địa chỉ">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="Url_HinhAnh">Hình Ảnh:</label>
                     <div class="col-sm-10">
-                        <div id="listImage" class="listImage col-sm-12" style="display:none">
-                            <span class="closeall_images" id="closeall_images"><i class="fa fa-fw fa-remove"></i></span>
+                        <div id="listImage" class="listImage_old col-sm-12">
+                            <!--choose image and show-->
+                            <div id="Images_new" class="col-sm-11" style="border-top:1px solid">
+                                <div class="img_box" ng-repeat="x in stepsModel">
+                                    <img src="{{x.image}}" style="width:200px;height:200px">
+                                    <span class="image_name"></span>
+                                    <span class="icon-delete kv-file-zoom btn btn-xs btn-default">
+                                        <i class="fa fa-fw fa-trash-o" aria-hidden="true">
+                                        </i>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="button_choosefile col-sm-2">
-                            <label for="gallery_upload" class="custom-file-upload" id="gallery_upload_choose">
-                                <i class="fa fa-cloud-upload"></i> Chọn ảnh
-                            </label>
-                            <input id="gallery_upload" type="file" class="input-upload-file" multiple="" accept="image/*" style="display:none" />
-                        </div>
+                        <label for="gallery_upload" class="custom-file-upload" id="gallery_upload_choose">
+                            <i class="fa fa-cloud-upload"></i> Chọn ảnh
+                        </label>
+                        <input id="gallery_upload" type="file" onchange="angular.element(this).scope().imageUpload(event)" class=" input-upload-file" multiple="" accept="image/*" style="display:none" />
                     </div>
                 </div>
+
                 <br />
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="">Dropbox:</label>
@@ -273,7 +203,7 @@
                 <br />
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-4">
-                        <input type="button" class="btn btn-block btn-primary btn-lg" id="btn_submit" value="Save" />
+                        <input class="btn btn-block btn-primary btn-lg" id="btn_submit" value="Lưu" ng-click="submitForm(congtrinh)" />
                     </div>
                 </div>
 
