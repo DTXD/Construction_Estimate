@@ -17,9 +17,6 @@ namespace Du_Toan_Xay_Dung.Controllers
     public class CongTrinhController : Controller
     {
         DataDTXDDataContext _db = new DataDTXDDataContext();
-        // GET: /CongTrinh/
-        // lấy dữ liệu sử dụng angular js
-
         [PageLogin]
         public ActionResult Index()
         {
@@ -27,8 +24,6 @@ namespace Du_Toan_Xay_Dung.Controllers
             ViewData["List_CongTrinh_Null"] = _db.CongTrinhs.Where(i => i.Email.Equals(SessionHandler.User.Email) && !i.HangMucs.Any(o => o.MaCT.Equals(i.MaCT))).Select(i => i.MaCT).ToList();
             return View();
         }
-
-
         [PageLogin]
         public JsonResult get_datafile(string ID)
         {
@@ -48,38 +43,46 @@ namespace Du_Toan_Xay_Dung.Controllers
         public ActionResult ChiTiet_CongTrinh(string Id)
         {
             ViewData["List_CongTrinh"] = _db.CongTrinhs.Where(i => i.Email.Equals(SessionHandler.User.Email)).Select(i => new CongTrinhViewModel(i)).ToList();
+            ViewData["CongTrinh_Detail"] = _db.CongTrinhs.Where(i => i.MaCT.Equals(Id)).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
             ViewData["List_HangMuc_IdCT"] = _db.HangMucs.Where(i => i.MaCT.Equals(Id)).Select(i => new HangMucViewModel(i)).ToList();
 
             return View();
         }
 
-
         [PageLogin]
-        public JsonResult Delete_CongTrinh(CongTrinhViewModel obj)
+        public JsonResult Delete_CongTrinh(string MaCT)
         {
-            //try
-            //{
-               var img_congtrinh = _db.Images_CongTrinhs.Where(i => i.MaCT.Equals(obj.MaCT)).ToList();
-               var congtrinh = _db.CongTrinhs.Single(i => i.MaCT.Equals(obj.MaCT));
-               for (var i = 0; i < img_congtrinh.Count; i++)
-               {
-                   _db.Images_CongTrinhs.DeleteOnSubmit(img_congtrinh[i]);
-               }
+            try
+            {
+                var img_congtrinh = _db.Images_CongTrinhs.Where(i => i.MaCT.Equals(MaCT)).ToList();
+                var hangmuc = _db.HangMucs.Where(i => i.MaCT.Equals(MaCT)).ToList();
+                var congtrinh = _db.CongTrinhs.Single(i => i.MaCT.Equals(MaCT));
+                for (var i = 0; i < img_congtrinh.Count; i++)
+                {
+                    _db.Images_CongTrinhs.DeleteOnSubmit(img_congtrinh[i]);
+                }
+                if(hangmuc.Count!=0)
+                {
+                    for (var i = 0; i < hangmuc.Count; i++)
+                    {
+                        _db.HangMucs.DeleteOnSubmit(hangmuc[i]);
+                    }
+                }
                 _db.CongTrinhs.DeleteOnSubmit(congtrinh);
-             
+
                 _db.SubmitChanges();
                 return Json("ok", JsonRequestBehavior.AllowGet);
-            //}
-            //catch (Exception e)
-            //{
-                //return Json("error", JsonRequestBehavior.AllowGet);
-            //}
+            }
+            catch (Exception e)
+            {
+                return Json("error", JsonRequestBehavior.AllowGet);
+            }
         }
 
         [PageLogin]
         public ActionResult UpdateCongTrinh(string ID)
         {
-            if(ID == null)
+            if (ID == null)
             {
                 ID = "";
             }
@@ -87,90 +90,75 @@ namespace Du_Toan_Xay_Dung.Controllers
             ViewData["image_congtrinh"] = _db.Images_CongTrinhs.Where(a => a.MaCT.Equals(ID)).Select(i => new Images_CongTrinhViewModel(i)).ToList();
             return View();
         }
-
         [PageLogin]
         [HttpPost]
         public JsonResult post_updatecongtrinh(CongTrinhViewModel obj)
         {
             //try
             //{
-            int int_ma = Convert.ToInt32(obj.MaCT.Substring(2, 1));
-            var congtrinh = _db.CongTrinhs.First(m => m.MaCT == obj.MaCT);
-            //var image = _db.Images_CongTrinhs.First(i => i.MaCT == obj.MaCT);
-            //if (obj.img_congtrinh != null)
-            //{
-                //if (obj.img_congtrinh.Count() > 0)
-                //{
-                    string url_location = Server.MapPath("~/Images/CongTrinh");
-                    if (Directory.Exists(url_location))
+                int int_ma = Convert.ToInt32(obj.MaCT.Substring(2, 1));
+                var congtrinh = _db.CongTrinhs.First(m => m.MaCT == obj.MaCT);
+                if (obj.img_congtrinh != null)
+                {
+                    if (obj.img_congtrinh.Count() > 0)
                     {
-                        foreach (var file in obj.img_congtrinh)
+                        string url_location = Server.MapPath("~/Images/CongTrinh");
+                        if (Directory.Exists(url_location))
                         {
-                            //if (file != null && file.ContentLength > 0)
-                            //{
-                                string fileLocation = Server.MapPath("~/Images/CongTrinh/") + file.FileName;
-                                file.SaveAs(fileLocation);
-                            //}
+                            //foreach (var file1 in Request.Files["myFile"])
+                            foreach (var file1 in obj.img_congtrinh)
+
+                                if (file1 != null && file1.ContentLength > 0)
+                                {
+                                    string fileLocation = Server.MapPath("~/Images/CongTrinh/") + file1.FileName;
+                                    file1.SaveAs(fileLocation);
+                                }
                         }
                     }
-                //}
-            //}
-                    /*
+                }
+
+                congtrinh.Id = int_ma;
+                congtrinh.TenCT = obj.TenCT;
+                congtrinh.MoTa = obj.MoTa;
+                congtrinh.DiaChi = obj.DiaChi;
+                congtrinh.Gia = obj.Gia;
+
+                if (obj.img_congtrinh != null)
+                {
                     foreach (var file in obj.img_congtrinh)
                     {
                         if (file != null && file.ContentLength > 0)
                         {
-                            //BinaryReader b = new BinaryReader(file.InputStream);
-                            //byte[] binData = b.ReadBytes(file.ContentLength);
-
-                            //string result = System.Text.Encoding.UTF8.GetString(binData);
-                            //file.SaveAs(string.Format("{0}/{1}", url_location, file.FileName));
-                            con.UploadtoDropbox(token_dropbox, "/Image", file.FileName,file);
+                        //them image vao database
+                        var image = new Images_CongTrinh();
+                        image.MaCT = "CT" + int_ma.ToString();
+                        image.Url = "~/Images/CongTrinh/" + file.FileName;
+                        _db.Images_CongTrinhs.InsertOnSubmit(image);
                         }
-                    }                    
+                    }
                 }
-            }*/
-            congtrinh.Id = int_ma;
-            congtrinh.TenCT = obj.TenCT;
-            congtrinh.MoTa = obj.MoTa;
-            congtrinh.DiaChi = obj.DiaChi;
-            congtrinh.Gia = obj.Gia;
-            UpdateModel(congtrinh);
-            
-                    //if (obj.img_congtrinh != null)
-                    //{
-                        foreach (var file in obj.img_congtrinh)
-                        {
-                            //if (file != null && file.ContentLength > 0)
-                            //{
-                                //them image vao database
-                                var image = new Images_CongTrinh();
-                                image.MaCT = "CT" + int_ma.ToString();
-                                image.Url = "~/Images/CongTrinh/" + file.FileName;
-                                _db.Images_CongTrinhs.InsertOnSubmit(image);
-                            //}
-                        }
-                    //}
-                    /*if (obj.img_old != null)
+                /*if (obj.img_old != null)
+                //{
+                    foreach (var file in obj.img_old)
                     {
-                        foreach (var file in obj.img_old)
+                        if (file != null && file.ContentLength > 0)
                         {
-                            if (file != null && file.ContentLength > 0)
-                            {
-                                //cap nhat image vao database
-                                image.Url = "~/Images/CongTrinh/" + file.FileName;
-                                //UpdateModel(image);
-                            }
+                            var image = new Images_CongTrinh();
+                            image.MaCT = "CT" + int_ma.ToString();
+                            image.Url = "~/Images/CongTrinh/" + file.FileName;
+                            _db.Images_CongTrinhs.DeleteOnSubmit(image);
+                            //UpdateModel(image);
                         }
-                    }*/
-            _db.SubmitChanges();
-            return Json("ok");
+                    }
+                //}*/
+                _db.SubmitChanges();
+                return Json("ok");
             //}
             //catch (Exception)
             //{
-            // return Json("error");
+                //return Json("error");
             //}
-            }
+        }
         [PageLogin]
         public ActionResult UpdateHangMuc(string ID)
         {
@@ -196,30 +184,29 @@ namespace Du_Toan_Xay_Dung.Controllers
                 return Json("error");
             }
         }
-        public ActionResult Delete(string MaHM)
+        [PageLogin]
+        public JsonResult Delete(string MaHM)
         {
-
-            if (SessionHandler.User != null)
-            {
-                var user = SessionHandler.User;
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-            HangMuc hangmuc = new HangMuc();
-            hangmuc = _db.HangMucs.Where(i => i.MaHM.Equals(MaHM)).FirstOrDefault();
-            var congtrinh = _db.HangMucs.Where(i => i.MaCT.Equals(hangmuc.MaCT)).ToList();
-            _db.HangMucs.DeleteOnSubmit(hangmuc);
-            _db.SubmitChanges();
-            if (congtrinh.Count == 1)
-            {
-                return RedirectToAction("index");
-            }
-            else
-            {
-                return RedirectToAction("ChiTiet_CongTrinh" + "/" + hangmuc.MaCT);
-            }
+            //try
+            //{
+                HangMuc hangmuc = new HangMuc();
+                hangmuc = _db.HangMucs.Where(i => i.MaHM.Equals(MaHM)).FirstOrDefault();
+                var congtrinh = _db.HangMucs.Where(i => i.MaHM.Equals(hangmuc.MaHM)).ToList();
+                _db.HangMucs.DeleteOnSubmit(hangmuc);
+                _db.SubmitChanges();
+                if (congtrinh.Count == 1)
+                {
+                    return Json("1");
+                }
+                else
+                {
+                    return Json("2");
+                }
+            //}
+            //catch(Exception)
+            //{
+                //return Json("error");
+            //}
         }
 
         [PageLogin]
@@ -234,92 +221,92 @@ namespace Du_Toan_Xay_Dung.Controllers
         {
             try
             {
-                var index = _db.CongTrinhs.OrderByDescending(i => i.Id).Select(i => i.Id).FirstOrDefault();
-                index = index + 1;
-                if (obj.img_congtrinh != null)
-                {
-                    if (obj.img_congtrinh.Count() > 0)
-                    {
-                        string url_location = Server.MapPath("~/Images/CongTrinh");
-                        if (Directory.Exists(url_location))
-                        {
-                            foreach (var file in obj.img_congtrinh)
-                            {
-                                if (file != null && file.ContentLength > 0)
-                                {
-                                    string fileLocation = Server.MapPath("~/Images/CongTrinh/") + file.FileName;
-                                    file.SaveAs(fileLocation);
-                                }
-                            }
-                        }
-                    }
-                }
-                /*
-                if (obj.img_congtrinh != null)
-                {
+            var index = _db.CongTrinhs.OrderByDescending(i => i.Id).Select(i => i.Id).FirstOrDefault();
+            index = index + 1;
 
-                    if (obj.img_congtrinh.Count() > 0)
+            if (obj.img_congtrinh != null)
+            {
+                if (obj.img_congtrinh.Count() > 0)
+                {
+                    string url_location = Server.MapPath("~/Images/CongTrinh");
+                    if (Directory.Exists(url_location))
                     {
-                        string url_location = Server.MapPath("~/Images/CongTrinh");
-                        if (Directory.Exists(url_location))
-                        {
-                            foreach (var file in obj.img_congtrinh)
-                            {
-                                if (file != null && file.ContentLength > 0)
-                                {
-                                    string fileLocation = Server.MapPath("~/Images/CongTrinh/") + file.FileName;
-                                    file.SaveAs(fileLocation);
-                                }
-                            }
-                        }
-                        /*
                         foreach (var file in obj.img_congtrinh)
                         {
                             if (file != null && file.ContentLength > 0)
                             {
-                                //BinaryReader b = new BinaryReader(file.InputStream);
-                                //byte[] binData = b.ReadBytes(file.ContentLength);
-
-                                //string result = System.Text.Encoding.UTF8.GetString(binData);
-                                //file.SaveAs(string.Format("{0}/{1}", url_location, file.FileName));
-                                con.UploadtoDropbox(token_dropbox, "/Image", file.FileName,file);
+                                string fileLocation = Server.MapPath("~/Images/CongTrinh/") + file.FileName;
+                                file.SaveAs(fileLocation);
                             }
-                        }                    */
-                   // }
-               // }
-                var congtrinh = new CongTrinh();
-                congtrinh.Id = index;
-                congtrinh.MaCT = "CT" + index.ToString();
-                congtrinh.Email = SessionHandler.User.Email;
-                congtrinh.TenCT = obj.TenCT;
-                congtrinh.MoTa = obj.MoTa;
-                congtrinh.DiaChi = obj.DiaChi;
-                congtrinh.Gia = 0;
+                        }
+                    }
+                }
+            }
+            /*
+            if (obj.img_congtrinh != null)
+            {
 
-                _db.CongTrinhs.InsertOnSubmit(congtrinh);
-                if (obj.img_congtrinh != null)
+                if (obj.img_congtrinh.Count() > 0)
                 {
+                    string url_location = Server.MapPath("~/Images/CongTrinh");
+                    if (Directory.Exists(url_location))
+                    {
+                        foreach (var file in obj.img_congtrinh)
+                        {
+                            if (file != null && file.ContentLength > 0)
+                            {
+                                string fileLocation = Server.MapPath("~/Images/CongTrinh/") + file.FileName;
+                                file.SaveAs(fileLocation);
+                            }
+                        }
+                    }
+                    /*
                     foreach (var file in obj.img_congtrinh)
                     {
                         if (file != null && file.ContentLength > 0)
                         {
-                            //them image vao database
-                            var image = new Images_CongTrinh();
-                            image.MaCT = "CT" + index.ToString();
-                            image.Url = "~/Images/CongTrinh/" + file.FileName;
-                            _db.Images_CongTrinhs.InsertOnSubmit(image);
+                            //BinaryReader b = new BinaryReader(file.InputStream);
+                            //byte[] binData = b.ReadBytes(file.ContentLength);
+
+                            //string result = System.Text.Encoding.UTF8.GetString(binData);
+                            //file.SaveAs(string.Format("{0}/{1}", url_location, file.FileName));
+                            con.UploadtoDropbox(token_dropbox, "/Image", file.FileName,file);
                         }
+                    }                    */
+            // }
+            // }
+            var congtrinh = new CongTrinh();
+            congtrinh.Id = index;
+            congtrinh.MaCT = "CT" + index.ToString();
+            congtrinh.Email = SessionHandler.User.Email;
+            congtrinh.TenCT = obj.TenCT;
+            congtrinh.MoTa = obj.MoTa;
+            congtrinh.DiaChi = obj.DiaChi;
+            congtrinh.Gia = 0;
+
+            _db.CongTrinhs.InsertOnSubmit(congtrinh);
+            if (obj.img_congtrinh != null)
+            {
+                foreach (var file in obj.img_congtrinh)
+                {
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        //them image vao database
+                        var image = new Images_CongTrinh();
+                        image.MaCT = "CT" + index.ToString();
+                        image.Url = "~/Images/CongTrinh/" + file.FileName;
+                        _db.Images_CongTrinhs.InsertOnSubmit(image);
                     }
                 }
-                _db.SubmitChanges();
+            }
+            _db.SubmitChanges();
 
-                return Json("ok");
+            return Json("ok");
             }
             catch (Exception)
-            {
-                return Json("error");
-            }
-
+             {
+             return Json("error");
+             }
             //HttpPostedFileBase file;
             //if (Request.Files.AllKeys.Any())
             //{
@@ -374,30 +361,6 @@ namespace Du_Toan_Xay_Dung.Controllers
                 return Json("error");
             }
         }
-        /*public ActionResult Post_ThemHangMuc(HangMucViewModel obj)
-        {
-            string ID = obj.MaCT;
-            if (ID != null)
-            {
-                //lay dong cuoi cung bang hangmuc
-                var idhm_last = _db.HangMucs.OrderByDescending(i => i.Id).Select(i => i.Id).FirstOrDefault();
-                idhm_last = idhm_last + 1;
-                HangMuc hm = new HangMuc();
-                hm.Id = idhm_last;
-                hm.MaHM = "HM" + idhm_last.ToString();
-                hm.MaCT = ID;
-                hm.TenHM = obj.TenHM;
-                hm.MoTa = obj.MoTa;
-                hm.Gia = 0;
-
-                _db.HangMucs.InsertOnSubmit(hm);
-                _db.SubmitChanges();
-
-            }
-
-            return RedirectToAction("ChiTiet_CongTrinh", "CongTrinh", new { Id = ID });
-        }*/
-
         public ActionResult ExportToExcel(string ID)
         {
             if (ID != null)

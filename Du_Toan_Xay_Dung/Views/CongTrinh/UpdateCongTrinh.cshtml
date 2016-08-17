@@ -13,134 +13,91 @@
 <script>
     angular.module('postApp', [])
    .controller('postController', ['$scope', '$http', function ($scope, $http) {
-       $scope.fileGallery = new Array();
-       var max_fileGallery = 12;
-       var current_fileGallery = 0;
-       $('#gallery_upload').change(function () {
-           readURL(this);
-       });
-       function readURL(input) {
-           var files = input.files;
+       $scope.stepsModel = [];
+       $scope.listfile = [];  //list file
+       $scope.oldlist = [];
+
+       $scope.uploadedFile = function (event) {
+           $scope.$apply(function ($scope) {
+               $scope.files = event.files;
+           });
+           $scope.stepsModel = [];
+           var files = event.target.files; //FileList object
            for (var i = 0; i < files.length; i++) {
-               if (current_fileGallery > max_fileGallery - 1) {
-                   return;
-               } else {
-                   current_fileGallery++;
-                   var url = input.value;
-                   var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-                   if (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg") {
-                       if (files[i].size < 10485760) {
-                           if (files.length > 0 && files[i]) {
-                               var reader = new FileReader();
+               var file = files[i];
+               var reader = new FileReader();
+               reader.onload = $scope.imageIsLoaded;
+               reader.readAsDataURL(file);
+               $scope.listfile.push(file);
+           }
+           //console.log($scope.listfile);
+       }
 
-                               //check if file is image, set div display images should show
-                               $("#listImage").css("display", "");
+       $scope.imageIsLoaded = function (e) {
+           $scope.$apply(function () {
+               var image = { image: e.target.result };
+               $scope.stepsModel.push(image);
+           });
+       }
+       $scope.submit = function (files) {
+           var fd = new FormData();
+           fd.append("MaCT", $scope.congtrinh.MaCT);
+           fd.append("TenCT", $scope.congtrinh.TenCT);
+           fd.append("MoTa", $scope.congtrinh.MoTa);
+           fd.append("DiaChi", $scope.congtrinh.DiaChi);
+           if ($scope.listfile) {
+               for (var i = 0; i < $scope.listfile.length; i++) {
 
-                               // Closure to capture the file information.
-                               reader.onload = (function (theFile, sqe) {
-                                   return function (e) {
-                                       $scope.fileGallery.push(theFile);
-                                       var li = $("<div class='img_box'></div>");
-                                       var newAvatar = $("<img title='" + theFile.name + "' src='" + e.target.result + "' style='width:200px;height:200px'/>");
-                                       var image_name = $("<span class=\"image_name\">" + theFile.name + "</span>");
-                                       var newIconRemove = $("<span class=\"icon-delete kv-file-zoom btn btn-xs btn-default\" id=''><i class=\"fa fa-fw fa-trash-o\" aria-hidden=\"true\"></i></span>");
-                                       li.append(newAvatar).append(image_name).append(newIconRemove);
-                                       $("#listImage").append(li);
-                                       newIconRemove.bind("click", function () {
-                                           $(this).parent().remove();
-                                           $scope.fileGallery.splice(theFile, 1);
-                                           current_fileGallery--;
-                                           if (current_fileGallery == 0) {
-                                               $("#listImage").css("display", "none");
-                                               $("#gallery_upload").val("");
-                                           }
-                                       });
-                                   };
-                               })(files[i], i);
-                               reader.readAsDataURL(files[i]);
-                           }
-                       } else {
-
-                       }
-                   }
-                   else {
-                       //chon anh
-                   }
+                   fd.append("img_congtrinh", $scope.listfile[i]);
                }
            }
-       };
-       $scope.master = {};
-       $scope.submitForm = function (congtrinh) {
-           congtrinh.img_congtrinh = angular.copy($scope.fileGallery);
-           console.log(congtrinh.img_congtrinh);
-           $scope.master = angular.copy(congtrinh);
-           /*var data = $.param({
-               firstName: $scope.firstName,
-               lastName: $scope.lastName,
-               age: $scope.age
-           });*/
+           console.log($scope.oldlist);
+           if ($scope.oldlist)
+           {
+               for (var i = 0; i < $scope.listfile.length; i++) {
 
-           $http({
-               method: 'POST',
-               url: '/CongTrinh/post_updatecongtrinh',
-               data: JSON.stringify($scope.master),
-               headers: { 'Content-Type': 'application/json' }
-           })
-               .success(function (result) {
-                   if (result == "error") {
-                       // Showing errors.
-                       //$scope.errorEmail = data.errors.email;
-                       alert("Xảy ra lỗi");
-                       return;
-                   }
-                   else {
-                       //$scope.message = data.message;
-                       alert("Lưu thành công");
-                       window.location.href = "/CongTrinh/Index";
-                   }
-               });
-
-       };
-               /*var data = $.param({
-                   MaCT: $scope.mact,
-                   TenCT: $scope.TenCT,
-                   DiaChi : $scope.diachi,
-                   MoTa:$scope.mota,
-                   img_congtrinh:$scope.fileGallery
-               });*/
-        
-              /* var config = {
-                   headers : {
-                       'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                   }
+                   fd.append("img_old", $scope.oldlist[i]);
                }
-
-           $http.post('/CongTrinh/post_updatecongtrinh', data, config)
-               .success(function (data, status, headers, config) {
-                   $scope.ServerResponse = data;
-               })
-               .error(function (data, status, header, config) {
-                   $scope.ServerResponse = "Data: " + data +
-                       "<hr />status: " + status +
-                       "<hr />headers: " + header +
-                       "<hr />config: " + config;
-               });
-           };*/
-       $("#listImage").on('click', '.btn-default', function () {
-           var hoi = confirm("Bạn có chắc chắn muốn xóa hình ảnh");
-           $("#listImage .img_box").each(function () {
-               var image = $(this).find("img");
-               var imgurl = image.attr("src");
-               var imgname = image.attr("title");
+           }
+           $http.post('/CongTrinh/post_updatecongtrinh', fd, {
+               transformRequest: angular.identity,
+               headers: { 'Content-Type': undefined }
            })
+                 .success(function (result) {
+                     if (result == "error") {
+                         // Showing errors.
+                         //$scope.errorEmail = data.errors.email;
+                         alert("Xảy ra lỗi");
+                         return;
+                     } else {
+                         //$scope.message = data.message;
+                         alert("Lưu thành công");
+                         window.location.href = "/CongTrinh/Index";
+
+                     }
+                 });
+       };
+       $("#listImage").on('click', '.btn-default', function () {
+
+           var hoi = confirm("Bạn có chắc chắn muốn xóa hình ảnh");
+          
            if (hoi == true) {
                $(this).parent().remove();
+               $("#listImage .img_box").each(function () {
+                   var image = $(this).find("img");
+                   var imgurl = image.attr("src");
+                   var imgname = image.attr("title");
+               })
+               var specify_image = {
+                   url: imgurl,
+                   filename: imgname,
+               };
+               $scope.oldlist.push(specify_image);
+               //list file.push(specify_image);
            }
-           else {
-               return;
-           }
+           
        });
-
+       
        $('#listImage').on('click', '#closeall_images', function () {
            //remove each image
            $("#listImage .img_box").each(function () {
@@ -226,30 +183,34 @@
              ng-init="congtrinh.MaCT='@congtrinh.MaCT';congtrinh.TenCT='@congtrinh.TenCT'; congtrinh.MoTa='@congtrinh.MoTa';congtrinh.DiaChi='@congtrinh.DiaChi'">
         <div class=" container body-content">
             <div class="col-sm-12">
-                <form class="form-horizontal">
-                    <input type="text" style="display:none" name="mact" ng-model="congtrinh.MaCT" />
+                <form class="form-horizontal" method="post" data-ng-submit="addFile(congtrinh)">
+                    <input type="text" style="display:none" ng-model="congtrinh.MaCT" />
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="">Tên công trình:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="tenct" ng-model="congtrinh.TenCT" class="form-control" placeholder="Tên công trình">
+                            <input type="text" ng-model="congtrinh.TenCT" class="form-control" placeholder="Tên công trình">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="">Mô tả:</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="mota" rows="3" ng-model="congtrinh.MoTa" placeholder="Công trình nhu th? nào ..."></textarea>
+                            <textarea class="form-control" rows="3" ng-model="congtrinh.MoTa" placeholder="Công trình nhu th? nào ..."></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="">Ðịa chỉ:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="diachi" ng-model="congtrinh.DiaChi" placeholder="Ð?a ch?">
+                            <input type="text" class="form-control" ng-model="congtrinh.DiaChi" placeholder="Ð?a ch?">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="Url_HinhAnh">Hình ảnh:</label>
+                        <br />
                         <div class="col-sm-10">
-                            <div id="listImage" class="listImage col-sm-12">
+                            <div style="padding-left:30px">
+                                <h4>Hình đã có</h4>
+                            </div>
+                            <div id="listImage" class="listImage_old col-sm-12">
                                 <span class="closeall_images" id="closeall_images"><i class="fa fa-fw fa-remove"></i></span>
                                 @foreach (var k in hinhanh)
                                 {
@@ -262,13 +223,30 @@
                                         </span>
                                     </div>
                                 }
+                                <br /><br />
+                                <hr />
+                                <br /><br /><br /><br />
+                                <!--choose image and show-->
+                                <div id="Images_new" class="col-sm-11" style="border-top:1px solid">
+                                    <div>
+                                        <h4>Hình thêm mới</h4>
+                                    </div>
+                                    <span class="closeall_images" id="closeall_images"><i class="fa fa-fw fa-remove"></i></span>
+                                    <div class="img_box" ng-repeat="x in stepsModel track by $index">
+                                        <img src="{{x.image}}" style="width:200px;height:200px">
+                                        <span class="image_name"></span>
+                                        <span class="icon-delete kv-file-zoom btn btn-xs btn-default" onclick="">
+                                            <i class="fa fa-fw fa-trash-o" aria-hidden="true">
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="button_choosefile col-sm-2">
-                                <label for="gallery_upload" class="custom-file-upload" id="gallery_upload_choose">
-                                    <i class="fa fa-cloud-upload"></i> Chọn ảnh
-                                </label>
-                                <input id="gallery_upload" type="file"  class="input-upload-file" multiple="" accept="image/*" style="display:none" />
-                            </div>
+
+                            <label for="gallery_upload" class="custom-file-upload" id="gallery_upload_choose">
+                                <i class="fa fa-cloud-upload"></i> Chọn ảnh
+                            </label>
+                            <input id="gallery_upload" type="file" name="file" onchange="angular.element(this).scope().uploadedFile(event)" multiple accept="image/*" style="display:none" />
                         </div>
                     </div>
 
@@ -285,11 +263,11 @@
                     <br />
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-4">
-                            <input class="btn btn-block btn-primary btn-lg" id="btn_submit" value="Lưu" ng-click="submitForm(congtrinh)" />
+                            <button type="submit" class="btn btn-block btn-primary btn-lg" id="btn_submit" ng-click="submit()">Lưu</button>
                         </div>
                     </div>
                 </form>
             </div>
-            </div>
+        </div>
     </section>
 }

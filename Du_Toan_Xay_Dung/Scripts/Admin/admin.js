@@ -1,11 +1,4 @@
-﻿function open() {
-    var x = document.getElementById("tphp");
-    x.style.display = "block";
-}
-function close() {
-    var x = document.getElementById("tphp");
-    x.style.display = "none";
-}
+﻿
 function timkiem() {
     var select1 = document.getElementById("select-tphp1");
     var select2 = document.getElementById("select-tphp2");

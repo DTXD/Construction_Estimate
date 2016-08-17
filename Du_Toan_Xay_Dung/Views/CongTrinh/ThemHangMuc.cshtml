@@ -3,7 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var mact = ViewData["MaCT_ThemHangMuc"];
 }
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 <script>
     angular.module('postApp', [])
      .controller('postController', ['$scope', '$http', function ($scope, $http) {
@@ -29,7 +28,6 @@
                      }
                  });
          };
-
      }]);
 </script>
 

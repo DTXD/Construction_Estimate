@@ -1,14 +1,42 @@
 ﻿@{
     ViewBag.Title = "suadongia";
     Layout = "~/Views/Shared/_Admin.cshtml";
-        }
+ }
+<script>
+    angular.module('postApp', [])
+  .controller('postController', ['$scope', '$http', function ($scope, $http) {
+      $scope.master = {};
+      $scope.submitForm = function (dongia) {
+          $scope.master = angular.copy(dongia);
+          $http({
+              method: 'POST',
+              url: '/Admin/post_suadongia',
+              data: JSON.stringify($scope.master),
+              headers: { 'Content-Type': 'application/json' }
+          })
+              .success(function (result) {
+                  if (result == "error") {
+                      // Showing errors.
+                      //$scope.errorEmail = data.errors.email;
+                      alert("Xảy ra lỗi");
+                      return;
+                  } else {
+                      //$scope.message = data.message;
+                      alert("Lưu thành công");
+                      window.location.href = "/Admin/danhsachdongia";
+                  }
+              });
+      };
+  }]);
+</script>
 <!-- page content -->
-<div class="right_col" role="main">
+<div class="right_col" role="main" ng-app="postApp" ng-controller="postController"
+      ng-init="dongia.MaKV='@Model.'">
     <div class="">
         <div class="page-title">
             <div class="title_left">
                 <h3>Sửa đơn giá</h3>
-            </div>  
+            </div>
         </div>
         <div class="clearfix"></div>
         <div class="row">
@@ -20,17 +48,6 @@
                             <li>
                                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="#">Cài đặt 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Cài đặt 2</a>
-                                    </li>
-                                </ul>
-                            </li>
                             <li>
                                 <a class="close-link"><i class="fa fa-close"></i></a>
                             </li>
@@ -39,13 +56,13 @@
                     </div>
                     <div class="x_content">
                         <br />
-                        <form id="demo-form2" action="/Admin/post_suadongia" method="post" data-parsley-validate class="form-horizontal form-label-left">
+                        <form method="post" data-parsley-validate class="form-horizontal form-label-left">
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                                     Mã khu vực
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" value="@Model.MaKV" id="makv" name="makv" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -64,7 +81,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Đơn vị 
+                                    Đơn vị
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input id="donvi" value="@Model.DonVi" name="donvi" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
@@ -92,102 +109,3 @@
         </div>
     </div>
 </div>
-<!-- /Datatables -->
-<script>
-    $(document).ready(function () {
-        function initToolbarBootstrapBindings() {
-            var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
-                'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-                'Times New Roman', 'Verdana'
-            ],
-              fontTarget = $('[title=Font]').siblings('.dropdown-menu');
-            $.each(fonts, function (idx, fontName) {
-                fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
-            });
-            $('a[title]').tooltip({
-                container: 'body'
-            });
-            $('.dropdown-menu input').click(function () {
-                return false;
-            })
-              .change(function () {
-                  $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
-              })
-              .keydown('esc', function () {
-                  this.value = '';
-                  $(this).change();
-              });
-
-            $('[data-role=magic-overlay]').each(function () {
-                var overlay = $(this),
-                  target = $(overlay.data('target'));
-                overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
-            });
-
-            if ("onwebkitspeechchange" in document.createElement("input")) {
-                var editorOffset = $('#editor').offset();
-
-                $('.voiceBtn').css('position', 'absolute').offset({
-                    top: editorOffset.top,
-                    left: editorOffset.left + $('#editor').innerWidth() - 35
-                });
-            } else {
-                $('.voiceBtn').hide();
-            }
-        }
-
-        initToolbarBootstrapBindings();
-
-        $('#editor').wysiwyg({
-            fileUploadError: showErrorAlert
-        });
-
-        window.prettyPrint;
-        prettyPrint();
-    });
-</script>
-<!-- jQuery Tags Input -->
-<!-- /jQuery Tags Input -->
-<!-- Parsley -->
-<script>
-    $(document).ready(function () {
-        $.listen('parsley:field:validate', function () {
-            validateFront();
-        });
-        $('#demo-form .btn').on('click', function () {
-            $('#demo-form').parsley().validate();
-            validateFront();
-        });
-        var validateFront = function () {
-            if (true === $('#demo-form').parsley().isValid()) {
-                $('.bs-callout-info').removeClass('hidden');
-                $('.bs-callout-warning').addClass('hidden');
-            } else {
-                $('.bs-callout-info').addClass('hidden');
-                $('.bs-callout-warning').removeClass('hidden');
-            }
-        };
-    });
-
-    $(document).ready(function () {
-        $.listen('parsley:field:validate', function () {
-            validateFront();
-        });
-        $('#demo-form2 .btn').on('click', function () {
-            $('#demo-form2').parsley().validate();
-            validateFront();
-        });
-        var validateFront = function () {
-            if (true === $('#demo-form2').parsley().isValid()) {
-                $('.bs-callout-info').removeClass('hidden');
-                $('.bs-callout-warning').addClass('hidden');
-            } else {
-                $('.bs-callout-info').addClass('hidden');
-                $('.bs-callout-warning').removeClass('hidden');
-            }
-        };
-    });
-    try {
-        hljs.initHighlightingOnLoad();
-    } catch (err) { }
-</script>

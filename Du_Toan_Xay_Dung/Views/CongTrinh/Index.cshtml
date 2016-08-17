@@ -8,7 +8,7 @@
 }
 <script>
     $(document).ready(function () {
-        /*$('#container ').on('click', '.btn_deleteproject', function () {
+        $('#container ').on('click', '.btn_deleteproject', function () {
             var s = $(this).parent();
             var _txtID = s.find('input').val();
             var mess = confirm("Bạn có thật sự muốn Xóa...!!!");
@@ -16,7 +16,7 @@
                 $.ajax({
                     type: "POST",
                     url: '/CongTrinh/Delete_CongTrinh',
-                    data: { ID: _txtID },
+                    data: { MaCT: _txtID },
                     cache: false,
                     dataType: "json",
                     success: function (result) {
@@ -34,9 +34,7 @@
                 });
             }
         });
-
-        /*
-        
+      
         $('#btn_uploadimages').click(function () {
             var _txtID = $(this).attr("data-dropboxmact");
             $.ajax({
@@ -52,72 +50,37 @@
                     console.log(err.status + " - " + err.statusText);
                 }
             });
-
-        });
-        
-
-        $('#container ').on('click', '.btn_getdata', function () {
-            var _txtID = $(this).attr("data-dropboxmact");
-            $("#btn_uploadimages").attr("data-mactupload", _txtID);
-            $("#btn_uploadfileexcel").attr("data-mactupload", _txtID);
-        });
-
-        */
-        $("#container").on('mouseover', '.each_project', function () {
-            var des = $(this).find(".description_project");
-            des.css("margin-top", "");
-            var but = $(this).find(".button-project");
-            but.css("display", "");
-        });
-        $("#container").on('mouseout', '.each_project', function () {
-            var des = $(this).find(".description_project");
-            des.css("margin-top", "25px");
-            var but = $(this).find(".button-project");
-            but.css("display", "none");
-        });
-
+        })
+            
+            $('#container ').on('click', '.btn_getdata', function () {
+                var _txtID = $(this).attr("data-dropboxmact");
+                $("#btn_uploadimages").attr("data-mactupload", _txtID);
+                $("#btn_uploadfileexcel").attr("data-mactupload", _txtID);
+            });
+     
+            $("#container").on('mouseover', '.each_project', function () {
+                var des = $(this).find(".description_project");
+                des.css("margin-top", "");
+                var but = $(this).find(".button-project");
+                but.css("display", "");
+            });
+            $("#container").on('mouseout', '.each_project', function () {
+                var des = $(this).find(".description_project");
+                des.css("margin-top", "25px");
+                var but = $(this).find(".button-project");
+                but.css("display", "none");
+            });
 
     });
 </script>
-<script>
-    angular.module('postApp', [])
-   .controller('postController', ['$scope', '$http', function ($scope, $http) {
-       $scope.master = {};
-       $scope.submitForm = function (congtrinh) {
-           $scope.hoi = confirm("Bạn có chắc chắn muốn xóa công trình này!!!!");
-           if ($scope.hoi == true) {
-               $scope.master = angular.copy(congtrinh);
-               $http({
-                   method: 'POST',
-                   url: '/CongTrinh/Delete_CongTrinh',
-                   data: JSON.stringify($scope.master),
-                   headers: { 'Content-Type': 'application/json' }
-               })
-                   .success(function (result) {
-                       if (result == "error") {
-                           // Showing errors.
-                           //$scope.errorEmail = data.errors.email;
-                           alert("Xảy ra lỗi");
-                           return;
-                       } else {
-                           //$scope.message = data.message;
-                           alert("Xóa thành công");
-                           window.location.href = "/CongTrinh/Index";
-                       }
-                   });
-           };
-       };
 
-   }]);
-</script>
-@section CSS {
-    <style>
+
+<style>
         .description_project {
             height: 51px;
             text-align: left;
         }
     </style>
-}
 
 <section class="content-header">
     <h1>
@@ -129,7 +92,7 @@
 </section>
 @if (SessionHandler.User != null)
 {
-    <section class="content" ng-app="postApp" ng-controller="postController">
+    <section class="content">
         <div class="col-lg-3">
             <a class="btn btn-primary" id="btn_themhm" href="/Congtrinh/themcongtrinh"><i class="fa fa-fw fa-plus"></i>Thêm Công Trình</a>
         </div>
@@ -148,7 +111,7 @@
                         {
                             description = item.MoTa;
                         }
-                        <div class="col-md-4 col-sm-6 each_project" ng-init="congtrinh.MaCT='@item.MaCT'">
+                        <div class="col-md-4 col-sm-6 each_project">
                             <div class="panel panel-info">
                                 <div class="panel-heading">@item.TenCT</div>
                                 <div class="panel-body" style="text-align:center; height:260px">
@@ -184,9 +147,9 @@
                                         {
                                             <a class="btn btn-default" href="/CongTrinh/ThemHangMuc/@item.MaCT" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
                                         }
+                                        <input type="hidden" value="@item.MaCT" />
                                         <a class="btn btn-default" href="/CongTrinh/ExportToExcel/@item.MaCT"><i class="fa fa-fw fa-file-excel-o" style="font-size: initial"></i></a>
-                                        <input type="hidden" ng-model="congtrinh.MaCT" />
-                                        <button class="btn btn-danger btn_deleteproject" ng-click="submitForm(congtrinh)" style="float:right"><i class="fa fa-fw fa-trash-o" style="font-size: initial"></i></button>
+                                            <button class="btn btn-danger btn_deleteproject"  style="float:right"><i class="fa fa-fw fa-trash-o" style="font-size: initial"></i></button>
                                     </div>
                                 </div>
                             </div>

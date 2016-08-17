@@ -449,7 +449,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 _db.SubmitChanges();
             }
             return RedirectToAction("index");
-        }
+         }
         [HttpPost]
         public ActionResult Post_themnguoidung(FormCollection form)
         {
