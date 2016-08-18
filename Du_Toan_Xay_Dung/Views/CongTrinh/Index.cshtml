@@ -7,51 +7,7 @@
     var congtrinhs_null = ViewData["List_CongTrinh_Null"] as List<string>;
 }
 <script>
-    $(document).ready(function () {
-        $('#container ').on('click', '.btn_deleteproject', function () {
-            var s = $(this).parent();
-            var _txtID = s.find('input').val();
-            var mess = confirm("Bạn có thật sự muốn Xóa...!!!");
-            if (mess == true) {
-                $.ajax({
-                    type: "POST",
-                    url: '/CongTrinh/Delete_CongTrinh',
-                    data: { MaCT: _txtID },
-                    cache: false,
-                    dataType: "json",
-                    success: function (result) {
-                        if (result == "ok") {
-                            alert("Xóa thành công");
-
-                            setTimeout(function () {
-                                location.reload();
-                            }, 2000);
-                        }
-                    },
-                    error: function (err) {
-                        console.log(err.status + " - " + err.statusText);
-                    }
-                });
-            }
-        });
-      
-        $('#btn_uploadimages').click(function () {
-            var _txtID = $(this).attr("data-dropboxmact");
-            $.ajax({
-                type: "POST",
-                url: '/CongTrinh/get_datafile',
-                data: { ID: _txtID },
-                cache: false,
-                dataType: "json",
-                success: function (data) {
-                    console.log(data);
-                },
-                error: function (err) {
-                    console.log(err.status + " - " + err.statusText);
-                }
-            });
-        })
-            
+    $(document).ready(function () {           
             $('#container ').on('click', '.btn_getdata', function () {
                 var _txtID = $(this).attr("data-dropboxmact");
                 $("#btn_uploadimages").attr("data-mactupload", _txtID);
@@ -74,6 +30,41 @@
     });
 </script>
 
+<script>
+      angular.module('postApp', [])
+     .controller('postController', ['$scope', '$http', function ($scope, $http) {
+         $scope.submitForm = function () {
+             var hoi = confirm("Bạn có chắc chắn muốn xóa công trình này");
+             if (hoi == true) {
+                 if ($scope.formAdd.$valid) {
+                     var mact = document.getElementById("mact").value;
+                     console.log(mact);
+                     var postdata = {
+                         MaCT: mact
+                     };
+                     $http({
+                         method: 'POST',
+                         url: '/CongTrinh/Delete_CongTrinh',
+                         data: JSON.stringify(postdata),
+                         headers: { 'Content-Type': 'application/json' }
+                     })
+                         .success(function (result) {
+                             if (result == "ok") {
+                                 alert("Xóa thành công");
+                                 window.location.href = "/CongTrinh/Index";
+                             }
+                             else {
+                                 alert("Xảy ra lỗi");
+                                 return;
+
+                             }
+                         });
+                 }
+             }
+
+         };
+     }]);
+</script>
 
 <style>
         .description_project {
@@ -90,123 +81,129 @@
         <li class="active">Công Trình</li>
     </ol>
 </section>
+   
+ <section class="content" ng-app="postApp" ng-controller="postController">
 @if (SessionHandler.User != null)
-{
-    <section class="content">
-        <div class="col-lg-3">
-            <a class="btn btn-primary" id="btn_themhm" href="/Congtrinh/themcongtrinh"><i class="fa fa-fw fa-plus"></i>Thêm Công Trình</a>
-        </div>
-        <div id="container" class="container col-sm-12" style="margin-top:50px">
-            <div class="row">
-                <div class="col-xs-10" style="margin-left:50px">
-                    @foreach (var item in list_congtrinh)
-                    {
-                        var d = 0;
-                        var description = "";
-                        if (Convert.ToString(item.MoTa).Length > 60)
-                        {
-                            description = Convert.ToString(item.MoTa).Substring(0, 60);
-                        }
-                        else
-                        {
-                            description = item.MoTa;
-                        }
-                        <div class="col-md-4 col-sm-6 each_project">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">@item.TenCT</div>
-                                <div class="panel-body" style="text-align:center; height:260px">
-                                    <div class="info-project" style="margin-bottom:20px">
-                                        <img src="~/Images/Awicons-Vista-Artistic-Office-building.ico" style="width:130px; height:130px" />
-                                        <div class="description_project" style="margin-top: 25px; display: inherit;"><p>@description ...</p></div>
-                                    </div>
-                                    <div class="button-project" style="display:none">
+  {
+    <div class="col-lg-3">
+        <a class="btn btn-primary" id="btn_themhm" href="/Congtrinh/themcongtrinh"><i class="fa fa-fw fa-plus"></i>Thêm Công Trình</a>
+    </div>
+    <div id="container" class="container col-sm-12" style="margin-top:50px">
+        <div class="row">
+            <div class="col-xs-10" style="margin-left:50px">
+                @foreach (var item in list_congtrinh)
+                {
+                var d = 0;
+                var description = "";
+                if (Convert.ToString(item.MoTa).Length > 60)
+                {
+                description = Convert.ToString(item.MoTa).Substring(0, 60);
+                }
+                else
+                {
+                description = item.MoTa;
+                }
+                <form method="post" name="formAdd" id="formAdd" ng-submit="submitForm()">
+                    <div class="col-md-4 col-sm-6 each_project">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">@item.TenCT</div>
+                            <div class="panel-body" style="text-align:center; height:260px">
+                                <div class="info-project" style="margin-bottom:20px">
+                                    <img src="~/Images/Awicons-Vista-Artistic-Office-building.ico" style="width:130px; height:130px" />
+                                    <div class="description_project" style="margin-top: 25px; display: inherit;"><p>@description ...</p></div>
+                                </div>
+                                <div class="button-project" style="display:none">
 
-                                        <a class="btn btn-default" href="/CongTrinh/UpdateCongTrinh/@item.MaCT" target="_blank"><i class="fa fa-fw fa-edit" style="font-size:large"></i></a>
+                                    <a class="btn btn-default" href="/CongTrinh/UpdateCongTrinh/@item.MaCT" target="_blank"><i class="fa fa-fw fa-edit" style="font-size:large"></i></a>
 
-                                        @if (congtrinhs_null != null)
-                                        {
-                                            foreach (var k in congtrinhs_null)
-                                            {
-                                                if (k.Equals(item.MaCT))
-                                                {
-                                                    d = 1;
-                                                    break;
-                                                }
-                                            }
-                                            //if d=0 ==> khong tim thay cong trinh null trong toan bo cong trinh user
-                                            if (d == 0)
-                                            {
-                                                <a class="btn btn-default" href="/CongTrinh/ChiTiet_CongTrinh/@item.MaCT" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
-                                            }
-                                            else
-                                            {
-                                                <a class="btn btn-default" href="/CongTrinh/ThemHangMuc/@item.MaCT" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <a class="btn btn-default" href="/CongTrinh/ThemHangMuc/@item.MaCT" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
-                                        }
-                                        <input type="hidden" value="@item.MaCT" />
-                                        <a class="btn btn-default" href="/CongTrinh/ExportToExcel/@item.MaCT"><i class="fa fa-fw fa-file-excel-o" style="font-size: initial"></i></a>
-                                            <button class="btn btn-danger btn_deleteproject"  style="float:right"><i class="fa fa-fw fa-trash-o" style="font-size: initial"></i></button>
-                                    </div>
+                                    @if (congtrinhs_null != null)
+                                    {
+                                    foreach (var k in congtrinhs_null)
+                                    {
+                                    if (k.Equals(item.MaCT))
+                                    {
+                                    d = 1;
+                                    break;
+                                    }
+                                    }
+                                    //if d=0 ==> khong tim thay cong trinh null trong toan bo cong trinh user
+                                    if (d == 0)
+                                    {
+                                    <a class="btn btn-default" href="/CongTrinh/ChiTiet_CongTrinh/@item.MaCT" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
+                                    }
+                                    else
+                                    {
+                                    <a class="btn btn-default" href="/CongTrinh/ThemHangMuc/@item.MaCT" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
+                                    }
+                                    }
+                                    else
+                                    {
+                                    <a class="btn btn-default" href="/CongTrinh/ThemHangMuc/@item.MaCT" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
+                                    }
+                                    <input type="hidden" value="@item.MaCT" id="mact" />
+                                    <a class="btn btn-default" href="/CongTrinh/ExportToExcel/@item.MaCT"><i class="fa fa-fw fa-file-excel-o" style="font-size: initial"></i></a>
+                                    <button type="submit" class="btn btn-danger btn_deleteproject" style="float:right"><i class="fa fa-fw fa-trash-o" style="font-size: initial"></i></button>
                                 </div>
                             </div>
                         </div>
-                    }
-                </div>
-            </div>
-            <!--Still argument-->
-            <!--Model ask user choose type to upload-->
-            <div class="row">
-                <div class="modal fade" id="Model_AskUser" tabindex="-1" role="dialog" aria-labelledby="Model_AskUser" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h4 class="modal-title" id="title_AskUser">Save to Dropbox</h4>
-                            </div>
-                            <div class="modal-body">
-                                <!-- /.box-body-->
-                                <span>
-                                    Upload to your Dropbox. Please choose type you want ?
-                                </span>
-                                <br />
-                                <br />
-                                <span class="btn btn-block btn-info btn-lg" id="btn_uploadimages" data-toggle="modal" data-target="#Model_SavetoDropbox" data-dismiss="modal">Images</span>
-                                <span class="btn btn-block btn-info btn-lg" id="btn_uploadfileexcel">File Excel</span>
-                            </div>
-                        </div>
                     </div>
-                </div>
+                    
+                </form>
+                }
             </div>
-            <!--Model show data need to upload-->
-            <div class="row">
-                <div class="modal fade" id="Model_SavetoDropbox" tabindex="-1" role="dialog" aria-labelledby="Model_SavetoDropbox" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h4 class="modal-title" id="title_SavetoDropbox">Save to Dropbox</h4>
-                            </div>
-                            <div class="modal-body">
-                                <!-- /.box-body-->
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" id="btn_save" data-dismiss="modal">Save changes</button>
-                            </div>
+        </div>
+        <!--Still argument-->
+        <!--Model ask user choose type to upload-->
+        <div class="row">
+            <div class="modal fade" id="Model_AskUser" tabindex="-1" role="dialog" aria-labelledby="Model_AskUser" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="title_AskUser">Save to Dropbox</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- /.box-body-->
+                            <span>
+                                Upload to your Dropbox. Please choose type you want ?
+                            </span>
+                            <br />
+                            <br />
+                            <span class="btn btn-block btn-info btn-lg" id="btn_uploadimages" data-toggle="modal" data-target="#Model_SavetoDropbox" data-dismiss="modal">Images</span>
+                            <span class="btn btn-block btn-info btn-lg" id="btn_uploadfileexcel">File Excel</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+        <!--Model show data need to upload-->
+        <div class="row">
+            <div class="modal fade" id="Model_SavetoDropbox" tabindex="-1" role="dialog" aria-labelledby="Model_SavetoDropbox" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="title_SavetoDropbox">Save to Dropbox</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- /.box-body-->
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="btn_save" data-dismiss="modal">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
+</section>
+
+
 

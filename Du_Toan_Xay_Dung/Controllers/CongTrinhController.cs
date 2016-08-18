@@ -50,13 +50,13 @@ namespace Du_Toan_Xay_Dung.Controllers
         }
 
         [PageLogin]
-        public JsonResult Delete_CongTrinh(string MaCT)
+        public JsonResult Delete_CongTrinh(CongTrinhViewModel obj)
         {
             try
             {
-                var img_congtrinh = _db.Images_CongTrinhs.Where(i => i.MaCT.Equals(MaCT)).ToList();
-                var hangmuc = _db.HangMucs.Where(i => i.MaCT.Equals(MaCT)).ToList();
-                var congtrinh = _db.CongTrinhs.Single(i => i.MaCT.Equals(MaCT));
+                var img_congtrinh = _db.Images_CongTrinhs.Where(i => i.MaCT.Equals(obj.MaCT)).ToList();
+                var hangmuc = _db.HangMucs.Where(i => i.MaCT.Equals(obj.MaCT)).ToList();
+                var congtrinh = _db.CongTrinhs.Single(i => i.MaCT.Equals(obj.MaCT));
                 for (var i = 0; i < img_congtrinh.Count; i++)
                 {
                     _db.Images_CongTrinhs.DeleteOnSubmit(img_congtrinh[i]);
@@ -185,28 +185,31 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
         }
         [PageLogin]
-        public JsonResult Delete(string MaHM)
+        public JsonResult Delete(HangMucViewModel obj)
         {
-            //try
-            //{
+            try
+            {
                 HangMuc hangmuc = new HangMuc();
-                hangmuc = _db.HangMucs.Where(i => i.MaHM.Equals(MaHM)).FirstOrDefault();
-                var congtrinh = _db.HangMucs.Where(i => i.MaHM.Equals(hangmuc.MaHM)).ToList();
-                _db.HangMucs.DeleteOnSubmit(hangmuc);
-                _db.SubmitChanges();
-                if (congtrinh.Count == 1)
+                hangmuc = _db.HangMucs.Where(i => i.MaHM.Equals(obj.MaHM)).FirstOrDefault();
+                var congtrinh = _db.HangMucs.Where(i => i.MaHM.Equals(hangmuc.MaCT)).ToList();
+                if (hangmuc != null)
                 {
-                    return Json("1");
+                    _db.HangMucs.DeleteOnSubmit(hangmuc);
+                }
+                _db.SubmitChanges();
+                if (congtrinh.Count == 0)
+                {
+                    return Json("0");
                 }
                 else
                 {
-                    return Json("2");
+                    return Json("1");
                 }
-            //}
-            //catch(Exception)
-            //{
-                //return Json("error");
-            //}
+            }
+            catch(Exception)
+            {
+                return Json("error");
+            }
         }
 
         [PageLogin]
