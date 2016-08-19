@@ -96,7 +96,6 @@ namespace Du_Toan_Xay_Dung.Controllers
         {
             //try
             //{
-                int int_ma = Convert.ToInt32(obj.MaCT.Substring(2, 1));
                 var congtrinh = _db.CongTrinhs.First(m => m.MaCT == obj.MaCT);
                 if (obj.img_congtrinh != null)
                 {
@@ -105,7 +104,6 @@ namespace Du_Toan_Xay_Dung.Controllers
                         string url_location = Server.MapPath("~/Images/CongTrinh");
                         if (Directory.Exists(url_location))
                         {
-                            //foreach (var file1 in Request.Files["myFile"])
                             foreach (var file1 in obj.img_congtrinh)
 
                                 if (file1 != null && file1.ContentLength > 0)
@@ -117,7 +115,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                     }
                 }
 
-                congtrinh.Id = int_ma;
+                congtrinh.MaCT = obj.MaCT;
                 congtrinh.TenCT = obj.TenCT;
                 congtrinh.MoTa = obj.MoTa;
                 congtrinh.DiaChi = obj.DiaChi;
@@ -131,7 +129,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                         {
                         //them image vao database
                         var image = new Images_CongTrinh();
-                        image.MaCT = "CT" + int_ma.ToString();
+                        image.MaCT = obj.MaCT;
                         image.Url = "~/Images/CongTrinh/" + file.FileName;
                         _db.Images_CongTrinhs.InsertOnSubmit(image);
                         }
