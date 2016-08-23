@@ -1,7 +1,10 @@
 ﻿
 function timkiem() {
+    //var select1 = angular.element(document.querySelector('#select-tphp1'));
     var select1 = document.getElementById("select-tphp1");
+    //var select2 = angular.element(document.querySelector('#select-tphp2'));
     var select2 = document.getElementById("select-tphp2");
+   // var txt = angular.element(document.querySelector('#txttimkiem')).value.toLowerCase();
     var txt = document.getElementById("txttimkiem").value.toLowerCase();
     for (var option in select2) {
         select2.remove(option);

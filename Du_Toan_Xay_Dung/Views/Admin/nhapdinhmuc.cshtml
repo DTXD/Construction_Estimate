@@ -6,37 +6,6 @@
     var list_dongia = ViewData["DSDonGia"] as List<DonGiaViewModel>;
 }
 <script src="~/Scripts/Admin/admin.js"></script>
-<script>
-    angular.module('postApp', [])
-   .controller('postController', ['$scope', '$http', function ($scope, $http) {
-       $scope.master = {};
-       $scope.submitForm = function (hangmuc) {
-           $scope.master = angular.copy(hangmuc);
-           $http({
-               method: 'POST',
-               url: '/CongTrinh/post_themhangmuc',
-               data: JSON.stringify($scope.master),
-               headers: { 'Content-Type': 'application/json' }
-           })
-               .success(function (result) {
-                   if (result == "error") {
-                       // Showing errors.
-                       //$scope.errorEmail = data.errors.email;
-                       alert("Xảy ra lỗi");
-                       return;
-                   } else {
-                       //$scope.message = data.message;
-                       alert("Lưu thành công");
-                       window.location.href = "/Admin/Index";
-                   }
-               });
-       };
-
-   }]);
-    </script>
-
-</script>
-
 <div class="right_col" role="main">
     <div class="">
         <div class="page-title">
@@ -139,17 +108,6 @@
                                                 <li>
                                                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                                 </li>
-                                                <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li>
-                                                            <a href="#">Cài đặt 1</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">Cài đặt 2</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
                                                 <li>
                                                     <a class="close-link"><i class="fa fa-close"></i></a>
                                                 </li>
@@ -183,19 +141,6 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $(".select2_single").select2({
-            placeholder: "Select a state",
-            allowClear: true
-        });
-        $(".select2_group").select2({});
-        $(".select2_multiple").select2({
-            maximumSelectionLength: 4,
-            placeholder: "With Max Selection limit 4",
-            allowClear: true
-        });
-    });
-</script>
+
 
 
