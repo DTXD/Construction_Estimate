@@ -1,0 +1,148 @@
+﻿@{
+    ViewBag.Title = "Work_SPA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Menu Toggle Script -->
+<script>
+    $(document).ready(function () {
+        $("#body_content").removeClass("container");
+
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault(e);
+            $("#wrapper_content").toggleClass("toggled");
+            $("#sheet_cellheader").toggleClass("toggled_sheet");
+        });
+    });
+</script>
+
+@section Scripts{
+
+    
+    <!--Bootstrap angular-->
+    <script src="~/Scripts/Angular/ui-bootstrap-tpls-2.0.0.min.js"></script>
+
+    <!--App script-->
+    <script src="~/Scripts/DuToan/Estimate_Work/App_work.js"></script>
+
+    <script src="~/Scripts/DuToan/Estimate_Work/services/dataService.js"></script>
+
+    <script src="~/Scripts/DuToan/Estimate_Work/Controllers/EstimateCtrl.js"></script>
+}
+
+@section CSS{
+
+    <style>
+        .left_menu {
+            z-index: 1000;
+            position: fixed;
+            left: 250px;
+            width: 250px;
+            height: 100%;
+            margin-left: -250px;
+            overflow-y: auto;
+        }
+
+        .wrapper_content {
+            padding-left: 250px;
+        }
+
+        .page-content-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        #wrapper_content.toggled {
+            padding-left: 250px;
+        }
+
+            #wrapper_content.toggled #left_menu {
+                width: 250px;
+            }
+
+        #wrapper_content.toggled {
+            padding-left: 0;
+        }
+
+            #wrapper_content.toggled #left_menu {
+                width: 0;
+            }
+
+        #sheet_cellheader.toggled_sheet {
+            width: 98.64%;
+        }
+
+        .content_page {
+            border-radius: 3px 3px 3px 3px;
+            -moz-border-radius: 3px 3px 3px 3px;
+            -webkit-border-radius: 3px 3px 3px 3px;
+            border-style: solid;
+            border-color: #ddd;
+            border-width: 0px 1px 1px 1px;
+            background-color: white;
+        }
+    </style>
+}
+<section class="content-header"></section>
+
+<section class="content" ng-app="app_work" ng-controller="mainController">
+    <!-- Sidebar -->
+    <div class="col-sm-12 wrapper_content" id="wrapper_content">
+        <div class="left_menu" id="left_menu">
+            <ul class="">
+                <li class="">
+                    <a href="#">
+                        Start Bootstrap
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#">Shortcuts</a>
+                </li>
+                <li>
+                    <a href="#">Overview</a>
+                </li>
+                <li>
+                    <a href="#">Events</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">Services</a>
+                </li>
+                <li>
+                    <a href="#">haha</a>
+                </li>
+            </ul>
+        </div>
+        <div id="page-content-wrapper" class="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <span class="btn btn-default" id="menu-toggle">Toggle Menu</span>
+                    </div>
+                    <div class="col-sm-10"></div>
+                    <div class="col-sm-12" style="margin-top:20px">
+                        <uib-tabset active="active">
+                            <uib-tab index="0" heading="Dự toán" ui-sref="DuToan">
+                            </uib-tab>
+                            <uib-tab index="1" heading="Thành Phần Hao Phí" ui-sref="HaoPhi">
+                            </uib-tab>
+                            <uib-tab index="2" heading="Phân Tích" ui-sref="PhanTich">
+                            </uib-tab>
+                            <uib-tab index="3" heading="Tổng Hợp" ui-sref="TongHop">
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>
+                    <div class="col-sm-12 content_page" ui-view>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

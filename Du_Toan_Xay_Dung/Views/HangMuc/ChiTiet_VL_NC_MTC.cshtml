@@ -1,0 +1,251 @@
+﻿@using Du_Toan_Xay_Dung.Models
+@{
+    ViewBag.Title = "ChiTiet_VL_NC_MTC";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var id = ViewData["ID_MaHieuCV"];
+    var list_vl = (dynamic)null;
+    var list_nc = (dynamic)null;
+    var list_mtc = (dynamic)null;
+    if (id != null && id.ToString().Substring(0, 3) != "CV_")
+    {
+        list_vl = ViewData["List_VL"] as List<HaoPhi_DM_ViewModel>;
+        list_nc = ViewData["List_NC"] as List<HaoPhi_DM_ViewModel>;
+        list_mtc = ViewData["List_MTC"] as List<HaoPhi_DM_ViewModel>;
+    }
+    else
+    {
+        list_vl = ViewData["List_VL"] as List<HaoPhi_User_ViewModel>;
+        list_nc = ViewData["List_NC"] as List<HaoPhi_User_ViewModel>;
+        list_mtc = ViewData["List_MTC"] as List<HaoPhi_User_ViewModel>;
+    }
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var temp = $("#txtmahieucv_user").val();
+            if (temp.indexOf("CV_") != -1) {
+                $('#btn_submit').click(function () {
+                    var tempma = $("#form input[name='MaHP']").serializeArray();
+                    var tempgia = $("#form input[name='Gia']").serializeArray();
+
+                    var MaHP = "";
+                    var Gia = "";
+                    $.each(tempma, function (i, field) {
+                        MaHP = MaHP + field.value + ',';
+                    });
+                    $.each(tempgia, function (i, field) {
+                        Gia = Gia + field.value + ',';
+                    });
+                    MaHP = MaHP.substring(0, MaHP.length - 1);
+                    Gia = Gia.substring(0, Gia.length - 1);
+
+                    var postData = {
+                        MaHP: MaHP,
+                        Gia: Gia
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: '/HangMuc/Post_ChiTiet_VL_NC_MTC',
+                        data: postData,
+                        dataType: "JSON",
+                        success: function (result) {
+                            if (result == "ok") {
+                                location.reload();
+                            }
+                            else {
+                                alert("Loi");
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err.status + " - " + err.statusText);
+                        }
+                    });
+                });
+
+            }
+            else {
+                alert("Ban phai save cong viec !!");
+                $("#form").submit(function (e) {
+                    e.preventDefault();
+                });
+                //code hien ra 1 thong bao k phải alert..de test thoi
+            }
+
+        });
+
+    </script>
+}
+
+
+
+<section class="content-header">
+    <h1>
+        Hao Phí Công Việc
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Công Trình</a></li>
+        <li class="active">Hao Phí Công Việc</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="container" style="margin-top:100px">
+        @if (id != null)
+        {
+            <input type="hidden" name="txtmahieucv_user" id="txtmahieucv_user" value="@id" />
+        }
+        <form id="form" name="form" enctype="multipart/form-data" method="post">
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Vật Liệu</h3>
+                            <div class="box-tools">
+                            </div>
+                        </div><!-- /.box-header -->
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <th>Loại Vật Liệu</th>
+                                        <th>Đơn Vị</th>
+                                        <th>Giá Theo Đơn Giá</th>
+                                        <th></th>
+                                    </tr>
+                                    @if (list_vl != null)
+                                    {
+                                        decimal? tong = 0;
+                                        foreach (var item in list_vl)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @item.Ten
+                                                    <input type="hidden" name="MaHP" data-note="Array" value="@item.MaHP" />
+                                                </td>
+                                                <td>@item.DonVi</td>
+                                                <td><input style="width:150px" type="text" data-note="Array" value="@item.Gia" name="Gia" /></td>
+                                                <td></td>
+                                            </tr>
+                                            tong = tong + @item.Gia;
+                                        }
+
+                                        <tr>
+                                            <td></td>
+                                            <td><span style="font-weight:bold">TỔNG: </span></td>
+                                            <td><input style="width:150px" type="text" value="@tong" name="txt_tongvl" id="txt_tongvl" /></td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Nhân Công</h3>
+                            <div class="box-tools">
+                            </div>
+                        </div><!-- /.box-header -->
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <th>Loại Vật Liệu</th>
+                                        <th>Đơn Vị</th>
+                                        <th>Giá Theo Đơn Giá</th>
+                                        <th></th>
+                                    </tr>
+
+                                    @if (list_nc != null)
+                                    {
+                                        decimal? tong = 0;
+                                        foreach (var item in list_nc)
+                                        {
+
+                                            <tr>
+                                                <td>
+                                                    @item.Ten
+                                                    <input type="hidden" name="MaHP" data-note="Array" value="@item.MaHP" />
+                                                </td>
+                                                <td>@item.DonVi</td>
+                                                <td><input style="width:150px" type="text" data-note="Array" value="@item.Gia" name="Gia" /></td>
+                                                <td></td>
+                                            </tr>
+                                            tong = tong + @item.Gia;
+                                        }
+
+                                        <tr>
+                                            <td></td>
+                                            <td><span style="font-weight:bold">TỔNG: </span></td>
+                                            <td><input style="width:150px" type="text" value="@tong" name="txt_tongnc" id="txt_tongnc" /></td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Máy Thi Công</h3>
+                            <div class="box-tools">
+                            </div>
+                        </div><!-- /.box-header -->
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <th>Loại Vật Liệu</th>
+                                        <th>Đơn Vị</th>
+                                        <th>Giá Theo Đơn Giá</th>
+                                        <th></th>
+                                    </tr>
+                                    @if (list_mtc != null)
+                                    {
+                                        decimal? tong = 0;
+                                        foreach (var item in list_mtc)
+                                        {
+
+                                            <tr>
+                                                <td>
+                                                    @item.Ten
+                                                    <input type="hidden" data-note="Array" name="MaHP" value="@item.MaHP" />
+                                                </td>
+                                                <td>@item.DonVi</td>
+                                                <td><input style="width:150px" type="text" data-note="Array" value="@item.Gia" name="Gia" /></td>
+                                                <td></td>
+                                            </tr>
+                                            tong = tong + @item.Gia;
+                                        }
+
+                                        <tr>
+                                            <td></td>
+                                            <td><span style="font-weight:bold">TỔNG: </span></td>
+                                            <td><input style="width:150px" type="text" value="@tong" name="txt_tongmtc" id="txt_tongmtc" /></td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2" style="float:right">
+                    <button id="btn_submit" type="submit" class="btn btn-block btn-primary btn-flat">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

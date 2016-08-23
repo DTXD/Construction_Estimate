@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DTXD" Class="DataDTXDDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=DTXD;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DTXDConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ChiTiet_DinhMuc" Member="ChiTiet_DinhMucs">
+    <Type Name="ChiTiet_DinhMuc">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MaHieuCV_DM" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="MaVL_NC_MTC" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="SoLuong" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
+      <Column Name="DonVi" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="DinhMuc_ChiTiet_DinhMuc" Member="DinhMuc" ThisKey="MaHieuCV_DM" OtherKey="MaHieuCV_DM" Type="DinhMuc" IsForeignKey="true" />
+      <Association Name="DonGia_ChiTiet_DinhMuc" Member="DonGia" ThisKey="MaVL_NC_MTC" OtherKey="MaVL_NC_MTC" Type="DonGia" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CongTrinh" Member="CongTrinhs">
+    <Type Name="CongTrinh">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="MaCT" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="TenCT" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
+      <Column Name="MoTa" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="Gia" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Association Name="CongTrinh_HangMuc" Member="HangMucs" ThisKey="MaCT" OtherKey="MaCT" Type="HangMuc" />
+      <Association Name="CongTrinh_Images_CongTrinh" Member="Images_CongTrinhs" ThisKey="MaCT" OtherKey="MaCT" Type="Images_CongTrinh" />
+      <Association Name="Nguoi_Dung_CongTrinh" Member="Nguoi_Dung" ThisKey="Email" OtherKey="Email" Type="Nguoi_Dung" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CongViec" Member="CongViecs">
+    <Type Name="CongViec">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="MaHieuCV_User" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaHM" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="MaHieuCV_DM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TenCongViec" Type="System.String" DbType="NVarChar(3000) NOT NULL" CanBeNull="false" />
+      <Column Name="DonVi" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="KhoiLuong" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="GiaVL" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
+      <Column Name="GiaNC" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
+      <Column Name="GiaMTC" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
+      <Column Name="ThanhTien" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
+      <Association Name="CongViec_ThanhPhanHaoPhi" Member="ThanhPhanHaoPhis" ThisKey="MaHieuCV_User" OtherKey="MaHieuCV_User" Type="ThanhPhanHaoPhi" />
+      <Association Name="HangMuc_CongViec" Member="HangMuc" ThisKey="MaHM" OtherKey="MaHM" Type="HangMuc" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DinhMuc" Member="DinhMucs">
+    <Type Name="DinhMuc">
+      <Column Name="MaHieuCV_DM" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CongTac" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
+      <Column Name="DonVi" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="RangBuoc" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Association Name="DinhMuc_ChiTiet_DinhMuc" Member="ChiTiet_DinhMucs" ThisKey="MaHieuCV_DM" OtherKey="MaHieuCV_DM" Type="ChiTiet_DinhMuc" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DonGia" Member="DonGias">
+    <Type Name="DonGia">
+      <Column Name="MaKV" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="MaVL_NC_MTC" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Ten" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="DonVi" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Gia" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Association Name="DonGia_ChiTiet_DinhMuc" Member="ChiTiet_DinhMucs" ThisKey="MaVL_NC_MTC" OtherKey="MaVL_NC_MTC" Type="ChiTiet_DinhMuc" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HangMuc" Member="HangMucs">
+    <Type Name="HangMuc">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="MaHM" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaCT" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TenHM" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
+      <Column Name="MoTa" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="Gia" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
+      <Association Name="HangMuc_CongViec" Member="CongViecs" ThisKey="MaHM" OtherKey="MaHM" Type="CongViec" />
+      <Association Name="CongTrinh_HangMuc" Member="CongTrinh" ThisKey="MaCT" OtherKey="MaCT" Type="CongTrinh" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Images_CongTrinh" Member="Images_CongTrinhs">
+    <Type Name="Images_CongTrinh">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MaCT" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Url" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="CongTrinh_Images_CongTrinh" Member="CongTrinh" ThisKey="MaCT" OtherKey="MaCT" Type="CongTrinh" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Nguoi_Dung" Member="Nguoi_Dungs">
+    <Type Name="Nguoi_Dung">
+      <Column Name="Email" Type="System.String" DbType="NVarChar(200) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MatKhau" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Ho_TenLot" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Ten" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="SDT" Type="System.String" DbType="NVarChar(12)" CanBeNull="true" />
+      <Column Name="NoiLamViec" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ThanhPho" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Url_HinhAnh" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Quyen" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Nguoi_Dung_CongTrinh" Member="CongTrinhs" ThisKey="Email" OtherKey="Email" Type="CongTrinh" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ThanhPhanHaoPhi" Member="ThanhPhanHaoPhis">
+    <Type Name="ThanhPhanHaoPhi">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="MaHP" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaHieuCV_User" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Ten" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
+      <Column Name="DonVi" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="SoLuong_DM" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
+      <Column Name="Gia" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
+      <Association Name="CongViec_ThanhPhanHaoPhi" Member="CongViec" ThisKey="MaHieuCV_User" OtherKey="MaHieuCV_User" Type="CongViec" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

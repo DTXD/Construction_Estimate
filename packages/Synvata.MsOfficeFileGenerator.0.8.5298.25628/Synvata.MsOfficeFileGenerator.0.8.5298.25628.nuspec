@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Synvata.MsOfficeFileGenerator</id>
+    <version>0.8.5298.25628</version>
+    <title>Synvata.MsOfficeFileGenerator</title>
+    <authors>Synvata</authors>
+    <owners>Synvata</owners>
+    <licenseUrl>https://github.com/Synvata/MsOfficeFileGenerator/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Synvata/MsOfficeFileGenerator</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>A .NET assembly to generate Microsoft Office OpenXML files such as Excel files (.xlsx), Word files (.docx).</description>
+    <summary />
+    <releaseNotes>Excel files can be generated. bool value will be displayed as "Yes" / "No"</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>OpenXML Excel Export</tags>
+    <dependencies>
+      <dependency id="DocumentFormat.OpenXml" version="2.5" />
+    </dependencies>
+  </metadata>
+</package>
