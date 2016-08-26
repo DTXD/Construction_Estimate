@@ -31,6 +31,7 @@
                reader.readAsDataURL(file);
                $scope.listfile.push(file);
            }
+
            //console.log($scope.listfile);
        }
 
@@ -60,8 +61,7 @@
                }
            }
            console.log($scope.oldlist);
-           if ($scope.oldlist)
-           {
+           if ($scope.oldlist) {
                for (var i = 0; i < $scope.listfile.length; i++) {
 
                    fd.append("img_old", $scope.oldlist[i]);

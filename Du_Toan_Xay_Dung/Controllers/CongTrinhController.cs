@@ -17,6 +17,14 @@ namespace Du_Toan_Xay_Dung.Controllers
     public class CongTrinhController : Controller
     {
         DataDTXDDataContext _db = new DataDTXDDataContext();
+
+        [HttpPost]
+        public JsonResult listhangmuc()
+        {
+            var list_normwork =  _db.HangMucs.Select(i => new HangMucViewModel(i)).ToList();
+
+            return Json(list_normwork);
+        }
         [PageLogin]
         public ActionResult Index()
         {
@@ -38,7 +46,6 @@ namespace Du_Toan_Xay_Dung.Controllers
             return View();
         }
 
-
         [PageLogin]
         public ActionResult ChiTiet_CongTrinh(string Id)
         {
@@ -47,6 +54,12 @@ namespace Du_Toan_Xay_Dung.Controllers
             ViewData["List_HangMuc_IdCT"] = _db.HangMucs.Where(i => i.MaCT.Equals(Id)).Select(i => new HangMucViewModel(i)).ToList();
 
             return View();
+        }
+
+        public JsonResult Get_AllHangMuc() 
+        {
+            var list = _db.HangMucs.Select(i => new HangMucViewModel(i)).ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         [PageLogin]
@@ -94,8 +107,8 @@ namespace Du_Toan_Xay_Dung.Controllers
         [HttpPost]
         public JsonResult post_updatecongtrinh(CongTrinhViewModel obj)
         {
-            //try
-            //{
+            try
+            {
                 var congtrinh = _db.CongTrinhs.First(m => m.MaCT == obj.MaCT);
                 if (obj.img_congtrinh != null)
                 {
@@ -148,14 +161,14 @@ namespace Du_Toan_Xay_Dung.Controllers
                             //UpdateModel(image);
                         }
                     }
-                //}*/
+               }*/
                 _db.SubmitChanges();
                 return Json("ok");
-            //}
-            //catch (Exception)
-            //{
-                //return Json("error");
-            //}
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
         }
         [PageLogin]
         public ActionResult UpdateHangMuc(string ID)

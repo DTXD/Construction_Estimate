@@ -1,9 +1,7 @@
-﻿'use strict';
+﻿
 
 angular.module('app_work').factory('dataService', ['$http', function ($http) {
-
     var getNormworks = function () {
-
         return $http({
             method: 'POST',
             url: '/HangMuc/GetNormWorks',
