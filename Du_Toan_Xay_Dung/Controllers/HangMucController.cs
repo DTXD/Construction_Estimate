@@ -84,18 +84,17 @@ namespace Du_Toan_Xay_Dung.Controllers
             return View();
         }
 
-        [HttpPost]
         public JsonResult GetNormWorks()
         {
             var list_normwork = _db.DinhMucs.Select(i => new DinhMucViewModel(i)).ToList();
 
-            return Json(list_normwork);
+            return Json(list_normwork, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetDSDonGia()
         {
             var list = _db.DonGias.Select(i => new DonGiaViewModel(i)).ToList();
-            return Json(list);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetDetailNormWork_Price()
@@ -108,7 +107,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 Name_Material = o.Ten,
                 Price = o.Gia
             });
-            return Json(list);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetDSCongViec(string mahangmuc)

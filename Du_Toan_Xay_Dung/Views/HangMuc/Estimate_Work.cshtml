@@ -35,12 +35,13 @@
     <style>
         .left_menu {
             z-index: 1000;
-            position: fixed;
             left: 250px;
             width: 250px;
             height: 100%;
             margin-left: -250px;
             overflow-y: auto;
+            float:left;
+            margin-top:150px
         }
 
         .wrapper_content {
@@ -89,34 +90,30 @@
     <!-- Sidebar -->
     <div class="col-sm-12 wrapper_content" id="wrapper_content">
         <div class="left_menu" id="left_menu">
-            <ul class="">
-                <li class="">
-                    <a href="#">
-                        Start Bootstrap
-                    </a>
-                </li>
-                <li>
-                    <a href="#">Dashboard</a>
-                </li>
-                <li>
-                    <a href="#">Shortcuts</a>
-                </li>
-                <li>
-                    <a href="#">Overview</a>
-                </li>
-                <li>
-                    <a href="#">Events</a>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">haha</a>
-                </li>
-            </ul>
+            <div style="margin-left:50px">
+                <h4>Chọn công trình:</h4>
+                <select>
+                    <option>Nhà cấp 3</option>
+                    <option>Nhà cấp 4</option>
+                    <option>Trường Học</option>
+                </select>
+            </div>
+            <div style="margin-left:50px">
+                <h4>Chọn Hạng Mục:</h4>
+                <select>
+                    <option>Đào Móng</option>
+                    <option>Xây Tường</option>
+                    <option>Phát Rừng</option>
+                </select>
+            </div>
+            <div style="margin-left:50px">
+                <h4>Chọn Đơn Giá:</h4>
+                <select>
+                    <option>Hồ Chí Minh</option>
+                    <option>Hà Nội</option>
+                    <option selected>Đơn giá của tôi</option>
+                </select>
+            </div>
         </div>
         <div id="page-content-wrapper" class="page-content-wrapper">
             <div class="container-fluid">
@@ -124,7 +121,9 @@
                     <div class="col-sm-2">
                         <span class="btn btn-default" id="menu-toggle">Toggle Menu</span>
                     </div>
-                    <div class="col-sm-10"></div>
+                    <div class="col-sm-10">
+                        <h4>Nhà cấp 3 / Đào Móng</h4>
+                    </div>
                     <div class="col-sm-12" style="margin-top:20px">
                         <uib-tabset active="active">
                             <uib-tab index="0" heading="Dự toán" ui-sref="DuToan">

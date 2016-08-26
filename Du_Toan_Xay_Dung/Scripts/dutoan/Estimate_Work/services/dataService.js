@@ -4,24 +4,16 @@ angular.module('app_work').factory('dataService', ['$http', function ($http) {
 
     var getNormworks = function () {
 
-        return $http({
-            method: 'POST',
-            url: '/HangMuc/GetNormWorks',
-            headers: { 'Content-Type': 'application/json' }
-        })
-                  .success(function (data) {
-                      if (data.errors) {
-                          // Showing errors.
-                          $scope.errorEmail = data.errors.email;
-                      } else {
-                          return data;
-                      }
-                  });
+        return $http.get('/HangMuc/GetNormWorks').then(function (response) {
+            return response.data
+        }, function (response) {
+            //Showing errors
+        });
     };
 
     var getListPrice = function () {
         return $http({
-            method: 'POST',
+            method: 'GET',
             url: '/HangMuc/GetDSDonGia',
             headers: { 'Content-Type': 'application/json' }
         })
@@ -38,7 +30,7 @@ angular.module('app_work').factory('dataService', ['$http', function ($http) {
 
     var GetDetailNormWork_Price = function () {
         return $http({
-            method: 'POST',
+            method: 'GET',
             url: '/HangMuc/GetDetailNormWork_Price',
             headers: { 'Content-Type': 'application/json' }
         })
