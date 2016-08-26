@@ -55,7 +55,7 @@
                     {
                         <li><a href="/CongTrinh/Index">Công Trình</a></li>
                     }
-                    <li><a id="btn_href_dutoan" href="/HangMuc/Index">Dự Toán</a></li>
+                    <li><a id="btn_href_dutoan" href="/HangMuc/Estimate_Work">Dự Toán</a></li>
                     <li><a>Photos</a></li>
                     <li><a href="#">About Us</a></li>
                     <li><a href="#">Links</a></li>
@@ -81,11 +81,11 @@
                     if (s == '') {
                         var con_hm = confirm("Bạn vẫn chưa đăng nhập, Hệ thống sẽ không thể lưu dữ liệu của bạn, Bạn có muốn tiếp tục...!!!");
                         if (con_hm == true) {
-                            $(this).attr('href', '/HangMuc/Index');
+                            $(this).attr('href', '/HangMuc/Estimate_Work');
                         }
                     }
                     else {
-                        $(this).attr('href', "/HangMuc/Index");
+                        $(this).attr('href', "/HangMuc/Estimate_Work");
                     }
                 });
             });

@@ -9,7 +9,6 @@
             Otherwise the missed function will return the default error message: <i>'The function "funcName" has not supported in FlexSheet yet.'</i>.
         </p>
     </div>
-
     <style>
         .input_zoomdata {
             margin-bottom: 5px;
@@ -127,10 +126,10 @@
                             <div style="left:6%;width:6%;" class="cell"><input type="text" ng-model="work.key" class="input_sheet" /></div>
                             <div style="left:12%;width:21%;" class="cell"><input type="text" ng-model="work.name" ng-dblclick="search_work($event);" class="input_sheet" /></div>
                             <div style="left:33%;width:6%;" class="cell"><input type="text" ng-model="work.unit" class="input_sheet" /></div>
-                            <div style="left:39%;width:5%;" class="cell"><input type="text" ng-model="work.number" class="input_sheet" /></div>
-                            <div style="left:44%;width:5%;" class="cell"><input type="text" ng-model="work.horizontal" class="input_sheet" /></div>
-                            <div style="left:49%;width:5%;" class="cell"><input type="text" ng-model="work.vertical" class="input_sheet" /></div>
-                            <div style="left:54%;width:5%;" class="cell"><input type="text" ng-model="work.height" class="input_sheet" /></div>
+                            <div style="left:39%;width:5%;" class="cell"><input type="text" ng-model="work.number" class="input_sheet" ng-blur="change($event)" /></div>
+                            <div style="left:44%;width:5%;" class="cell"><input type="text" ng-model="work.horizontal" class="input_sheet" ng-blur="change($event)" /></div>
+                            <div style="left:49%;width:5%;" class="cell"><input type="text" ng-model="work.vertical" class="input_sheet" ng-blur="change($event)" /></div>
+                            <div style="left:54%;width:5%;" class="cell"><input type="text" ng-model="work.height" class="input_sheet" ng-blur="change($event)" /></div>
                             <div style="left:59%;width:5%;" class="cell"><input type="text" ng-model="work.area" class="input_sheet" /></div>
                             <div style="left:64%;width:6%;" class="cell"><input type="text" ng-model="work.pricematerial" class="input_sheet" /></div>
                             <div style="left:70%;width:6%;" class="cell"><input type="text" ng-model="work.pricelabor" class="input_sheet" /></div>
