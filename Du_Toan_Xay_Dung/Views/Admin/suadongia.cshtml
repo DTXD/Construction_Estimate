@@ -2,36 +2,9 @@
     ViewBag.Title = "suadongia";
     Layout = "~/Views/Shared/_Admin.cshtml";
  }
-<script>
-    angular.module('postApp', [])
-  .controller('postController', ['$scope', '$http', function ($scope, $http) {
-      $scope.master = {};
-      $scope.submitForm = function (dongia) {
-          $scope.master = angular.copy(dongia);
-          $http({
-              method: 'POST',
-              url: '/Admin/post_suadongia',
-              data: JSON.stringify($scope.master),
-              headers: { 'Content-Type': 'application/json' }
-          })
-              .success(function (result) {
-                  if (result == "error") {
-                      // Showing errors.
-                      //$scope.errorEmail = data.errors.email;
-                      alert("Xảy ra lỗi");
-                      return;
-                  } else {
-                      //$scope.message = data.message;
-                      alert("Lưu thành công");
-                      window.location.href = "/Admin/danhsachdongia";
-                  }
-              });
-      };
-  }]);
-</script>
+
 <!-- page content -->
-<div class="right_col" role="main" ng-app="postApp" ng-controller="postController"
-      ng-init="dongia.MaKV='@Model.'">
+<div class="right_col" role="main">
     <div class="">
         <div class="page-title">
             <div class="title_left">
@@ -62,7 +35,7 @@
                                     Mã khu vực
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" disabled required="required" value="@Model.MaKV" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -70,13 +43,13 @@
                                     Mã thành phần
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" value="@Model.MaVL_NC_MTC" name="mathanhphan" id="mathanhphan" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" disabled value="@Model.MaVL_NC_MTC" name="mathanhphan" id="mathanhphan" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Tên thành phần</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="ten" value="@Model.Ten" class="form-control col-md-7 col-xs-12" type="text" name="ten">
+                                    <input id="ten" disabled value="@Model.Ten" class="form-control col-md-7 col-xs-12" type="text" name="ten">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -84,7 +57,7 @@
                                     Đơn vị
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="donvi" value="@Model.DonVi" name="donvi" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                    <input id="donvi" disabled value="@Model.DonVi" name="donvi" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
                                 </div>
                             </div>
                             <div class="form-group">

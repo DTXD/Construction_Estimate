@@ -56,61 +56,6 @@ namespace Du_Toan_Xay_Dung.Controllers
             ViewBag.Title = "Dự toán xây dựng";
             return View();
         }
-        /*[PageLogin]
-        [HttpPost]
-        public JsonResult post_themnguoidung(UserViewModel obj)
-        {
-            try
-            {
-                var index = _db.Nguoi_Dungs.OrderByDescending(i => i.Ten).Select(i => i.Ten).FirstOrDefault();
-                index = index + 1;
-
-                if (obj.img_user.Count() > 0)
-                {
-                    string url_location = Server.MapPath("~/Images/Nguoidung");
-                    if (Directory.Exists(url_location))
-                    {
-                        foreach (var file in obj.img_user)
-                        {
-                            if (file != null && file.ContentLength > 0)
-                            {
-                                string fileLocation = Server.MapPath("~/Images/Admin/") + file.FileName;
-                                file.SaveAs(fileLocation);
-                            }
-                        }
-                    }
-                }
-                var nguoidung = new Nguoi_Dung();
-                nguoidung.Email = obj.Email;
-                nguoidung.Ten = obj.Ten;
-                nguoidung.Ho_TenLot = obj.Ho_TenLot;
-                nguoidung.Quyen = obj.Quyen;
-                nguoidung.ThanhPho = obj.ThanhPho;
-                nguoidung.SDT = obj.SDT;
-
-                _db.Nguoi_Dungs.InsertOnSubmit(nguoidung);
-
-                foreach (var file in obj.img_user)
-                {
-                    if (file != null && file.ContentLength > 0)
-                    {
-                        //them image vao database
-                        var image = new img_user();
-
-                        image.Url = "~/Images/Admin/" + file.FileName;
-                        _db.iInsertOnSubmit(image);
-                    }
-                }
-                _db.SubmitChanges();
-
-                return Json("ok");
-            }
-            catch (Exception)
-            {
-                return Json("error");
-            }
-        }*/
-
         public ActionResult suanguoidung(string Email)
         {
             var nguoidung = _db.Nguoi_Dungs.Where(i => i.Email.Equals(Email)).Select(i => new UserViewModel(i)).FirstOrDefault();
@@ -493,6 +438,15 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
             Nguoi_Dung nguoidung = new Nguoi_Dung();
             nguoidung = _db.Nguoi_Dungs.Where(i => i.Email.Equals(email)).FirstOrDefault();
+            var congtrinh = _db.CongTrinhs.Where(i => i.Email.Equals(email)).ToList();
+            if(congtrinh.Count>0)
+            {
+                for(var i=0;i<congtrinh.Count;i++)
+                {
+                    _db.CongTrinhs.DeleteOnSubmit(congtrinh[i]);
+                }
+            }
+
             _db.Nguoi_Dungs.DeleteOnSubmit(nguoidung);
             _db.SubmitChanges();
             return RedirectToAction("suaxoanguoidung");
@@ -646,6 +600,61 @@ namespace Du_Toan_Xay_Dung.Controllers
             _db.SubmitChanges();
             return RedirectToAction("danhsachdongia");
         }
+        /* [PageLogin]
+         [HttpPost]
+         public JsonResult post_themnguoidung(UserViewModel obj)
+         {
+             try
+             {
+                 var index = _db.Nguoi_Dungs.OrderByDescending(i => i.Ten).Select(i => i.Ten).FirstOrDefault();
+                 index = index + 1;
+
+                 /*if (obj.img_user.Count() > 0)
+                 {
+                     string url_location = Server.MapPath("~/Images/Nguoidung");
+                     if (Directory.Exists(url_location))
+                     {
+                         foreach (var file in obj.img_user)
+                         {
+                             if (file != null && file.ContentLength > 0)
+                             {
+                                 string fileLocation = Server.MapPath("~/Images/Admin/") + file.FileName;
+                                 file.SaveAs(fileLocation);
+                             }
+                         }
+                     }
+                 }
+                 var nguoidung = new Nguoi_Dung();
+                 nguoidung.Email = obj.Email;
+                 nguoidung.Ten = obj.Ten;
+                 nguoidung.Ho_TenLot = obj.Ho_TenLot;
+                 nguoidung.Quyen = obj.Quyen;
+                 nguoidung.ThanhPho = obj.ThanhPho;
+                 nguoidung.SDT = obj.SDT;
+
+                 _db.Nguoi_Dungs.InsertOnSubmit(nguoidung);
+
+                 /*foreach (var file in obj.img_user)
+                 {
+                     if (file != null && file.ContentLength > 0)
+                     {
+                         //them image vao database
+                         var image = new img_user();
+
+                         image.Url = "~/Images/Admin/" + file.FileName;
+                         _db.iInsertOnSubmit(image);
+                     }
+                 }
+                 _db.SubmitChanges();
+
+                 return Json("ok");
+             }
+             catch (Exception)
+             {
+                 return Json("error");
+             }
+         }*/
+
 
     }
 }

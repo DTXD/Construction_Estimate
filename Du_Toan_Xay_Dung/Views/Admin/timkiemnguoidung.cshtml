@@ -22,17 +22,6 @@
                             <li>
                                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="#">Cài đặt 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Cài đặt 2</a>
-                                    </li>
-                                </ul>
-                            </li>
                             <li>
                                 <a class="close-link"><i class="fa fa-close"></i></a>
                             </li>
@@ -51,8 +40,6 @@
                                     <th>Quyền</th>
                                     <th>Nơi làm việc</th>
                                     <th>Thành phố</th>
-                                    <th>Mật khẩu</th>
-                                    <th>Quyền</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,13 +47,11 @@
                                 {
                                     <tr>
                                         <td>@Model[i].Email</td>
-                                        <td>@Model[i].MatKhau</td>
                                         <td>@Model[i].Ho_TenLot</td>
                                         <td>@Model[i].Ten</td>
-                                        <td>@Model[i].SDT</td>
+                                        <td>@Model[i].Quyen</td>
                                         <td>@Model[i].NoiLamViec</td>
                                         <td>@Model[i].ThanhPho</td>
-                                        <td>@Model[i].Quyen</td>
                                         <td><a href="/Admin/suanguoidung?Email=@Model[i].Email">Sửa</a></td>
                                         <td>
                                             @Html.ActionLink("Xóa", "Delete", "Admin", new { @Email = Model[i].Email }, new { @onclick = "return deleteconfirm()" })
@@ -83,77 +68,4 @@
     </div>
 </div>
 <!-- /page content -->
-<script>
-      $(document).ready(function() {
-        var handleDataTableButtons = function() {
-          if ($("#datatable-buttons").length) {
-            $("#datatable-buttons").DataTable({
-              dom: "Bfrtip",
-              buttons: [
-                {
-                  extend: "copy",
-                  className: "btn-sm"
-                },
-                {
-                  extend: "csv",
-                  className: "btn-sm"
-                },
-                {
-                  extend: "excel",
-                  className: "btn-sm"
-                },
-                {
-                  extend: "pdfHtml5",
-                  className: "btn-sm"
-                },
-                {
-                  extend: "print",
-                  className: "btn-sm"
-                },
-              ],
-              responsive: true
-            });
-          }
-        };
 
-        TableManageButtons = function() {
-          "use strict";
-          return {
-            init: function() {
-              handleDataTableButtons();
-            }
-          };
-        }();
-
-        $('#datatable').dataTable();
-        $('#datatable-keytable').DataTable({
-          keys: true
-        });
-
-        $('#datatable-responsive').DataTable();
-
-        $('#datatable-scroller').DataTable({
-          ajax: "js/datatables/json/scroller-demo.json",
-          deferRender: true,
-          scrollY: 380,
-          scrollCollapse: true,
-          scroller: true
-        });
-
-        var table = $('#datatable-fixed-header').DataTable({
-          fixedHeader: true
-        });
-
-        TableManageButtons.init();
-      });
-      function deleteconfirm()
-      {
-          if (confirm("Bạn có chắc chắn muốn xóa người dùng này"))
-              return true;
-          else
-              return false;
-      }
-      FocusEvent=false;
-      checked=false;
-</script>
-<!-- /Datatables -->
