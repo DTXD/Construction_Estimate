@@ -21,9 +21,9 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', 'dataService', 
 
 
     function getNormWorks() {
-        dataService.getNormworks().then(function (obj) {
+        dataService.getNormworks().then(function (data) {
             var eachItem;
-            angular.forEach(obj, function (value, key) {
+            angular.forEach(data, function (value, key) {
                 eachItem = {
                     ID: value.MaHieuCV_DM,
                     Name: value.CongTac + " " + value.RangBuoc,
@@ -38,14 +38,14 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', 'dataService', 
     };
 
     function getListPrice() {
-        dataService.getListPrice().then(function (obj) {
-            $scope.list_AllPrice = obj.data;
+        dataService.getListPrice().then(function (data) {
+            $scope.list_AllPrice = data;
         });
     };
 
     function GetDetailNormWork_Price() {
-        dataService.GetDetailNormWork_Price().then(function (obj) {
-            $scope.ListDetailNormWork_Price = obj.data;
+        dataService.GetDetailNormWork_Price().then(function (data) {
+            $scope.ListDetailNormWork_Price = data;
         });
     };
 

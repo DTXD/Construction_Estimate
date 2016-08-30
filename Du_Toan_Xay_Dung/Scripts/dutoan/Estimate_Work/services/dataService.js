@@ -1,53 +1,31 @@
 ﻿
-
 angular.module('app_work').factory('dataService', ['$http', function ($http) {
     var getNormworks = function () {
-        return $http({
-            method: 'POST',
-            url: '/HangMuc/GetNormWorks',
-            headers: { 'Content-Type': 'application/json' }
-        })
-                  .success(function (data) {
-                      if (data.errors) {
-                          // Showing errors.
-                          $scope.errorEmail = data.errors.email;
-                      } else {
-                          return data;
-                      }
-                  });
+        return $http.get('/HangMuc/GetNormWorks').then(function (response) {
+            return response.data
+        }, function (response) {
+            //Showing errors
+        });
     };
+
+    
 
     var getListPrice = function () {
-        return $http({
-            method: 'POST',
-            url: '/HangMuc/GetDSDonGia',
-            headers: { 'Content-Type': 'application/json' }
-        })
-                  .success(function (data) {
-                      if (data.errors) {
-                          // Showing errors.
-                          $scope.errorEmail = data.errors.email;
-                      } else {
-                          return data;
-                      }
-                  });
+        return $http.get('/HangMuc/GetDSDonGia').then(function (response) {
+            return response.data
+        }, function (response) {
+            //Showing errors
+        });
     };
 
+    
 
     var GetDetailNormWork_Price = function () {
-        return $http({
-            method: 'POST',
-            url: '/HangMuc/GetDetailNormWork_Price',
-            headers: { 'Content-Type': 'application/json' }
-        })
-                  .success(function (data) {
-                      if (data.errors) {
-                          // Showing errors.
-                          $scope.errorEmail = data.errors.email;
-                      } else {
-                          return data;
-                      }
-                  });
+        return $http.get('/HangMuc/GetDetailNormWork_Price').then(function (response) {
+            return response.data
+        }, function (response) {
+            //Showing errors
+        });
     };
 
 
