@@ -6,30 +6,65 @@
     var list_congtrinh = ViewData["List_CongTrinh"] as List<CongTrinhViewModel>;
     var congtrinhs_null = ViewData["List_CongTrinh_Null"] as List<string>;
 }
-<link href="~/Content/CongTrinh/congtrinh.css" rel="stylesheet" />
+<style>
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+    }
 
+    .img_box {
+        list-style: none;
+        position: relative;
+        display: table;
+        margin: 8px;
+        height: 160px;
+        border: 1px solid #ddd;
+        box-shadow: 1px 1px 5px 0 #a2958a;
+        padding: 6px;
+        float: left;
+    }
+
+    .icon-delete {
+        display: inherit;
+        margin: 20px 0px 0px 0px;
+    }
+    .glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+</style>
 <script>
-    $(document).ready(function () {
-        $('#container ').on('click', '.btn_getdata', function () {
-            var _txtID = $(this).attr("data-dropboxmact");
-            $("#btn_uploadimages").attr("data-mactupload", _txtID);
-            $("#btn_uploadfileexcel").attr("data-mactupload", _txtID);
-        });
+   
+        $(document).ready(function () {
+            $('#container ').on('click', '.btn_getdata', function () {
+                var _txtID = $(this).attr("data-dropboxmact");
+                $("#btn_uploadimages").attr("data-mactupload", _txtID);
+                $("#btn_uploadfileexcel").attr("data-mactupload", _txtID);
+            });
 
-        $("#container").on('mouseover', '.each_project', function () {
-            var des = $(this).find(".description_project");
-            des.css("margin-top", "");
-            var but = $(this).find(".button-project");
-            but.css("display", "");
-        });
-        $("#container").on('mouseout', '.each_project', function () {
-            var des = $(this).find(".description_project");
-            des.css("margin-top", "25px");
-            var but = $(this).find(".button-project");
-            but.css("display", "none");
-        });
+            $("#container").on('mouseover', '.each_project', function () {
+                var des = $(this).find(".description_project");
+                des.css("margin-top", "");
+                var but = $(this).find(".button-project");
+                but.css("display", "");
+            });
+            $("#container").on('mouseout', '.each_project', function () {
+                var des = $(this).find(".description_project");
+                des.css("margin-top", "25px");
+                var but = $(this).find(".button-project");
+                but.css("display", "none");
+            });
 
-    });
+        });
 </script>
 
 <script>
@@ -183,11 +218,11 @@
     }
 </style>
 
-<section class="content-header">
+<!--<section class="content-header">
     <ol class="breadcrumb">
         <li class="active">Công Trình</li>
     </ol>
-</section>
+</section>-->
 
 <section class="content" ng-app="postApp" ng-controller="postController">
     @if (SessionHandler.User != null)
@@ -197,11 +232,10 @@
                 <h3>Công trình <small class="label label-info">List</small></h3>
             </div>
             <div class="col-xs-12 col-sm-2">
-                <p style="padding:5px;"></p>
-                <button class="btn btn-primary form-control" data-toggle="modal" data-target="#modal_add_building"><span class="glyphicon glyphicon-plus"></span>THÊM CÔNG TRÌNH</button>
+                <p style="padding:5px"></p>
+                <button style="margin-right:100px" class="btn btn-primary form-control" data-toggle="modal" data-target="#modal_add_building"><b><span class="glyphicon glyphicon-plus"></span>&nbsp;</b>ADD</button>
             </div>
-        </div>
-        <hr />
+        </div><br /><hr />    
         <!--list cong trinh, copy ra 1 file rieng de de~
             phan biet voi cai file chung, copy het quang vo-->
         <div class="row">
@@ -234,9 +268,9 @@
                                 <div class="panel-body">
                                     <div class="info-project">
                                         <div class="col-sm-12">
-                                            <img src="~/Images/Awicons-Vista-Artistic-Office-building.ico" class="img-responsive" style="width:160px; height:160px;" />
+                                            <img src="~/Images/Awicons-Vista-Artistic-Office-building.ico" class="img-responsive" style="width:200px; height:200px;" />
                                         </div>
-                                        <p>@item.MoTa</p>
+                                        <p>@description...</p>
                                     </div>
                                 </div>
                                 <div class="panel-footer">
@@ -331,24 +365,23 @@
                                 </div>
                             </div>
                             <div class="form-group" style="margin-right:20px">
-                                <label class="control-label col-sm-2" for="Url_HinhAnh">Hình ảnh:</label>
+                                <label class="control-label col-sm-2" style="margin-left:20px" for="Url_HinhAnh">Hình ảnh:</label>
                                 <div id="listImage" class="listImage_old col-sm-12" style="padding-left:80px">
                                     <div id="Images_new" class="col-sm-11">
-                                        <span class="closeall_images" id="closeall_images" style="padding-left:900px"><i class="fa fa-fw fa-remove"></i></span>
+                                        <!--<span class="closeall_images" id="closeall_images" style="padding-left:900px"><i class="fa fa-fw fa-remove"></i></span>-->
                                         <div id="img_box" class="img_box" ng-repeat="x in stepsModel track by $index">
                                             <div style="display:none">{{x.Name}}</div>
                                             <div style="display:none">{{x.Size}}</div>
-                                            <img ng-src="{{x.Src}}" style="width:100px;height:80px">
+                                            <img ng-src="{{x.Src}}" style="width:150px;height:150px">
                                             <span class="image_name"></span>
-                                            <span class="icon-delete kv-file-zoom btn btn-xs btn-default"
-                                                  ng-click="deleteTempImage($index,x)">
+                                            <span class="icon-delete kv-file-zoom btn btn-xs btn-default"ng-click="deleteTempImage($index,x)">
                                                 <i class="fa fa-fw fa-trash-o" aria-hidden="true">
                                                 </i>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
-                                <label style="margin-left:100px" for="gallery_upload" class="custom-file-upload" id="gallery_upload_choose">
+                                <label style="margin-left:120px" for="gallery_upload" class="custom-file-upload" id="gallery_upload_choose">
                                     <i class="fa fa-cloud-upload"></i> Chọn ảnh
                                 </label>
                                 <input id="gallery_upload" type="file" name="file" onchange="angular.element(this).scope().uploadedFile(event)" multiple accept="image/*" style="display:none" />

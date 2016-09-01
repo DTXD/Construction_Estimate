@@ -263,6 +263,11 @@
     <Content Include="Content\Bootstrap\bootstrap.css" />
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
     <Content Include="Content\CongTrinh\congtrinh.css" />
+    <Content Include="Content\CongTrinh_css\bootstrap-theme.min.css" />
+    <Content Include="Content\CongTrinh_css\bootstrap.min.css" />
+    <Content Include="Content\CongTrinh_css\ces-frontpage.css" />
+    <Content Include="Content\CongTrinh_css\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\CongTrinh_css\font-awesome.min.css" />
     <Content Include="Content\custom.min.css" />
     <Content Include="Content\fileinput.min.css" />
     <Content Include="Content\font-awesome\css\font-awesome.css" />
@@ -401,6 +406,10 @@
     <Content Include="Scripts\Bootstrap\bootstrap-select.min.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\CongTrinh_js\bootstrap.min.js" />
+    <Content Include="Scripts\CongTrinh_js\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\CongTrinh_js\jquery.dataTables.min.js" />
+    <Content Include="Scripts\CongTrinh_js\jquery.min.js" />
     <Content Include="Scripts\Difference\bootbox.min.js" />
     <Content Include="Scripts\Difference\canvas-to-blob.min.js" />
     <Content Include="Scripts\Difference\ChunkFive_400.font.js" />
