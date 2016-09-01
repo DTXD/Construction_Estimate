@@ -26,11 +26,11 @@
             border-bottom: 1px solid #c6c6c6;
             outline: none;
             position: absolute;
-            height: 28px;
+            height: 56px;
         }
 
         .row_sheet {
-            height: 28px;
+            height: 56px;
             width: 100%;
         }
 
@@ -59,7 +59,7 @@
             padding-top: 5px;
             outline: none;
             position: absolute;
-            height: 28px;
+            height: 56px;
         }
 
         .sheet_cellheader {
@@ -81,22 +81,24 @@
         .input_sheet {
             width: 100%;
             border: 0px;
-            height: 27px;
+            height: 55px;
             padding-left: 4px;
+            resize: none;
         }
     </style>
 
     <div class="col-sm-12">
+        <!--
         <div class="col-sm-12" style="margin-top:10px">
             <div class="input_zoomdata">
                 <div class="input-group-btn">
                     <span class="btn btn-info"><i class="fa fa-fw fa-arrows-h"></i></span>
-                </div><!-- /btn-group -->
+                </div><!-- /btn-group 
                 <input type="text" class="form-control" id="txt_zoomdata" ng-model="work">
             </div>
         </div>
-
-        <div class="col-sm-12" style="height:200px;">
+            -->
+        <div class="col-sm-12" style="height:400px;">
             <div style="width:100%; height:100%">
                 <!--row_header-->
                 <div class="sheet_cellheader" id="sheet_cellheader">
@@ -128,7 +130,7 @@
                             <div style="left:0%;width:3%;border-left: 1px solid #c6c6c6;" class="column_header">{{work.index}}</div>
                             <div style="left:3%;width:3%;" class="cell"><input type="text" ng-model="work.id" class="input_sheet" /></div>
                             <div style="left:6%;width:6%;" class="cell"><input type="text" ng-model="work.key" class="input_sheet" /></div>
-                            <div style="left:12%;width:21%;" class="cell"><input type="text" ng-model="work.name" ng-dblclick="search_work($event);" class="input_sheet" /></div>
+                            <div style="left:12%;width:21%;" class="cell"><textarea ng-model="work.name" ng-dblclick="search_work($event);" class="input_sheet" style="font-size:13px;"></textarea></div>
                             <div style="left:33%;width:6%;" class="cell"><input type="text" ng-model="work.unit" class="input_sheet" /></div>
                             <div style="left:39%;width:5%;" class="cell"><input type="text" ng-model="work.number" class="input_sheet" ng-blur="change($event)" /></div>
                             <div style="left:44%;width:5%;" class="cell"><input type="text" ng-model="work.horizontal" class="input_sheet" ng-blur="change($event)" /></div>

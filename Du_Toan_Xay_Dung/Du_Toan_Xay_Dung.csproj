@@ -264,6 +264,7 @@
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
     <Content Include="Content\CongTrinh\congtrinh.css" />
     <Content Include="Content\custom.min.css" />
+    <Content Include="Content\dutoan\estimate_work.css" />
     <Content Include="Content\fileinput.min.css" />
     <Content Include="Content\font-awesome\css\font-awesome.css" />
     <Content Include="Content\font-awesome\css\font-awesome.min.css" />
@@ -418,10 +419,8 @@
     <Content Include="Scripts\Dropbox_API\dropins.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\App_work.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\Controllers\EstimateCtrl.js" />
-    <Content Include="Scripts\DuToan\Estimate_Work\Controllers\hangmucCtrl.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\JQuery\sheet_mainwork.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\services\dataService.js" />
-    <Content Include="Scripts\DuToan\Estimate_Work\services\hangmucservice.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.angular.min.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.grid.filter.min.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.grid.min.js" />

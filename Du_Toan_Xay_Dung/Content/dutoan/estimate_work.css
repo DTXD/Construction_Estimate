@@ -1,0 +1,59 @@
+﻿
+.treeview {
+    cursor: pointer;
+}
+    
+.treeview:hover{
+    background-color: #e5e5e5;
+
+}
+
+.left_menu {
+    z-index: 1000;
+    left: 250px;
+    width: 250px;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    float: left;
+    margin-top: 150px;
+}
+
+.wrapper_content {
+    padding-left: 250px;
+}
+
+.page-content-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+#wrapper_content.toggled {
+    padding-left: 250px;
+}
+
+    #wrapper_content.toggled #left_menu {
+        width: 250px;
+    }
+
+#wrapper_content.toggled {
+    padding-left: 0;
+}
+
+    #wrapper_content.toggled #left_menu {
+        width: 0;
+    }
+
+#sheet_cellheader.toggled_sheet {
+    width: 98.64%;
+}
+
+.content_page {
+    border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-color: #ddd;
+    border-width: 0px 1px 1px 1px;
+    background-color: white;
+}

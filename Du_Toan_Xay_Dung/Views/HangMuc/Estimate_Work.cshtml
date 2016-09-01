@@ -18,7 +18,7 @@
 
 @section Scripts{
 
-    
+
     <!--Bootstrap angular-->
     <script src="~/Scripts/Angular/ui-bootstrap-tpls-2.0.0.min.js"></script>
 
@@ -31,58 +31,7 @@
 }
 
 @section CSS{
-
-    <style>
-        .left_menu {
-            z-index: 1000;
-            left: 250px;
-            width: 250px;
-            height: 100%;
-            margin-left: -250px;
-            overflow-y: auto;
-            float:left;
-            margin-top:150px
-        }
-
-        .wrapper_content {
-            padding-left: 250px;
-        }
-
-        .page-content-wrapper {
-            position: relative;
-            width: 100%;
-        }
-
-        #wrapper_content.toggled {
-            padding-left: 250px;
-        }
-
-            #wrapper_content.toggled #left_menu {
-                width: 250px;
-            }
-
-        #wrapper_content.toggled {
-            padding-left: 0;
-        }
-
-            #wrapper_content.toggled #left_menu {
-                width: 0;
-            }
-
-        #sheet_cellheader.toggled_sheet {
-            width: 98.64%;
-        }
-
-        .content_page {
-            border-radius: 3px 3px 3px 3px;
-            -moz-border-radius: 3px 3px 3px 3px;
-            -webkit-border-radius: 3px 3px 3px 3px;
-            border-style: solid;
-            border-color: #ddd;
-            border-width: 0px 1px 1px 1px;
-            background-color: white;
-        }
-    </style>
+    <link href="~/Content/dutoan/estimate_work.css" rel="stylesheet" />
 }
 <section class="content-header"></section>
 
@@ -90,30 +39,55 @@
     <!-- Sidebar -->
     <div class="col-sm-12 wrapper_content" id="wrapper_content">
         <div class="left_menu" id="left_menu">
-            <div style="margin-left:50px">
-                <h4>Chọn công trình:</h4>
-                <select>
-                    <option>Nhà cấp 3</option>
-                    <option>Nhà cấp 4</option>
-                    <option>Trường Học</option>
-                </select>
+            <!--building-->
+            <div class="col-sm-12">
+                <div class="treeview" ng-click="treeview($event)">
+                    <span>
+                        <i class="fa fa-pie-chart"></i>
+                        <span>Công Trình</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </div>
+                <div class="col-sm-12 treeview-menu" style="display:none">
+                    <div>
+                        <h4>Chọn công trình:</h4>
+                        <select>
+                            <option>Nhà cấp 3</option>
+                            <option>Nhà cấp 4</option>
+                            <option>Trường Học</option>
+                        </select>
+                    </div>
+                    <div>
+                        <h4>Chọn Hạng Mục:</h4>
+                        <select>
+                            <option>Đào Móng</option>
+                            <option>Xây Tường</option>
+                            <option>Phát Rừng</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div style="margin-left:50px">
-                <h4>Chọn Hạng Mục:</h4>
-                <select>
-                    <option>Đào Móng</option>
-                    <option>Xây Tường</option>
-                    <option>Phát Rừng</option>
-                </select>
+            <!--Price-->
+            <div class="col-sm-12">
+                <div class="treeview" ng-click="treeview($event)">
+                    <span>
+                        <i class="fa fa-pie-chart"></i>
+                        <span>Đơn Giá</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </div>
+                <div class="col-sm-12 treeview-menu" style="display:none">
+                    <div>
+                        <h4>Chọn Đơn Giá:</h4>
+                        <select>
+                            <option>Hồ Chí Minh</option>
+                            <option>Hà Nội</option>
+                            <option selected>Đơn giá của tôi</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div style="margin-left:50px">
-                <h4>Chọn Đơn Giá:</h4>
-                <select>
-                    <option>Hồ Chí Minh</option>
-                    <option>Hà Nội</option>
-                    <option selected>Đơn giá của tôi</option>
-                </select>
-            </div>
+            <br />
         </div>
         <div id="page-content-wrapper" class="page-content-wrapper">
             <div class="container-fluid">
