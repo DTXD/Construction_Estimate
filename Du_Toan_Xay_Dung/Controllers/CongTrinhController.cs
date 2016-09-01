@@ -30,6 +30,7 @@ namespace Du_Toan_Xay_Dung.Controllers
         {
             ViewData["List_CongTrinh"] = _db.CongTrinhs.Where(i => i.Email.Equals(SessionHandler.User.Email)).Select(i => new CongTrinhViewModel(i)).ToList();
             ViewData["List_CongTrinh_Null"] = _db.CongTrinhs.Where(i => i.Email.Equals(SessionHandler.User.Email) && !i.HangMucs.Any(o => o.MaCT.Equals(i.MaCT))).Select(i => i.MaCT).ToList();
+            ViewData["list_hinhanh"] = _db.Images_CongTrinhs.Select(i => new Images_CongTrinhViewModel(i)).ToList();
             return View();
         }
         [PageLogin]

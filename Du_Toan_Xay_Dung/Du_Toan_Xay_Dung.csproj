@@ -262,6 +262,7 @@
     <Content Include="Content\Bootstrap\bootstrap-theme.min.css" />
     <Content Include="Content\Bootstrap\bootstrap.css" />
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
+    <Content Include="Content\CongTrinh\congtrinh.css" />
     <Content Include="Content\custom.min.css" />
     <Content Include="Content\dutoan\estimate_work.css" />
     <Content Include="Content\fileinput.min.css" />
@@ -395,6 +396,7 @@
     <Content Include="Scripts\Angular\angular-ui-router.min.js" />
     <Content Include="Scripts\Angular\angular.min.js" />
     <Content Include="Scripts\Angular\bootstrap.min.js" />
+    <Content Include="Scripts\Angular\congtrinh.js" />
     <Content Include="Scripts\Angular\ui-bootstrap-tpls-2.0.0.min.js" />
     <Content Include="Scripts\Bootstrap\bootstrap-select.js" />
     <Content Include="Scripts\Bootstrap\bootstrap-select.min.js" />
