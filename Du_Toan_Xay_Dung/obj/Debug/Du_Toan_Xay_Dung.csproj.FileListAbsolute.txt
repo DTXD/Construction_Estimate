@@ -593,3 +593,4 @@ C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay
 C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay_Dung\bin\System.Net.Http.Formatting.xml
 C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay_Dung\bin\System.Web.Http.xml
 C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay_Dung\bin\System.Web.Http.WebHost.xml
+C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay_Dung\obj\Debug\Du_Toan_Xay_Dung.csprojResolveAssemblyReference.cache
