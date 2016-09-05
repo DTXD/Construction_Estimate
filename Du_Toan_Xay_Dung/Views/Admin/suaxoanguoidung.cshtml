@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<Du_Toan_Xay_Dung.Models.Nguoi_Dung>
+﻿@model PagedList.IPagedList<Du_Toan_Xay_Dung.Models.User>
 @using PagedList.Mvc
 @{
     ViewBag.Title = "suaxoanguoidung";
@@ -65,13 +65,13 @@
                                 { 
                                 <tr>
                                     <td>@Model[i].Email</td>
-                                    <td>@Model[i].Ho_TenLot</td>
-                                    <td>@Model[i].Ten</td>
-                                    <td>@Model[i].SDT</td>
-                                    <td>@Model[i].NoiLamViec</td>
-                                    <td>@Model[i].ThanhPho</td>
-                                    <td>@Model[i].MatKhau</td>
-                                    <td>@Model[i].Quyen</td>
+                                    <td>@Model[i].First_Name</td>
+                                    <td>@Model[i].Last_Name</td>
+                                    <td>@Model[i].Phone</td>
+                                    <td>@Model[i].Workplace</td>
+                                    <td>@Model[i].City</td>
+                                    <td>@Model[i].Password</td>
+                                    <td>@Model[i].</td>
                                     <td><a href="/Admin/suanguoidung?Email=@Model[i].Email">Sửa</a></td>
                                     <td>@Html.ActionLink("Xóa", "Delete","Admin", new { @Email = Model[i].Email }, new { @onclick = "return deleteconfirm()" })                                        
                                     </td>

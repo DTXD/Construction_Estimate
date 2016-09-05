@@ -56,14 +56,6 @@
                                     <input id="donvi" name="donvi" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                    Ràng buộc  <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="rangbuoc" name="rangbuoc" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
-                                </div>
-                            </div>
                             <div class="form-group" id="tphp">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Thành phần hao phí</label>
                                 <div class="col-md-9 col-sm-9 col-xs-12" ng-controller="thanhphanhaophi">
@@ -83,7 +75,7 @@
                             <select size="15" id="select-tphp1" name="select-tphp1" style="display:none">
                                 @foreach (var k in list_dongia)
                                 {
-                                    <option value="@k.MaKV;@k.MaVL_NC_MTC;@k.Ten;@k.DonVi;@k.Gia">@k.Ten</option>
+                                    <option value="@k.ID;@k.Name;@k.Unit">@k.Name</option>
                                 }
                             </select>
 
@@ -120,12 +112,10 @@
                                             <table id="datatable" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th>Mã khu vực</th>
                                                         <th>Mã thành phần</th>
                                                         <th>Hao Phí</th>
                                                         <th>Tên</th>
                                                         <th>Đơn vị</th>
-                                                        <th>Giá</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>

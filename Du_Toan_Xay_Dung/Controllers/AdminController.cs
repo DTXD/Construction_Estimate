@@ -573,7 +573,8 @@ namespace Du_Toan_Xay_Dung.Controllers
         }
         public ActionResult suadongia(string MaVL_NC_MTC)
         {
-            var dongia = _db.UnitPrices.Where(i => i.ID.Equals(MaVL_NC_MTC)).Select(i => new DonGiaViewModel(i)).FirstOrDefault();
+            ViewData["dongia"] = _db.UnitPrices.Where(i => i.ID.Equals(MaVL_NC_MTC)).Select(i => new DonGiaViewModel(i)).FirstOrDefault();
+            ViewData["dongia_khuvuc"] = _db.UnitPrice_Areas.Where(i => i.UnitPrice_ID.Equals(MaVL_NC_MTC)).Select(i => new UnitPrice_AreaViewModel(i)).FirstOrDefault();
             if (SessionHandler.User != null)
             {
                 var user = SessionHandler.User;
@@ -583,7 +584,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 return RedirectToAction("Login", "Account");
             }
             ViewBag.Title = "Dự toán xây dựng";
-            return View(dongia);
+            return View();
         }
         [HttpPost]
         public ActionResult post_suadongia(string mathanhphan, FormCollection form)
