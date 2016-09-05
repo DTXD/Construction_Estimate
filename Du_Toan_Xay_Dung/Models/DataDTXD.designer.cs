@@ -60,33 +60,12 @@ namespace Du_Toan_Xay_Dung.Models
     partial void InsertBuilding(Building instance);
     partial void UpdateBuilding(Building instance);
     partial void DeleteBuilding(Building instance);
-    partial void InsertArea1(Area1 instance);
-    partial void UpdateArea1(Area1 instance);
-    partial void DeleteArea1(Area1 instance);
     partial void InsertUserWork1(UserWork1 instance);
     partial void UpdateUserWork1(UserWork1 instance);
     partial void DeleteUserWork1(UserWork1 instance);
-    partial void InsertBuilding1(Building1 instance);
-    partial void UpdateBuilding1(Building1 instance);
-    partial void DeleteBuilding1(Building1 instance);
-    partial void InsertImage1(Image1 instance);
-    partial void UpdateImage1(Image1 instance);
-    partial void DeleteImage1(Image1 instance);
     partial void InsertConstructionMaterial1(ConstructionMaterial1 instance);
     partial void UpdateConstructionMaterial1(ConstructionMaterial1 instance);
     partial void DeleteConstructionMaterial1(ConstructionMaterial1 instance);
-    partial void InsertBuildingItem1(BuildingItem1 instance);
-    partial void UpdateBuildingItem1(BuildingItem1 instance);
-    partial void DeleteBuildingItem1(BuildingItem1 instance);
-    partial void InsertNormDetail1(NormDetail1 instance);
-    partial void UpdateNormDetail1(NormDetail1 instance);
-    partial void DeleteNormDetail1(NormDetail1 instance);
-    partial void InsertNormWork1(NormWork1 instance);
-    partial void UpdateNormWork1(NormWork1 instance);
-    partial void DeleteNormWork1(NormWork1 instance);
-    partial void InsertUnitPrice1(UnitPrice1 instance);
-    partial void UpdateUnitPrice1(UnitPrice1 instance);
-    partial void DeleteUnitPrice1(UnitPrice1 instance);
     partial void InsertUser1(User1 instance);
     partial void UpdateUser1(User1 instance);
     partial void DeleteUser1(User1 instance);
@@ -210,14 +189,6 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Area1> Area1s
-		{
-			get
-			{
-				return this.GetTable<Area1>();
-			}
-		}
-		
 		public System.Data.Linq.Table<UserWork1> UserWork1s
 		{
 			get
@@ -226,67 +197,11 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Building1> Building1s
-		{
-			get
-			{
-				return this.GetTable<Building1>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Image1> Image1s
-		{
-			get
-			{
-				return this.GetTable<Image1>();
-			}
-		}
-		
 		public System.Data.Linq.Table<ConstructionMaterial1> ConstructionMaterial1s
 		{
 			get
 			{
 				return this.GetTable<ConstructionMaterial1>();
-			}
-		}
-		
-		public System.Data.Linq.Table<BuildingItem1> BuildingItem1s
-		{
-			get
-			{
-				return this.GetTable<BuildingItem1>();
-			}
-		}
-		
-		public System.Data.Linq.Table<NormDetail1> NormDetail1s
-		{
-			get
-			{
-				return this.GetTable<NormDetail1>();
-			}
-		}
-		
-		public System.Data.Linq.Table<NormWork1> NormWork1s
-		{
-			get
-			{
-				return this.GetTable<NormWork1>();
-			}
-		}
-		
-		public System.Data.Linq.Table<UnitPrice1> UnitPrice1s
-		{
-			get
-			{
-				return this.GetTable<UnitPrice1>();
-			}
-		}
-		
-		public System.Data.Linq.Table<UnitPrice_Area1> UnitPrice_Area1s
-		{
-			get
-			{
-				return this.GetTable<UnitPrice_Area1>();
 			}
 		}
 		
@@ -427,8 +342,6 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		private EntityRef<Building> _Building;
 		
-		private EntityRef<Building1> _Building1;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -448,7 +361,6 @@ namespace Du_Toan_Xay_Dung.Models
 		public BuildingItem()
 		{
 			this._Building = default(EntityRef<Building>);
-			this._Building1 = default(EntityRef<Building1>);
 			OnCreated();
 		}
 		
@@ -483,7 +395,7 @@ namespace Du_Toan_Xay_Dung.Models
 			{
 				if ((this._Building_ID != value))
 				{
-					if ((this._Building.HasLoadedOrAssignedValue || this._Building1.HasLoadedOrAssignedValue))
+					if (this._Building.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -586,40 +498,6 @@ namespace Du_Toan_Xay_Dung.Models
 						this._Building_ID = default(long);
 					}
 					this.SendPropertyChanged("Building");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building1_BuildingItem", Storage="_Building1", ThisKey="Building_ID", OtherKey="ID", IsForeignKey=true)]
-		public Building1 Building1
-		{
-			get
-			{
-				return this._Building1.Entity;
-			}
-			set
-			{
-				Building1 previousValue = this._Building1.Entity;
-				if (((previousValue != value) 
-							|| (this._Building1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Building1.Entity = null;
-						previousValue.BuildingItems.Remove(this);
-					}
-					this._Building1.Entity = value;
-					if ((value != null))
-					{
-						value.BuildingItems.Add(this);
-						this._Building_ID = value.ID;
-					}
-					else
-					{
-						this._Building_ID = default(long);
-					}
-					this.SendPropertyChanged("Building1");
 				}
 			}
 		}
@@ -865,8 +743,6 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		private EntityRef<Building> _Building;
 		
-		private EntityRef<Building1> _Building1;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -882,7 +758,6 @@ namespace Du_Toan_Xay_Dung.Models
 		public Image()
 		{
 			this._Building = default(EntityRef<Building>);
-			this._Building1 = default(EntityRef<Building1>);
 			OnCreated();
 		}
 		
@@ -917,7 +792,7 @@ namespace Du_Toan_Xay_Dung.Models
 			{
 				if ((this._Building_ID != value))
 				{
-					if ((this._Building.HasLoadedOrAssignedValue || this._Building1.HasLoadedOrAssignedValue))
+					if (this._Building.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -984,40 +859,6 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building1_Image", Storage="_Building1", ThisKey="Building_ID", OtherKey="ID", IsForeignKey=true)]
-		public Building1 Building1
-		{
-			get
-			{
-				return this._Building1.Entity;
-			}
-			set
-			{
-				Building1 previousValue = this._Building1.Entity;
-				if (((previousValue != value) 
-							|| (this._Building1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Building1.Entity = null;
-						previousValue.Images.Remove(this);
-					}
-					this._Building1.Entity = value;
-					if ((value != null))
-					{
-						value.Images.Add(this);
-						this._Building_ID = value.ID;
-					}
-					else
-					{
-						this._Building_ID = default(long);
-					}
-					this.SendPropertyChanged("Building1");
-				}
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1059,10 +900,6 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		private EntityRef<NormWork> _NormWork;
 		
-		private EntityRef<NormWork1> _NormWork1;
-		
-		private EntityRef<UnitPrice1> _UnitPrice1;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1083,8 +920,6 @@ namespace Du_Toan_Xay_Dung.Models
 		{
 			this._UnitPrice = default(EntityRef<UnitPrice>);
 			this._NormWork = default(EntityRef<NormWork>);
-			this._NormWork1 = default(EntityRef<NormWork1>);
-			this._UnitPrice1 = default(EntityRef<UnitPrice1>);
 			OnCreated();
 		}
 		
@@ -1119,7 +954,7 @@ namespace Du_Toan_Xay_Dung.Models
 			{
 				if ((this._NormWork_ID != value))
 				{
-					if ((this._NormWork.HasLoadedOrAssignedValue || this._NormWork1.HasLoadedOrAssignedValue))
+					if (this._NormWork.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -1143,7 +978,7 @@ namespace Du_Toan_Xay_Dung.Models
 			{
 				if ((this._UnitPrice_ID != value))
 				{
-					if ((this._UnitPrice.HasLoadedOrAssignedValue || this._UnitPrice1.HasLoadedOrAssignedValue))
+					if (this._UnitPrice.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -1264,74 +1099,6 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NormWork1_NormDetail", Storage="_NormWork1", ThisKey="NormWork_ID", OtherKey="ID", IsForeignKey=true)]
-		public NormWork1 NormWork1
-		{
-			get
-			{
-				return this._NormWork1.Entity;
-			}
-			set
-			{
-				NormWork1 previousValue = this._NormWork1.Entity;
-				if (((previousValue != value) 
-							|| (this._NormWork1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._NormWork1.Entity = null;
-						previousValue.NormDetails.Remove(this);
-					}
-					this._NormWork1.Entity = value;
-					if ((value != null))
-					{
-						value.NormDetails.Add(this);
-						this._NormWork_ID = value.ID;
-					}
-					else
-					{
-						this._NormWork_ID = default(string);
-					}
-					this.SendPropertyChanged("NormWork1");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UnitPrice1_NormDetail", Storage="_UnitPrice1", ThisKey="UnitPrice_ID", OtherKey="ID", IsForeignKey=true)]
-		public UnitPrice1 UnitPrice1
-		{
-			get
-			{
-				return this._UnitPrice1.Entity;
-			}
-			set
-			{
-				UnitPrice1 previousValue = this._UnitPrice1.Entity;
-				if (((previousValue != value) 
-							|| (this._UnitPrice1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UnitPrice1.Entity = null;
-						previousValue.NormDetails.Remove(this);
-					}
-					this._UnitPrice1.Entity = value;
-					if ((value != null))
-					{
-						value.NormDetails.Add(this);
-						this._UnitPrice_ID = value.ID;
-					}
-					else
-					{
-						this._UnitPrice_ID = default(string);
-					}
-					this.SendPropertyChanged("UnitPrice1");
-				}
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1367,8 +1134,6 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		private EntitySet<NormDetail> _NormDetails;
 		
-		private EntitySet<NormDetail1> _NormDetail1s;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1384,7 +1149,6 @@ namespace Du_Toan_Xay_Dung.Models
 		public UnitPrice()
 		{
 			this._NormDetails = new EntitySet<NormDetail>(new Action<NormDetail>(this.attach_NormDetails), new Action<NormDetail>(this.detach_NormDetails));
-			this._NormDetail1s = new EntitySet<NormDetail1>(new Action<NormDetail1>(this.attach_NormDetail1s), new Action<NormDetail1>(this.detach_NormDetail1s));
 			OnCreated();
 		}
 		
@@ -1461,19 +1225,6 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UnitPrice_NormDetail1", Storage="_NormDetail1s", ThisKey="ID", OtherKey="UnitPrice_ID")]
-		public EntitySet<NormDetail1> NormDetail1s
-		{
-			get
-			{
-				return this._NormDetail1s;
-			}
-			set
-			{
-				this._NormDetail1s.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1505,18 +1256,6 @@ namespace Du_Toan_Xay_Dung.Models
 			this.SendPropertyChanging();
 			entity.UnitPrice = null;
 		}
-		
-		private void attach_NormDetail1s(NormDetail1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.UnitPrice = this;
-		}
-		
-		private void detach_NormDetail1s(NormDetail1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.UnitPrice = null;
-		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NormWorks")]
@@ -1535,8 +1274,6 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		private EntitySet<NormDetail> _NormDetails;
 		
-		private EntitySet<NormDetail1> _NormDetail1s;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1554,7 +1291,6 @@ namespace Du_Toan_Xay_Dung.Models
 		public NormWork()
 		{
 			this._NormDetails = new EntitySet<NormDetail>(new Action<NormDetail>(this.attach_NormDetails), new Action<NormDetail>(this.detach_NormDetails));
-			this._NormDetail1s = new EntitySet<NormDetail1>(new Action<NormDetail1>(this.attach_NormDetail1s), new Action<NormDetail1>(this.detach_NormDetail1s));
 			OnCreated();
 		}
 		
@@ -1651,19 +1387,6 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NormWork_NormDetail1", Storage="_NormDetail1s", ThisKey="ID", OtherKey="NormWork_ID")]
-		public EntitySet<NormDetail1> NormDetail1s
-		{
-			get
-			{
-				return this._NormDetail1s;
-			}
-			set
-			{
-				this._NormDetail1s.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1691,18 +1414,6 @@ namespace Du_Toan_Xay_Dung.Models
 		}
 		
 		private void detach_NormDetails(NormDetail entity)
-		{
-			this.SendPropertyChanging();
-			entity.NormWork = null;
-		}
-		
-		private void attach_NormDetail1s(NormDetail1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.NormWork = this;
-		}
-		
-		private void detach_NormDetail1s(NormDetail1 entity)
 		{
 			this.SendPropertyChanging();
 			entity.NormWork = null;
@@ -2004,8 +1715,6 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		private EntitySet<Building> _Buildings;
 		
-		private EntitySet<Building1> _Building1s;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2033,7 +1742,6 @@ namespace Du_Toan_Xay_Dung.Models
 		public User()
 		{
 			this._Buildings = new EntitySet<Building>(new Action<Building>(this.attach_Buildings), new Action<Building>(this.detach_Buildings));
-			this._Building1s = new EntitySet<Building1>(new Action<Building1>(this.attach_Building1s), new Action<Building1>(this.detach_Building1s));
 			OnCreated();
 		}
 		
@@ -2230,19 +1938,6 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Building1", Storage="_Building1s", ThisKey="Email", OtherKey="Email")]
-		public EntitySet<Building1> Building1s
-		{
-			get
-			{
-				return this._Building1s;
-			}
-			set
-			{
-				this._Building1s.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2274,18 +1969,6 @@ namespace Du_Toan_Xay_Dung.Models
 			this.SendPropertyChanging();
 			entity.User = null;
 		}
-		
-		private void attach_Building1s(Building1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_Building1s(Building1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
-		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Building")]
@@ -2309,10 +1992,6 @@ namespace Du_Toan_Xay_Dung.Models
 		private EntitySet<BuildingItem> _BuildingItems;
 		
 		private EntitySet<Image> _Images;
-		
-		private EntitySet<Image1> _Image1s;
-		
-		private EntitySet<BuildingItem1> _BuildingItem1s;
 		
 		private EntityRef<User> _User;
 		
@@ -2340,8 +2019,6 @@ namespace Du_Toan_Xay_Dung.Models
 		{
 			this._BuildingItems = new EntitySet<BuildingItem>(new Action<BuildingItem>(this.attach_BuildingItems), new Action<BuildingItem>(this.detach_BuildingItems));
 			this._Images = new EntitySet<Image>(new Action<Image>(this.attach_Images), new Action<Image>(this.detach_Images));
-			this._Image1s = new EntitySet<Image1>(new Action<Image1>(this.attach_Image1s), new Action<Image1>(this.detach_Image1s));
-			this._BuildingItem1s = new EntitySet<BuildingItem1>(new Action<BuildingItem1>(this.attach_BuildingItem1s), new Action<BuildingItem1>(this.detach_BuildingItem1s));
 			this._User = default(EntityRef<User>);
 			this._User1 = default(EntityRef<User1>);
 			OnCreated();
@@ -2497,32 +2174,6 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building_Image1", Storage="_Image1s", ThisKey="ID", OtherKey="Building_ID")]
-		public EntitySet<Image1> Image1s
-		{
-			get
-			{
-				return this._Image1s;
-			}
-			set
-			{
-				this._Image1s.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building_BuildingItem1", Storage="_BuildingItem1s", ThisKey="ID", OtherKey="Building_ID")]
-		public EntitySet<BuildingItem1> BuildingItem1s
-		{
-			get
-			{
-				return this._BuildingItem1s;
-			}
-			set
-			{
-				this._BuildingItem1s.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Building", Storage="_User", ThisKey="Email", OtherKey="Email", IsForeignKey=true)]
 		public User User
 		{
@@ -2633,140 +2284,6 @@ namespace Du_Toan_Xay_Dung.Models
 		{
 			this.SendPropertyChanging();
 			entity.Building = null;
-		}
-		
-		private void attach_Image1s(Image1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.Building = this;
-		}
-		
-		private void detach_Image1s(Image1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.Building = null;
-		}
-		
-		private void attach_BuildingItem1s(BuildingItem1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.Building = this;
-		}
-		
-		private void detach_BuildingItem1s(BuildingItem1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.Building = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Area")]
-	public partial class Area1 : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private string _Name;
-		
-		private string _Address;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnAddressChanging(string value);
-    partial void OnAddressChanged();
-    #endregion
-		
-		public Area1()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(500)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="NVarChar(500)")]
-		public string Address
-		{
-			get
-			{
-				return this._Address;
-			}
-			set
-			{
-				if ((this._Address != value))
-				{
-					this.OnAddressChanging(value);
-					this.SendPropertyChanging();
-					this._Address = value;
-					this.SendPropertyChanged("Address");
-					this.OnAddressChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	
@@ -2951,566 +2468,6 @@ namespace Du_Toan_Xay_Dung.Models
 					this._Amount_Work = value;
 					this.SendPropertyChanged("Amount_Work");
 					this.OnAmount_WorkChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Building")]
-	public partial class Building1 : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private string _Email;
-		
-		private string _Name;
-		
-		private string _Description;
-		
-		private string _Address;
-		
-		private decimal _Sum;
-		
-		private EntitySet<BuildingItem> _BuildingItems;
-		
-		private EntitySet<Image> _Images;
-		
-		private EntitySet<Image1> _Image1s;
-		
-		private EntitySet<BuildingItem1> _BuildingItem1s;
-		
-		private EntityRef<User> _User;
-		
-		private EntityRef<User1> _User1;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnEmailChanging(string value);
-    partial void OnEmailChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnAddressChanging(string value);
-    partial void OnAddressChanged();
-    partial void OnSumChanging(decimal value);
-    partial void OnSumChanged();
-    #endregion
-		
-		public Building1()
-		{
-			this._BuildingItems = new EntitySet<BuildingItem>(new Action<BuildingItem>(this.attach_BuildingItems), new Action<BuildingItem>(this.detach_BuildingItems));
-			this._Images = new EntitySet<Image>(new Action<Image>(this.attach_Images), new Action<Image>(this.detach_Images));
-			this._Image1s = new EntitySet<Image1>(new Action<Image1>(this.attach_Image1s), new Action<Image1>(this.detach_Image1s));
-			this._BuildingItem1s = new EntitySet<BuildingItem1>(new Action<BuildingItem1>(this.attach_BuildingItem1s), new Action<BuildingItem1>(this.detach_BuildingItem1s));
-			this._User = default(EntityRef<User>);
-			this._User1 = default(EntityRef<User1>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
-		public string Email
-		{
-			get
-			{
-				return this._Email;
-			}
-			set
-			{
-				if ((this._Email != value))
-				{
-					if ((this._User.HasLoadedOrAssignedValue || this._User1.HasLoadedOrAssignedValue))
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnEmailChanging(value);
-					this.SendPropertyChanging();
-					this._Email = value;
-					this.SendPropertyChanged("Email");
-					this.OnEmailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(2000) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(2000)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="NVarChar(1000)")]
-		public string Address
-		{
-			get
-			{
-				return this._Address;
-			}
-			set
-			{
-				if ((this._Address != value))
-				{
-					this.OnAddressChanging(value);
-					this.SendPropertyChanging();
-					this._Address = value;
-					this.SendPropertyChanged("Address");
-					this.OnAddressChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Sum", DbType="Decimal(18,0) NOT NULL")]
-		public decimal Sum
-		{
-			get
-			{
-				return this._Sum;
-			}
-			set
-			{
-				if ((this._Sum != value))
-				{
-					this.OnSumChanging(value);
-					this.SendPropertyChanging();
-					this._Sum = value;
-					this.SendPropertyChanged("Sum");
-					this.OnSumChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building1_BuildingItem", Storage="_BuildingItems", ThisKey="ID", OtherKey="Building_ID")]
-		public EntitySet<BuildingItem> BuildingItems
-		{
-			get
-			{
-				return this._BuildingItems;
-			}
-			set
-			{
-				this._BuildingItems.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building1_Image", Storage="_Images", ThisKey="ID", OtherKey="Building_ID")]
-		public EntitySet<Image> Images
-		{
-			get
-			{
-				return this._Images;
-			}
-			set
-			{
-				this._Images.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building1_Image1", Storage="_Image1s", ThisKey="ID", OtherKey="Building_ID")]
-		public EntitySet<Image1> Image1s
-		{
-			get
-			{
-				return this._Image1s;
-			}
-			set
-			{
-				this._Image1s.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building1_BuildingItem1", Storage="_BuildingItem1s", ThisKey="ID", OtherKey="Building_ID")]
-		public EntitySet<BuildingItem1> BuildingItem1s
-		{
-			get
-			{
-				return this._BuildingItem1s;
-			}
-			set
-			{
-				this._BuildingItem1s.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Building1", Storage="_User", ThisKey="Email", OtherKey="Email", IsForeignKey=true)]
-		public User User
-		{
-			get
-			{
-				return this._User.Entity;
-			}
-			set
-			{
-				User previousValue = this._User.Entity;
-				if (((previousValue != value) 
-							|| (this._User.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._User.Entity = null;
-						previousValue.Building1s.Remove(this);
-					}
-					this._User.Entity = value;
-					if ((value != null))
-					{
-						value.Building1s.Add(this);
-						this._Email = value.Email;
-					}
-					else
-					{
-						this._Email = default(string);
-					}
-					this.SendPropertyChanged("User");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User1_Building1", Storage="_User1", ThisKey="Email", OtherKey="Email", IsForeignKey=true)]
-		public User1 User1
-		{
-			get
-			{
-				return this._User1.Entity;
-			}
-			set
-			{
-				User1 previousValue = this._User1.Entity;
-				if (((previousValue != value) 
-							|| (this._User1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._User1.Entity = null;
-						previousValue.Building1s.Remove(this);
-					}
-					this._User1.Entity = value;
-					if ((value != null))
-					{
-						value.Building1s.Add(this);
-						this._Email = value.Email;
-					}
-					else
-					{
-						this._Email = default(string);
-					}
-					this.SendPropertyChanged("User1");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_BuildingItems(BuildingItem entity)
-		{
-			this.SendPropertyChanging();
-			entity.Building1 = this;
-		}
-		
-		private void detach_BuildingItems(BuildingItem entity)
-		{
-			this.SendPropertyChanging();
-			entity.Building1 = null;
-		}
-		
-		private void attach_Images(Image entity)
-		{
-			this.SendPropertyChanging();
-			entity.Building1 = this;
-		}
-		
-		private void detach_Images(Image entity)
-		{
-			this.SendPropertyChanging();
-			entity.Building1 = null;
-		}
-		
-		private void attach_Image1s(Image1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.Building1 = this;
-		}
-		
-		private void detach_Image1s(Image1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.Building1 = null;
-		}
-		
-		private void attach_BuildingItem1s(BuildingItem1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.Building1 = this;
-		}
-		
-		private void detach_BuildingItem1s(BuildingItem1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.Building1 = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Images")]
-	public partial class Image1 : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private long _Building_ID;
-		
-		private string _Url;
-		
-		private EntityRef<Building> _Building;
-		
-		private EntityRef<Building1> _Building1;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnBuilding_IDChanging(long value);
-    partial void OnBuilding_IDChanged();
-    partial void OnUrlChanging(string value);
-    partial void OnUrlChanged();
-    #endregion
-		
-		public Image1()
-		{
-			this._Building = default(EntityRef<Building>);
-			this._Building1 = default(EntityRef<Building1>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Building_ID", DbType="BigInt NOT NULL")]
-		public long Building_ID
-		{
-			get
-			{
-				return this._Building_ID;
-			}
-			set
-			{
-				if ((this._Building_ID != value))
-				{
-					if ((this._Building.HasLoadedOrAssignedValue || this._Building1.HasLoadedOrAssignedValue))
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnBuilding_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Building_ID = value;
-					this.SendPropertyChanged("Building_ID");
-					this.OnBuilding_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NVarChar(2000) NOT NULL", CanBeNull=false)]
-		public string Url
-		{
-			get
-			{
-				return this._Url;
-			}
-			set
-			{
-				if ((this._Url != value))
-				{
-					this.OnUrlChanging(value);
-					this.SendPropertyChanging();
-					this._Url = value;
-					this.SendPropertyChanged("Url");
-					this.OnUrlChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building_Image1", Storage="_Building", ThisKey="Building_ID", OtherKey="ID", IsForeignKey=true)]
-		public Building Building
-		{
-			get
-			{
-				return this._Building.Entity;
-			}
-			set
-			{
-				Building previousValue = this._Building.Entity;
-				if (((previousValue != value) 
-							|| (this._Building.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Building.Entity = null;
-						previousValue.Image1s.Remove(this);
-					}
-					this._Building.Entity = value;
-					if ((value != null))
-					{
-						value.Image1s.Add(this);
-						this._Building_ID = value.ID;
-					}
-					else
-					{
-						this._Building_ID = default(long);
-					}
-					this.SendPropertyChanged("Building");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building1_Image1", Storage="_Building1", ThisKey="Building_ID", OtherKey="ID", IsForeignKey=true)]
-		public Building1 Building1
-		{
-			get
-			{
-				return this._Building1.Entity;
-			}
-			set
-			{
-				Building1 previousValue = this._Building1.Entity;
-				if (((previousValue != value) 
-							|| (this._Building1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Building1.Entity = null;
-						previousValue.Image1s.Remove(this);
-					}
-					this._Building1.Entity = value;
-					if ((value != null))
-					{
-						value.Image1s.Add(this);
-						this._Building_ID = value.ID;
-					}
-					else
-					{
-						this._Building_ID = default(long);
-					}
-					this.SendPropertyChanged("Building1");
 				}
 			}
 		}
@@ -3742,927 +2699,6 @@ namespace Du_Toan_Xay_Dung.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BuildingItems")]
-	public partial class BuildingItem1 : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private long _Building_ID;
-		
-		private string _Name;
-		
-		private string _Description;
-		
-		private decimal _Sum;
-		
-		private EntityRef<Building> _Building;
-		
-		private EntityRef<Building1> _Building1;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnBuilding_IDChanging(long value);
-    partial void OnBuilding_IDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnSumChanging(decimal value);
-    partial void OnSumChanged();
-    #endregion
-		
-		public BuildingItem1()
-		{
-			this._Building = default(EntityRef<Building>);
-			this._Building1 = default(EntityRef<Building1>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Building_ID", DbType="BigInt NOT NULL")]
-		public long Building_ID
-		{
-			get
-			{
-				return this._Building_ID;
-			}
-			set
-			{
-				if ((this._Building_ID != value))
-				{
-					if ((this._Building.HasLoadedOrAssignedValue || this._Building1.HasLoadedOrAssignedValue))
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnBuilding_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Building_ID = value;
-					this.SendPropertyChanged("Building_ID");
-					this.OnBuilding_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(2000) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(2000)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Sum", DbType="Decimal(18,3) NOT NULL")]
-		public decimal Sum
-		{
-			get
-			{
-				return this._Sum;
-			}
-			set
-			{
-				if ((this._Sum != value))
-				{
-					this.OnSumChanging(value);
-					this.SendPropertyChanging();
-					this._Sum = value;
-					this.SendPropertyChanged("Sum");
-					this.OnSumChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building_BuildingItem1", Storage="_Building", ThisKey="Building_ID", OtherKey="ID", IsForeignKey=true)]
-		public Building Building
-		{
-			get
-			{
-				return this._Building.Entity;
-			}
-			set
-			{
-				Building previousValue = this._Building.Entity;
-				if (((previousValue != value) 
-							|| (this._Building.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Building.Entity = null;
-						previousValue.BuildingItem1s.Remove(this);
-					}
-					this._Building.Entity = value;
-					if ((value != null))
-					{
-						value.BuildingItem1s.Add(this);
-						this._Building_ID = value.ID;
-					}
-					else
-					{
-						this._Building_ID = default(long);
-					}
-					this.SendPropertyChanged("Building");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building1_BuildingItem1", Storage="_Building1", ThisKey="Building_ID", OtherKey="ID", IsForeignKey=true)]
-		public Building1 Building1
-		{
-			get
-			{
-				return this._Building1.Entity;
-			}
-			set
-			{
-				Building1 previousValue = this._Building1.Entity;
-				if (((previousValue != value) 
-							|| (this._Building1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Building1.Entity = null;
-						previousValue.BuildingItem1s.Remove(this);
-					}
-					this._Building1.Entity = value;
-					if ((value != null))
-					{
-						value.BuildingItem1s.Add(this);
-						this._Building_ID = value.ID;
-					}
-					else
-					{
-						this._Building_ID = default(long);
-					}
-					this.SendPropertyChanged("Building1");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NormDetails")]
-	public partial class NormDetail1 : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private string _NormWork_ID;
-		
-		private string _UnitPrice_ID;
-		
-		private decimal _Numbers;
-		
-		private EntityRef<NormWork> _NormWork;
-		
-		private EntityRef<UnitPrice> _UnitPrice;
-		
-		private EntityRef<NormWork1> _NormWork1;
-		
-		private EntityRef<UnitPrice1> _UnitPrice1;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnNormWork_IDChanging(string value);
-    partial void OnNormWork_IDChanged();
-    partial void OnUnitPrice_IDChanging(string value);
-    partial void OnUnitPrice_IDChanged();
-    partial void OnNumbersChanging(decimal value);
-    partial void OnNumbersChanged();
-    #endregion
-		
-		public NormDetail1()
-		{
-			this._NormWork = default(EntityRef<NormWork>);
-			this._UnitPrice = default(EntityRef<UnitPrice>);
-			this._NormWork1 = default(EntityRef<NormWork1>);
-			this._UnitPrice1 = default(EntityRef<UnitPrice1>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NormWork_ID", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string NormWork_ID
-		{
-			get
-			{
-				return this._NormWork_ID;
-			}
-			set
-			{
-				if ((this._NormWork_ID != value))
-				{
-					if ((this._NormWork.HasLoadedOrAssignedValue || this._NormWork1.HasLoadedOrAssignedValue))
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnNormWork_IDChanging(value);
-					this.SendPropertyChanging();
-					this._NormWork_ID = value;
-					this.SendPropertyChanged("NormWork_ID");
-					this.OnNormWork_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitPrice_ID", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string UnitPrice_ID
-		{
-			get
-			{
-				return this._UnitPrice_ID;
-			}
-			set
-			{
-				if ((this._UnitPrice_ID != value))
-				{
-					if ((this._UnitPrice.HasLoadedOrAssignedValue || this._UnitPrice1.HasLoadedOrAssignedValue))
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnUnitPrice_IDChanging(value);
-					this.SendPropertyChanging();
-					this._UnitPrice_ID = value;
-					this.SendPropertyChanged("UnitPrice_ID");
-					this.OnUnitPrice_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Numbers", DbType="Decimal(18,3) NOT NULL")]
-		public decimal Numbers
-		{
-			get
-			{
-				return this._Numbers;
-			}
-			set
-			{
-				if ((this._Numbers != value))
-				{
-					this.OnNumbersChanging(value);
-					this.SendPropertyChanging();
-					this._Numbers = value;
-					this.SendPropertyChanged("Numbers");
-					this.OnNumbersChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NormWork_NormDetail1", Storage="_NormWork", ThisKey="NormWork_ID", OtherKey="ID", IsForeignKey=true)]
-		public NormWork NormWork
-		{
-			get
-			{
-				return this._NormWork.Entity;
-			}
-			set
-			{
-				NormWork previousValue = this._NormWork.Entity;
-				if (((previousValue != value) 
-							|| (this._NormWork.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._NormWork.Entity = null;
-						previousValue.NormDetail1s.Remove(this);
-					}
-					this._NormWork.Entity = value;
-					if ((value != null))
-					{
-						value.NormDetail1s.Add(this);
-						this._NormWork_ID = value.ID;
-					}
-					else
-					{
-						this._NormWork_ID = default(string);
-					}
-					this.SendPropertyChanged("NormWork");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UnitPrice_NormDetail1", Storage="_UnitPrice", ThisKey="UnitPrice_ID", OtherKey="ID", IsForeignKey=true)]
-		public UnitPrice UnitPrice
-		{
-			get
-			{
-				return this._UnitPrice.Entity;
-			}
-			set
-			{
-				UnitPrice previousValue = this._UnitPrice.Entity;
-				if (((previousValue != value) 
-							|| (this._UnitPrice.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UnitPrice.Entity = null;
-						previousValue.NormDetail1s.Remove(this);
-					}
-					this._UnitPrice.Entity = value;
-					if ((value != null))
-					{
-						value.NormDetail1s.Add(this);
-						this._UnitPrice_ID = value.ID;
-					}
-					else
-					{
-						this._UnitPrice_ID = default(string);
-					}
-					this.SendPropertyChanged("UnitPrice");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NormWork1_NormDetail1", Storage="_NormWork1", ThisKey="NormWork_ID", OtherKey="ID", IsForeignKey=true)]
-		public NormWork1 NormWork1
-		{
-			get
-			{
-				return this._NormWork1.Entity;
-			}
-			set
-			{
-				NormWork1 previousValue = this._NormWork1.Entity;
-				if (((previousValue != value) 
-							|| (this._NormWork1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._NormWork1.Entity = null;
-						previousValue.NormDetail1s.Remove(this);
-					}
-					this._NormWork1.Entity = value;
-					if ((value != null))
-					{
-						value.NormDetail1s.Add(this);
-						this._NormWork_ID = value.ID;
-					}
-					else
-					{
-						this._NormWork_ID = default(string);
-					}
-					this.SendPropertyChanged("NormWork1");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UnitPrice1_NormDetail1", Storage="_UnitPrice1", ThisKey="UnitPrice_ID", OtherKey="ID", IsForeignKey=true)]
-		public UnitPrice1 UnitPrice1
-		{
-			get
-			{
-				return this._UnitPrice1.Entity;
-			}
-			set
-			{
-				UnitPrice1 previousValue = this._UnitPrice1.Entity;
-				if (((previousValue != value) 
-							|| (this._UnitPrice1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UnitPrice1.Entity = null;
-						previousValue.NormDetail1s.Remove(this);
-					}
-					this._UnitPrice1.Entity = value;
-					if ((value != null))
-					{
-						value.NormDetail1s.Add(this);
-						this._UnitPrice_ID = value.ID;
-					}
-					else
-					{
-						this._UnitPrice_ID = default(string);
-					}
-					this.SendPropertyChanged("UnitPrice1");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NormWorks")]
-	public partial class NormWork1 : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _ID;
-		
-		private string _Name;
-		
-		private string _Unit;
-		
-		private EntitySet<NormDetail> _NormDetails;
-		
-		private EntitySet<NormDetail1> _NormDetail1s;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(string value);
-    partial void OnIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnUnitChanging(string value);
-    partial void OnUnitChanged();
-    #endregion
-		
-		public NormWork1()
-		{
-			this._NormDetails = new EntitySet<NormDetail>(new Action<NormDetail>(this.attach_NormDetails), new Action<NormDetail>(this.detach_NormDetails));
-			this._NormDetail1s = new EntitySet<NormDetail1>(new Action<NormDetail1>(this.attach_NormDetail1s), new Action<NormDetail1>(this.detach_NormDetail1s));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="NVarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Unit
-		{
-			get
-			{
-				return this._Unit;
-			}
-			set
-			{
-				if ((this._Unit != value))
-				{
-					this.OnUnitChanging(value);
-					this.SendPropertyChanging();
-					this._Unit = value;
-					this.SendPropertyChanged("Unit");
-					this.OnUnitChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NormWork1_NormDetail", Storage="_NormDetails", ThisKey="ID", OtherKey="NormWork_ID")]
-		public EntitySet<NormDetail> NormDetails
-		{
-			get
-			{
-				return this._NormDetails;
-			}
-			set
-			{
-				this._NormDetails.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NormWork1_NormDetail1", Storage="_NormDetail1s", ThisKey="ID", OtherKey="NormWork_ID")]
-		public EntitySet<NormDetail1> NormDetail1s
-		{
-			get
-			{
-				return this._NormDetail1s;
-			}
-			set
-			{
-				this._NormDetail1s.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_NormDetails(NormDetail entity)
-		{
-			this.SendPropertyChanging();
-			entity.NormWork1 = this;
-		}
-		
-		private void detach_NormDetails(NormDetail entity)
-		{
-			this.SendPropertyChanging();
-			entity.NormWork1 = null;
-		}
-		
-		private void attach_NormDetail1s(NormDetail1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.NormWork1 = this;
-		}
-		
-		private void detach_NormDetail1s(NormDetail1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.NormWork1 = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UnitPrice")]
-	public partial class UnitPrice1 : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _ID;
-		
-		private string _Name;
-		
-		private string _Unit;
-		
-		private EntitySet<NormDetail> _NormDetails;
-		
-		private EntitySet<NormDetail1> _NormDetail1s;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(string value);
-    partial void OnIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnUnitChanging(string value);
-    partial void OnUnitChanged();
-    #endregion
-		
-		public UnitPrice1()
-		{
-			this._NormDetails = new EntitySet<NormDetail>(new Action<NormDetail>(this.attach_NormDetails), new Action<NormDetail>(this.detach_NormDetails));
-			this._NormDetail1s = new EntitySet<NormDetail1>(new Action<NormDetail1>(this.attach_NormDetail1s), new Action<NormDetail1>(this.detach_NormDetail1s));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="NVarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(1000) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Unit
-		{
-			get
-			{
-				return this._Unit;
-			}
-			set
-			{
-				if ((this._Unit != value))
-				{
-					this.OnUnitChanging(value);
-					this.SendPropertyChanging();
-					this._Unit = value;
-					this.SendPropertyChanged("Unit");
-					this.OnUnitChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UnitPrice1_NormDetail", Storage="_NormDetails", ThisKey="ID", OtherKey="UnitPrice_ID")]
-		public EntitySet<NormDetail> NormDetails
-		{
-			get
-			{
-				return this._NormDetails;
-			}
-			set
-			{
-				this._NormDetails.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UnitPrice1_NormDetail1", Storage="_NormDetail1s", ThisKey="ID", OtherKey="UnitPrice_ID")]
-		public EntitySet<NormDetail1> NormDetail1s
-		{
-			get
-			{
-				return this._NormDetail1s;
-			}
-			set
-			{
-				this._NormDetail1s.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_NormDetails(NormDetail entity)
-		{
-			this.SendPropertyChanging();
-			entity.UnitPrice1 = this;
-		}
-		
-		private void detach_NormDetails(NormDetail entity)
-		{
-			this.SendPropertyChanging();
-			entity.UnitPrice1 = null;
-		}
-		
-		private void attach_NormDetail1s(NormDetail1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.UnitPrice1 = this;
-		}
-		
-		private void detach_NormDetail1s(NormDetail1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.UnitPrice1 = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UnitPrice_Area")]
-	public partial class UnitPrice_Area1
-	{
-		
-		private string _UnitPrice_ID;
-		
-		private long _Area_ID;
-		
-		private System.Nullable<decimal> _Price;
-		
-		public UnitPrice_Area1()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitPrice_ID", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string UnitPrice_ID
-		{
-			get
-			{
-				return this._UnitPrice_ID;
-			}
-			set
-			{
-				if ((this._UnitPrice_ID != value))
-				{
-					this._UnitPrice_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Area_ID", DbType="BigInt NOT NULL")]
-		public long Area_ID
-		{
-			get
-			{
-				return this._Area_ID;
-			}
-			set
-			{
-				if ((this._Area_ID != value))
-				{
-					this._Area_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Decimal(18,3)")]
-		public System.Nullable<decimal> Price
-		{
-			get
-			{
-				return this._Price;
-			}
-			set
-			{
-				if ((this._Price != value))
-				{
-					this._Price = value;
-				}
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
 	public partial class User1 : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -4688,8 +2724,6 @@ namespace Du_Toan_Xay_Dung.Models
 		private string _Role;
 		
 		private EntitySet<Building> _Buildings;
-		
-		private EntitySet<Building1> _Building1s;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -4718,7 +2752,6 @@ namespace Du_Toan_Xay_Dung.Models
 		public User1()
 		{
 			this._Buildings = new EntitySet<Building>(new Action<Building>(this.attach_Buildings), new Action<Building>(this.detach_Buildings));
-			this._Building1s = new EntitySet<Building1>(new Action<Building1>(this.attach_Building1s), new Action<Building1>(this.detach_Building1s));
 			OnCreated();
 		}
 		
@@ -4915,19 +2948,6 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User1_Building1", Storage="_Building1s", ThisKey="Email", OtherKey="Email")]
-		public EntitySet<Building1> Building1s
-		{
-			get
-			{
-				return this._Building1s;
-			}
-			set
-			{
-				this._Building1s.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -4955,18 +2975,6 @@ namespace Du_Toan_Xay_Dung.Models
 		}
 		
 		private void detach_Buildings(Building entity)
-		{
-			this.SendPropertyChanging();
-			entity.User1 = null;
-		}
-		
-		private void attach_Building1s(Building1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.User1 = this;
-		}
-		
-		private void detach_Building1s(Building1 entity)
 		{
 			this.SendPropertyChanging();
 			entity.User1 = null;

@@ -30,20 +30,20 @@ namespace Du_Toan_Xay_Dung.Controllers
             string matkhau = form["Password"];
 
             SessionHandler.User = null;
-            var user = _db.Nguoi_Dungs.Where(i => i.Email.Equals(email) && i.MatKhau.Equals(matkhau)).FirstOrDefault();
+            var user = _db.Users.Where(i => i.Email.Equals(email) && i.Password.Equals(matkhau)).FirstOrDefault();
             if (user != null)
             {
-                if (user.Quyen == "user")
+                if (user.Role == "user")
                 {
                     var userviewmodel = new UserViewModel(user);
-                    userviewmodel.MatKhau = string.Empty;
+                    userviewmodel.Passwork = string.Empty;
                     SessionHandler.User = userviewmodel;
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     var userviewmodel = new UserViewModel(user);
-                    userviewmodel.MatKhau = string.Empty;
+                    userviewmodel.Passwork = string.Empty;
                     SessionHandler.User = userviewmodel;
                     return RedirectToAction("Index", "Admin");
                 }
@@ -68,13 +68,13 @@ namespace Du_Toan_Xay_Dung.Controllers
             string matkhau = form["Password"];
             string quyen = "user";
 
-            Nguoi_Dung user = new Nguoi_Dung()
+            User user = new User()
             {
                 Email = email,
-                MatKhau = matkhau,
-                Ho_TenLot = ho_tenlot,
-                Ten = ten,
-                Quyen = quyen
+                Password = matkhau,
+                First_Name = ho_tenlot,
+                Last_Name = ten,
+                Role = quyen
                 
             };
 
