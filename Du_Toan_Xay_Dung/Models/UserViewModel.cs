@@ -17,7 +17,7 @@ namespace Du_Toan_Xay_Dung.Models
             Last_Name = obj.Last_Name;
             First_Name = obj.First_Name;
             Phone = obj.Phone;
-           WorkPlace = obj.Workplace;
+            WorkPlace = obj.Workplace;
             City = obj.City;
             Role = obj.Role;
         }
