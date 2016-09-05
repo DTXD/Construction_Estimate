@@ -42,25 +42,17 @@
                      };
                      $http({
                          method: 'POST',
-                         url: '/CongTrinh/Delete',
+                         url: '/CongTrinh/Delete_HangMuc',
                          data: JSON.stringify(postdata),
                          headers: { 'Content-Type': 'application/json' }
                      })
                          .success(function (result) {
-                             if (result == "0") {
+                             if (result == "ok") {
                                  alert("Xóa thành công");
-                                 window.location.href = "/CongTrinh/Index";
+                                 window.location.href = "/CongTrinh/ChiTiet_CongTrinh";
                              }
                              else {
-                                 if (result == "error") {
-                                     alert("Xảy ra lỗi");
-                                     return;
-                                 }
-                                 else {
-                                     alert("Xóa thành công");
-                                     window.location.href = "/CongTrinh/ChiTiet_CongTrinh/@congtrinh.MaCT";
-                                 }
-
+                                 alert("Xảy ra lỗi");
                              }
 
 

@@ -8,7 +8,7 @@ namespace Du_Toan_Xay_Dung.Models
     {
         public Images_CongTrinhViewModel() { }
 
-        public Images_CongTrinhViewModel(Image obj)
+        public Images_CongTrinhViewModel(Images_Url obj)
         {
             ID = obj.ID;
             Building_ID = obj.Building_ID;

@@ -17,7 +17,7 @@
       <Column Name="Address" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
       <Column Name="Sum" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
       <Association Name="Building_BuildingItem" Member="BuildingItems" ThisKey="ID" OtherKey="Building_ID" Type="BuildingItem" />
-      <Association Name="Building_Image" Member="Images" ThisKey="ID" OtherKey="Building_ID" Type="Image" />
+      <Association Name="Building_Images_Url" Member="Images_Urls" ThisKey="ID" OtherKey="Building_ID" Type="Images_Url" />
       <Association Name="User_Building" Member="User" ThisKey="Email" OtherKey="Email" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
@@ -40,14 +40,6 @@
       <Column Name="Unit_Measure" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Numbers" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
       <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Images" Member="Images">
-    <Type Name="Image">
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Building_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="Url" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
-      <Association Name="Building_Image" Member="Building" ThisKey="Building_ID" OtherKey="ID" Type="Building" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.NormDetails" Member="NormDetails">
@@ -109,6 +101,14 @@
       <Column Name="Name" Type="System.String" DbType="NVarChar(3000) NOT NULL" CanBeNull="false" />
       <Column Name="Unit_Measure" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Amount_Work" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Images_Url" Member="Images_Urls">
+    <Type Name="Images_Url">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Building_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Url" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
+      <Association Name="Building_Images_Url" Member="Building" ThisKey="Building_ID" OtherKey="ID" Type="Building" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
