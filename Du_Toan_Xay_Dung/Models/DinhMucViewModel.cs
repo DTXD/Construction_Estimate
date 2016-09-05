@@ -14,7 +14,6 @@ namespace Du_Toan_Xay_Dung.Models
             ID = obj.ID;
             Name = obj.Name;
             Unit = obj.Unit;
-
         }
 
         public string ID { get; set; }
