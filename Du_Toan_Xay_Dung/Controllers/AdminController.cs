@@ -211,14 +211,19 @@ namespace Du_Toan_Xay_Dung.Controllers
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    var dongia = new DonGia();
-                    dongia.MaKV = ds.Tables[0].Rows[i][0].ToString();
-                    dongia.MaVL_NC_MTC = ds.Tables[0].Rows[i][1].ToString();
-                    dongia.Ten = ds.Tables[0].Rows[i][2].ToString();
-                    dongia.DonVi = ds.Tables[0].Rows[i][3].ToString();
-                    dongia.Gia = Convert.ToDecimal(ds.Tables[0].Rows[i][4].ToString());
-
-                    _db.DonGias.InsertOnSubmit(dongia);
+                    var khuvuc = new Area();
+                    var dongia = new UnitPrice();
+                    var dongia_khuvuc = new UnitPrice_Area();
+                    khuvuc.ID = Convert.ToInt64(ds.Tables[0].Rows[i][0].ToString());
+                    dongia.ID = ds.Tables[0].Rows[i][1].ToString();
+                    dongia_khuvuc.Area_ID = Convert.ToInt64(ds.Tables[0].Rows[i][0].ToString());
+                    dongia_khuvuc.UnitPrice_ID = ds.Tables[0].Rows[i][1].ToString();
+                    dongia.Name = ds.Tables[0].Rows[i][2].ToString();
+                    dongia.Unit = ds.Tables[0].Rows[i][3].ToString();
+                    dongia_khuvuc.Price = Convert.ToDecimal(ds.Tables[0].Rows[i][4].ToString());
+                    _db.Areas.InsertOnSubmit(khuvuc);
+                    _db.UnitPrices.InsertOnSubmit(dongia);
+                    _db.UnitPrice_Areas.InsertOnSubmit(dongia_khuvuc);
                 }
                 _db.SubmitChanges();
 
@@ -323,13 +328,12 @@ namespace Du_Toan_Xay_Dung.Controllers
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    var dmuc = new DinhMuc();
-                    dmuc.MaHieuCV_DM = ds.Tables[0].Rows[i][0].ToString();
-                    dmuc.CongTac = ds.Tables[0].Rows[i][1].ToString();
-                    dmuc.RangBuoc = ds.Tables[0].Rows[i][2].ToString();
-                    dmuc.DonVi = ds.Tables[0].Rows[i][3].ToString();
+                    var dmuc = new NormWork();
+                    dmuc.ID = ds.Tables[0].Rows[i][0].ToString();
+                    dmuc.Name = ds.Tables[0].Rows[i][1].ToString();
+                    dmuc.Unit = ds.Tables[0].Rows[i][3].ToString();
 
-                    _db.DinhMucs.InsertOnSubmit(dmuc);
+                    _db.NormWorks.InsertOnSubmit(dmuc);
                 }
                 _db.SubmitChanges();
 
@@ -348,7 +352,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 return RedirectToAction("Login", "Account");
             }
             ViewBag.Title = "Dự toán xây dựng";
-            ViewData["DSDonGia"] = _db.DonGias.Select(i => new DonGiaViewModel(i)).ToList();
+            ViewData["DSDonGia"] = _db.UnitPrices.Select(i => new DonGiaViewModel(i)).ToList();
             return View();
         }
         [HttpPost]
@@ -371,26 +375,25 @@ namespace Du_Toan_Xay_Dung.Controllers
             string[] adonvithanhphan = donvithanhphan.Split(new Char[] { ',' });
 
             // nhập dữ liệu cho đối tượng
-            DinhMuc dmuc = new DinhMuc()
+            NormWork dmuc = new NormWork()
             {
-                MaHieuCV_DM = madinhmuc,
-                CongTac = tendinhmuc,
-                RangBuoc = rangbuoc,
-                DonVi = donvidinhmuc,
+                ID = madinhmuc,
+                Name = tendinhmuc,
+                Unit = donvidinhmuc,
             };
-            _db.DinhMucs.InsertOnSubmit(dmuc);
+            _db.NormWorks.InsertOnSubmit(dmuc);
             _db.SubmitChanges();
             for (var i = 0; i < amathanhphan.Length; i++)
             {
-                ChiTiet_DinhMuc dgia = new ChiTiet_DinhMuc()
+                NormDetail dgia = new NormDetail()
                 {
 
-                    MaHieuCV_DM = madinhmuc,
-                    MaVL_NC_MTC = amathanhphan[i].ToString(),
-                    SoLuong = Convert.ToDecimal(ahaophi[i].ToString()),
-                    DonVi = adonvithanhphan[i].ToString()
+                    NormWork_ID= madinhmuc,
+                    UnitPrice_ID = amathanhphan[i].ToString(),
+                    Numbers = Convert.ToDecimal(ahaophi[i].ToString()),
+                  
                 };
-                _db.ChiTiet_DinhMucs.InsertOnSubmit(dgia);
+                _db.NormDetails.InsertOnSubmit(dgia);
                 _db.SubmitChanges();
             }
             return RedirectToAction("index");
