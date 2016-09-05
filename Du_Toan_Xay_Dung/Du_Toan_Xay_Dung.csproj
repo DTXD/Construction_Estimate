@@ -216,7 +216,9 @@
     <Compile Include="Handlers\SessionHandler.cs" />
     <Compile Include="Models\AreaViewModel.cs" />
     <Compile Include="Models\ChiTiet_DinhMucViewModel.cs" />
-    <Compile Include="Models\DataDTXD.cs">
+    <Compile Include="Models\DataDTXD.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>DataDTXD.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\DonGiaChiTiet_DM_ViewModel.cs" />
@@ -224,11 +226,6 @@
     <Compile Include="Models\DetailNormWork_PriceViewModel.cs" />
     <Compile Include="Models\Export_CongViec_ViewModel.cs" />
     <Compile Include="Models\CongViec_User_ViewModel.cs" />
-    <Compile Include="Models\DataDTXD.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataDTXD.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Models\DinhMucViewModel.cs" />
     <Compile Include="Models\DonGiaViewModel.cs" />
     <Compile Include="Models\HangMucViewModel.cs" />
@@ -318,11 +315,6 @@
     <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.dll" />
     <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.pdb" />
     <Content Include="obj\x86\Debug\TempPE\Models.DataDTXD.designer.cs.dll" />
-    <Content Include="Models\DataDTXD.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DataDTXD.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
@@ -420,6 +412,11 @@
     <Content Include="Scripts\Difference\sortable.min.js" />
     <Content Include="Scripts\Bootstrap\bootstrap-select.js.map" />
     <Content Include="Content\Bootstrap\bootstrap-select.css.map" />
+    <Content Include="Models\DataDTXD.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataDTXD.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Scripts\Difference\_references.js" />
     <Content Include="Scripts\Dropbox_API\dropins.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\App_work.js" />

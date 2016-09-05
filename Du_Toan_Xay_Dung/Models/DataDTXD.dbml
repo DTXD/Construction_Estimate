@@ -8,6 +8,17 @@
       <Association Name="Area_UnitPrice_Area" Member="UnitPrice_Areas" ThisKey="ID" OtherKey="Area_ID" Type="UnitPrice_Area" />
     </Type>
   </Table>
+  <Table Name="dbo.UserWorks" Member="UserWorks">
+    <Type Name="UserWork">
+      <Column Name="BuildingItem_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserWork_ID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="NormWork_ID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(3000) NOT NULL" CanBeNull="false" />
+      <Column Name="Unit_Measure" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount_Work" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
   <Table Name="dbo.Building" Member="Buildings">
     <Type Name="Building">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -40,6 +51,14 @@
       <Column Name="Unit_Measure" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Numbers" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
       <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Images_Url" Member="Images_Urls">
+    <Type Name="Images_Url">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Building_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Url" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
+      <Association Name="Building_Images_Url" Member="Building" ThisKey="Building_ID" OtherKey="ID" Type="Building" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.NormDetails" Member="NormDetails">
@@ -90,25 +109,6 @@
       <Column Name="Url_Image" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="Role" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Association Name="User_Building" Member="Buildings" ThisKey="Email" OtherKey="Email" Type="Building" />
-    </Type>
-  </Table>
-  <Table Name="dbo.UserWorks" Member="UserWorks">
-    <Type Name="UserWork">
-      <Column Name="BuildingItem_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="UserWork_ID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="NormWork_ID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(3000) NOT NULL" CanBeNull="false" />
-      <Column Name="Unit_Measure" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Amount_Work" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Images_Url" Member="Images_Urls">
-    <Type Name="Images_Url">
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Building_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="Url" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
-      <Association Name="Building_Images_Url" Member="Building" ThisKey="Building_ID" OtherKey="ID" Type="Building" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
