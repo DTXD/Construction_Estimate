@@ -78,7 +78,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 
             };
 
-            _db.Nguoi_Dungs.InsertOnSubmit(user);
+            _db.Users.InsertOnSubmit(user);
             _db.SubmitChanges();
 
             return RedirectToAction("Index", "Home");

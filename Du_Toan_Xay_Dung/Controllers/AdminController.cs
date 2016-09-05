@@ -58,7 +58,7 @@ namespace Du_Toan_Xay_Dung.Controllers
         }
         public ActionResult suanguoidung(string Email)
         {
-            var nguoidung = _db.Nguoi_Dungs.Where(i => i.Email.Equals(Email)).Select(i => new UserViewModel(i)).FirstOrDefault();
+            var nguoidung = _db.Users.Where(i => i.Email.Equals(Email)).Select(i => new UserViewModel(i)).FirstOrDefault();
             if (SessionHandler.User != null)
             {
                 var user = SessionHandler.User;
@@ -73,7 +73,7 @@ namespace Du_Toan_Xay_Dung.Controllers
         [HttpPost]
         public ActionResult post_suanguoidung(string email, FormCollection form)
         {
-            var nguoidung = _db.Nguoi_Dungs.First(m => m.Email == email);
+            var nguoidung = _db.Users.First(m => m.Email == email);
             string Email = form["email"];
             string hotenlot = form["middle-name"];
             string ten = form["name"];
@@ -83,20 +83,20 @@ namespace Du_Toan_Xay_Dung.Controllers
             string hinhanh = form["image"];
             // gán dữ liệu
             nguoidung.Email = Email;
-            nguoidung.Ho_TenLot = hotenlot;
-            nguoidung.Ten = ten;
-            nguoidung.ThanhPho = thanhpho;
-            nguoidung.NoiLamViec = noilamviec;
-            nguoidung.SDT = sodienthoai;
-            nguoidung.Url_HinhAnh = hinhanh;
+            nguoidung.First_Name = hotenlot;
+            nguoidung.Last_Name = ten;
+            nguoidung.City = thanhpho;
+            nguoidung.Workplace = noilamviec;
+            nguoidung.Phone = sodienthoai;
+            nguoidung.Url_Image = hinhanh;
             // thực thi câu truy vấn
             UpdateModel(nguoidung);
             _db.SubmitChanges();
             return RedirectToAction("suaxoanguoidung");
         }
-        public IEnumerable<Nguoi_Dung> ListAllPageging1(int page, int pagesize)
+        public IEnumerable<User> ListAllPageging1(int page, int pagesize)
         {
-            return _db.Nguoi_Dungs.OrderByDescending(x => x.Ten).ToPagedList(page, pagesize);
+            return _db.Users.OrderByDescending(x => x.First_Name).ToPagedList(page, pagesize);
         }
         public ActionResult suaxoanguoidung(int page = 1, int pagesize = 10)
         {
@@ -407,19 +407,19 @@ namespace Du_Toan_Xay_Dung.Controllers
             string noilamviec = form["placework"];
             string thanhpho = form["city"];
             string hinhanh = form["image"];
-            Nguoi_Dung user = new Nguoi_Dung()
+            User user = new User()
             {
                 Email = email,
-                MatKhau = matkhau,
-                Ho_TenLot = ho_tenlot,
-                Ten = ten,
-                Quyen = quyen,
-                NoiLamViec = noilamviec,
-                ThanhPho = thanhpho,
-                SDT = sodienthoai,
-                Url_HinhAnh = hinhanh
+                Password = matkhau,
+                First_Name = ho_tenlot,
+                Last_Name = ten,
+                Role = quyen,
+                Workplace = noilamviec,
+                City = thanhpho,
+                Phone = sodienthoai,
+                Url_Image = hinhanh
             };
-            _db.Nguoi_Dungs.InsertOnSubmit(user);
+            _db.Users.InsertOnSubmit(user);
             _db.SubmitChanges();
 
             return RedirectToAction("suaxoanguoidung", "Admin");
@@ -436,8 +436,8 @@ namespace Du_Toan_Xay_Dung.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-            Nguoi_Dung nguoidung = new Nguoi_Dung();
-            nguoidung = _db.Nguoi_Dungs.Where(i => i.Email.Equals(email)).FirstOrDefault();
+            User nguoidung = new User();
+            nguoidung = _db.Users.Where(i => i.Email.Equals(email)).FirstOrDefault();
             var congtrinh = _db.CongTrinhs.Where(i => i.Email.Equals(email)).ToList();
             if(congtrinh.Count>0)
             {
@@ -447,7 +447,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 }
             }
 
-            _db.Nguoi_Dungs.DeleteOnSubmit(nguoidung);
+            _db.Users.DeleteOnSubmit(nguoidung);
             _db.SubmitChanges();
             return RedirectToAction("suaxoanguoidung");
         }
@@ -464,17 +464,17 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
             string tukhoa = f["txttimkiem"].ToString();
             ViewBag.tukhoa = tukhoa;
-            List<Nguoi_Dung> listnguoidung = _db.Nguoi_Dungs.Where(n => n.Ten.Contains(tukhoa)).ToList();
+            List<User> listnguoidung = _db.Users.Where(n => n.Last_Name.Contains(tukhoa)).ToList();
             // phân trang
             int pagenumber = (page ?? 1);
             int pagesize = 10;
             if (listnguoidung.Count == 0)
             {
                 ViewBag.ThongBao = "Không tìm thấy bản ghi phù hợp";
-                return View(_db.Nguoi_Dungs.OrderBy(n => n.Ten).ToPagedList(pagenumber, pagesize));
+                return View(_db.Users.OrderBy(n => n.Ten).ToPagedList(pagenumber, pagesize));
             }
             ViewBag.ThongBao = "Đã tìm thấy" + "    " + listnguoidung.Count + "kết quả";
-            return View(listnguoidung.OrderBy(n => n.Ten).ToPagedList(pagenumber, pagesize));
+            return View(listnguoidung.OrderBy(n => n.Last_Name).ToPagedList(pagenumber, pagesize));
         }
         [HttpGet]
         public ActionResult timkiemnguoidung(string tukhoa, int? page)
@@ -489,7 +489,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
             string tukhoa1 = tukhoa;
             ViewBag.tukhoa = tukhoa1;
-            List<Nguoi_Dung> listnguoidung = _db.Nguoi_Dungs.Where(n => n.Ten.Contains(tukhoa)).ToList();
+            List<User> listnguoidung = _db.Users.Where(n => n.Ten.Contains(tukhoa)).ToList();
             // phân trang
             int pagenumber = (page ?? 1);
             int pagesize = 10;
@@ -499,7 +499,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 return View(_db.DonGias.OrderBy(n => n.Ten).ToPagedList(pagenumber, pagesize));
             }
             ViewBag.ThongBao = "Đã tìm thấy" + listnguoidung.Count + "kết quả";
-            return View(listnguoidung.OrderBy(n => n.Ten).ToPagedList(pagenumber, pagesize));
+            return View(listnguoidung.OrderBy(n => n.Last_Name).ToPagedList(pagenumber, pagesize));
         }
         [HttpPost]
         public ActionResult timkiem(FormCollection f, int? page)
