@@ -21,6 +21,7 @@ namespace Du_Toan_Xay_Dung.Controllers
         }
 
 
+        /*
         public ActionResult Index_2(string ID)
         {
 
@@ -29,12 +30,12 @@ namespace Du_Toan_Xay_Dung.Controllers
                 int d = ID.IndexOf(',');
                 if (d == -1)
                 {
-                    ViewData["CongTrinh"] = _db.Buildings.Where(i => i.MaCT.Equals(ID)).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
+                    ViewData["CongTrinh"] = _db.Buildings.Where(i => i.ID.Equals(ID)).Select(i => new BuildingViewModel(i)).FirstOrDefault();
                 }
                 else
                 {
                     var Arr_ID = ID.Split(',');
-                    ViewData["CongTrinh"] = _db.CongTrinhs.Where(i => i.MaCT.Equals(Arr_ID[0])).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
+                    ViewData["CongTrinh"] = _db.Buildings.Where(i => i.MaCT.Equals(Arr_ID[0])).Select(i => new BuildingViewModel(i)).FirstOrDefault();
                     ViewData["HangMuc_ChiTiet"] = _db.CongViecs.Where(i => i.MaHM.Equals(Arr_ID[1])).Select(i => new CongViec_User_ViewModel(i)).ToList();
                     ViewData["HangMuc"] = _db.HangMucs.Where(i => i.MaHM.Equals(Arr_ID[1])).Select(i => new HangMucViewModel(i)).FirstOrDefault();
                 }
@@ -42,7 +43,7 @@ namespace Du_Toan_Xay_Dung.Controllers
 
             if (SessionHandler.User != null)
             {
-                ViewData["DSCongTrinh"] = _db.CongTrinhs.Where(i => i.Email.Equals(SessionHandler.User.Email)).Select(i => new CongTrinhViewModel(i)).ToList();
+                ViewData["DSCongTrinh"] = _db.CongTrinhs.Where(i => i.Email.Equals(SessionHandler.User.Email)).Select(i => new BuildingViewModel(i)).ToList();
             }
 
 
@@ -60,12 +61,12 @@ namespace Du_Toan_Xay_Dung.Controllers
                 int d = ID.IndexOf(',');
                 if (d == -1)
                 {
-                    ViewData["CongTrinh"] = _db.CongTrinhs.Where(i => i.MaCT.Equals(ID)).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
+                    ViewData["CongTrinh"] = _db.CongTrinhs.Where(i => i.MaCT.Equals(ID)).Select(i => new BuildingViewModel(i)).FirstOrDefault();
                 }
                 else
                 {
                     var Arr_ID = ID.Split(',');
-                    ViewData["CongTrinh"] = _db.CongTrinhs.Where(i => i.MaCT.Equals(Arr_ID[0])).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
+                    ViewData["CongTrinh"] = _db.CongTrinhs.Where(i => i.MaCT.Equals(Arr_ID[0])).Select(i => new BuildingViewModel(i)).FirstOrDefault();
                     ViewData["CongViec_User"] = _db.CongViecs.Where(i => i.MaHM.Equals(Arr_ID[1])).Select(i => new CongViec_User_ViewModel(i)).ToList();
                     ViewData["HangMuc"] = _db.HangMucs.Where(i => i.MaHM.Equals(Arr_ID[1])).Select(i => new HangMucViewModel(i)).FirstOrDefault();
                 }
@@ -73,7 +74,7 @@ namespace Du_Toan_Xay_Dung.Controllers
 
             if (SessionHandler.User != null)
             {
-                ViewData["DSCongTrinh"] = _db.CongTrinhs.Where(i => i.Email.Equals(SessionHandler.User.Email)).Select(i => new CongTrinhViewModel(i)).ToList();
+                ViewData["DSCongTrinh"] = _db.CongTrinhs.Where(i => i.Email.Equals(SessionHandler.User.Email)).Select(i => new BuildingViewModel(i)).ToList();
             }
 
 
@@ -83,30 +84,37 @@ namespace Du_Toan_Xay_Dung.Controllers
 
             return View();
         }
-
+         */
         public JsonResult GetNormWorks()
         {
-            var list_normwork = _db.DinhMucs.Select(i => new DinhMucViewModel(i)).ToList();
+            var list_normwork = _db.NormWorks.Select(i => new DinhMucViewModel(i)).ToList();
 
             return Json(list_normwork, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetDSDonGia()
         {
-            var list = _db.DonGias.Select(i => new DonGiaViewModel(i)).ToList();
+            var list = _db.UnitPrices.Select(i => new DonGiaViewModel(i)).ToList();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetDetailNormWork_Price()
         {
-            var list = _db.ChiTiet_DinhMucs.Join(_db.DonGias, i => i.MaVL_NC_MTC, o => o.MaVL_NC_MTC, (i, o) => new {
-                Key_NormWork = i.MaHieuCV_DM,
-                Key_Material = i.MaVL_NC_MTC,
-                Number = i.SoLuong,
-                Unit = i.DonVi,
-                Name_Material = o.Ten,
-                Price = o.Gia
-            });
+            var list = _db.NormDetails.Join(_db.UnitPrices, nd => nd.UnitPrice_ID, up => up.ID, (nd, up) => new {
+                NormDetails = nd, UnitPrices =up})
+                .Join(_db.UnitPrice_Areas, up=>up.UnitPrices.ID, upa=>upa.UnitPrice_ID, (up,upa) => new {
+                    UnitPrices = up, UnitPrice_Areas = upa})
+                    .Select( s => new {
+                        Key_NormWork = s.UnitPrices.NormDetails.NormWork_ID,
+                        Key_Material = s.UnitPrices.UnitPrices.ID,
+                        Number = s.UnitPrices.NormDetails.Numbers,
+                        Unit = s.UnitPrices.UnitPrices.Unit,
+                        Name_Material = s.UnitPrices.UnitPrices.Name,
+                        Price = s.UnitPrice_Areas.Price
+                    });
+
+            
+
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 

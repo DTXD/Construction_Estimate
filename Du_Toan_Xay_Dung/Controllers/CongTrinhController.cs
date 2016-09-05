@@ -28,7 +28,7 @@ namespace Du_Toan_Xay_Dung.Controllers
         [PageLogin]
         public ActionResult Index()
         {
-            ViewData["List_CongTrinh"] = _db.CongTrinhs.Where(i => i.Email.Equals(SessionHandler.User.Email)).Select(i => new CongTrinhViewModel(i)).ToList();
+            ViewData["List_CongTrinh"] = _db.CongTrinhs.Where(i => i.Email.Equals(SessionHandler.User.Email)).Select(i => new BuildingViewModel(i)).ToList();
             ViewData["List_CongTrinh_Null"] = _db.CongTrinhs.Where(i => i.Email.Equals(SessionHandler.User.Email) && !i.HangMucs.Any(o => o.MaCT.Equals(i.MaCT))).Select(i => i.MaCT).ToList();
             ViewData["list_hinhanh"] = _db.Images_CongTrinhs.Select(i => new Images_CongTrinhViewModel(i)).ToList();
             return View();
@@ -43,15 +43,15 @@ namespace Du_Toan_Xay_Dung.Controllers
         public ActionResult HinhAnhCT(string Id)
         {
             ViewData["image_congtrinh"] = _db.Images_CongTrinhs.Where(i => i.MaCT.Equals(Id)).Select(i => new Images_CongTrinhViewModel(i)).FirstOrDefault();
-            ViewData["congtrinh"] = _db.CongTrinhs.Where(a => a.MaCT.Equals(Id)).Select(a => new CongTrinhViewModel(a)).FirstOrDefault();
+            ViewData["congtrinh"] = _db.CongTrinhs.Where(a => a.MaCT.Equals(Id)).Select(a => new BuildingViewModel(a)).FirstOrDefault();
             return View();
         }
 
         [PageLogin]
         public ActionResult ChiTiet_CongTrinh(string Id)
         {
-            ViewData["List_CongTrinh"] = _db.CongTrinhs.Where(i => i.Email.Equals(SessionHandler.User.Email)).Select(i => new CongTrinhViewModel(i)).ToList();
-            ViewData["CongTrinh_Detail"] = _db.CongTrinhs.Where(i => i.MaCT.Equals(Id)).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
+            ViewData["List_CongTrinh"] = _db.CongTrinhs.Where(i => i.Email.Equals(SessionHandler.User.Email)).Select(i => new BuildingViewModel(i)).ToList();
+            ViewData["CongTrinh_Detail"] = _db.CongTrinhs.Where(i => i.MaCT.Equals(Id)).Select(i => new BuildingViewModel(i)).FirstOrDefault();
             ViewData["List_HangMuc_IdCT"] = _db.HangMucs.Where(i => i.MaCT.Equals(Id)).Select(i => new HangMucViewModel(i)).ToList();
 
             return View();
@@ -64,7 +64,7 @@ namespace Du_Toan_Xay_Dung.Controllers
         }
 
         [PageLogin]
-        public JsonResult Delete_CongTrinh(CongTrinhViewModel obj)
+        public JsonResult Delete_CongTrinh(BuildingViewModel obj)
         {
             try
             {
@@ -100,13 +100,13 @@ namespace Du_Toan_Xay_Dung.Controllers
             {
                 ID = "";
             }
-            ViewData["CongTrinh_Update"] = _db.CongTrinhs.Where(i => i.MaCT.Equals(ID)).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
+            ViewData["CongTrinh_Update"] = _db.CongTrinhs.Where(i => i.MaCT.Equals(ID)).Select(i => new BuildingViewModel(i)).FirstOrDefault();
             ViewData["image_congtrinh"] = _db.Images_CongTrinhs.Where(a => a.MaCT.Equals(ID)).Select(i => new Images_CongTrinhViewModel(i)).ToList();
             return View();
         }
         [PageLogin]
         [HttpPost]
-        public JsonResult post_updatecongtrinh(CongTrinhViewModel obj)
+        public JsonResult post_updatecongtrinh(BuildingViewModel obj)
         {
             try
             {
@@ -232,7 +232,7 @@ namespace Du_Toan_Xay_Dung.Controllers
 
         [PageLogin]
         [HttpPost]
-        public JsonResult Post_ThemCongTrinh(CongTrinhViewModel obj)
+        public JsonResult Post_ThemCongTrinh(BuildingViewModel obj)
         {
             try
             {
@@ -381,7 +381,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             if (ID != null)
             {
 
-                var congtrinh = _db.CongTrinhs.Where(i => i.MaCT.Equals(ID)).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
+                var congtrinh = _db.CongTrinhs.Where(i => i.MaCT.Equals(ID)).Select(i => new BuildingViewModel(i)).FirstOrDefault();
                 var hangmuc = _db.HangMucs.Where(i => i.MaCT.Equals(ID)).Select(i => new HangMucViewModel(i)).ToList();
                 var mahangmucs = _db.HangMucs.Where(i => i.MaCT.Equals(ID)).Select(i => i.MaHM).ToList();
                 List<string> mahangmucs1 = _db.HangMucs.Where(i => i.MaCT.Equals(ID)).Select(i => i.MaHM).ToList();

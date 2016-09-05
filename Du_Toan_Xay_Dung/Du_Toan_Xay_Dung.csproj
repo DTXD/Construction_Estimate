@@ -220,7 +220,7 @@
       <DependentUpon>DataDTXD.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\DonGiaChiTiet_DM_ViewModel.cs" />
-    <Compile Include="Models\CongTrinhViewModel.cs" />
+    <Compile Include="Models\BuildingViewModel.cs" />
     <Compile Include="Models\DetailNormWork_PriceViewModel.cs" />
     <Compile Include="Models\Export_CongViec_ViewModel.cs" />
     <Compile Include="Models\CongViec_User_ViewModel.cs" />

@@ -5,11 +5,11 @@ using System.Web;
 
 namespace Du_Toan_Xay_Dung.Models
 {
-    public class CongTrinhViewModel
+    public class BuildingViewModel
     {
-        public CongTrinhViewModel() { }
+        public BuildingViewModel() { }
 
-        public CongTrinhViewModel(Building obj)
+        public BuildingViewModel(Building obj)
         {
             ID = obj.ID;  
             Email = obj.Email;
