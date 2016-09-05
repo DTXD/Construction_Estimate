@@ -33,6 +33,9 @@ namespace Du_Toan_Xay_Dung.Models
     partial void InsertArea(Area instance);
     partial void UpdateArea(Area instance);
     partial void DeleteArea(Area instance);
+    partial void InsertUserWork(UserWork instance);
+    partial void UpdateUserWork(UserWork instance);
+    partial void DeleteUserWork(UserWork instance);
     partial void InsertBuilding(Building instance);
     partial void UpdateBuilding(Building instance);
     partial void DeleteBuilding(Building instance);
@@ -42,6 +45,9 @@ namespace Du_Toan_Xay_Dung.Models
     partial void InsertConstructionMaterial(ConstructionMaterial instance);
     partial void UpdateConstructionMaterial(ConstructionMaterial instance);
     partial void DeleteConstructionMaterial(ConstructionMaterial instance);
+    partial void InsertImages_Url(Images_Url instance);
+    partial void UpdateImages_Url(Images_Url instance);
+    partial void DeleteImages_Url(Images_Url instance);
     partial void InsertNormDetail(NormDetail instance);
     partial void UpdateNormDetail(NormDetail instance);
     partial void DeleteNormDetail(NormDetail instance);
@@ -54,12 +60,6 @@ namespace Du_Toan_Xay_Dung.Models
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
-    partial void InsertUserWork(UserWork instance);
-    partial void UpdateUserWork(UserWork instance);
-    partial void DeleteUserWork(UserWork instance);
-    partial void InsertImages_Url(Images_Url instance);
-    partial void UpdateImages_Url(Images_Url instance);
-    partial void DeleteImages_Url(Images_Url instance);
     #endregion
 		
 		public DataDTXDDataContext() : 
@@ -100,6 +100,14 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
+		public System.Data.Linq.Table<UserWork> UserWorks
+		{
+			get
+			{
+				return this.GetTable<UserWork>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Building> Buildings
 		{
 			get
@@ -121,6 +129,14 @@ namespace Du_Toan_Xay_Dung.Models
 			get
 			{
 				return this.GetTable<ConstructionMaterial>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Images_Url> Images_Urls
+		{
+			get
+			{
+				return this.GetTable<Images_Url>();
 			}
 		}
 		
@@ -161,22 +177,6 @@ namespace Du_Toan_Xay_Dung.Models
 			get
 			{
 				return this.GetTable<User>();
-			}
-		}
-		
-		public System.Data.Linq.Table<UserWork> UserWorks
-		{
-			get
-			{
-				return this.GetTable<UserWork>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Images_Url> Images_Urls
-		{
-			get
-			{
-				return this.GetTable<Images_Url>();
 			}
 		}
 	}
@@ -266,6 +266,212 @@ namespace Du_Toan_Xay_Dung.Models
 					this._Address = value;
 					this.SendPropertyChanged("Address");
 					this.OnAddressChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UserWorks")]
+	public partial class UserWork : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _BuildingItem_ID;
+		
+		private long _ID;
+		
+		private string _UserWork_ID;
+		
+		private string _NormWork_ID;
+		
+		private string _Name;
+		
+		private string _Unit_Measure;
+		
+		private decimal _Amount_Work;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnBuildingItem_IDChanging(long value);
+    partial void OnBuildingItem_IDChanged();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnUserWork_IDChanging(string value);
+    partial void OnUserWork_IDChanged();
+    partial void OnNormWork_IDChanging(string value);
+    partial void OnNormWork_IDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnUnit_MeasureChanging(string value);
+    partial void OnUnit_MeasureChanged();
+    partial void OnAmount_WorkChanging(decimal value);
+    partial void OnAmount_WorkChanged();
+    #endregion
+		
+		public UserWork()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BuildingItem_ID", DbType="BigInt NOT NULL")]
+		public long BuildingItem_ID
+		{
+			get
+			{
+				return this._BuildingItem_ID;
+			}
+			set
+			{
+				if ((this._BuildingItem_ID != value))
+				{
+					this.OnBuildingItem_IDChanging(value);
+					this.SendPropertyChanging();
+					this._BuildingItem_ID = value;
+					this.SendPropertyChanged("BuildingItem_ID");
+					this.OnBuildingItem_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserWork_ID", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string UserWork_ID
+		{
+			get
+			{
+				return this._UserWork_ID;
+			}
+			set
+			{
+				if ((this._UserWork_ID != value))
+				{
+					this.OnUserWork_IDChanging(value);
+					this.SendPropertyChanging();
+					this._UserWork_ID = value;
+					this.SendPropertyChanged("UserWork_ID");
+					this.OnUserWork_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NormWork_ID", DbType="NVarChar(50)")]
+		public string NormWork_ID
+		{
+			get
+			{
+				return this._NormWork_ID;
+			}
+			set
+			{
+				if ((this._NormWork_ID != value))
+				{
+					this.OnNormWork_IDChanging(value);
+					this.SendPropertyChanging();
+					this._NormWork_ID = value;
+					this.SendPropertyChanged("NormWork_ID");
+					this.OnNormWork_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(3000) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit_Measure", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Unit_Measure
+		{
+			get
+			{
+				return this._Unit_Measure;
+			}
+			set
+			{
+				if ((this._Unit_Measure != value))
+				{
+					this.OnUnit_MeasureChanging(value);
+					this.SendPropertyChanging();
+					this._Unit_Measure = value;
+					this.SendPropertyChanged("Unit_Measure");
+					this.OnUnit_MeasureChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount_Work", DbType="Decimal(18,0) NOT NULL")]
+		public decimal Amount_Work
+		{
+			get
+			{
+				return this._Amount_Work;
+			}
+			set
+			{
+				if ((this._Amount_Work != value))
+				{
+					this.OnAmount_WorkChanging(value);
+					this.SendPropertyChanging();
+					this._Amount_Work = value;
+					this.SendPropertyChanged("Amount_Work");
+					this.OnAmount_WorkChanged();
 				}
 			}
 		}
@@ -950,6 +1156,157 @@ namespace Du_Toan_Xay_Dung.Models
 					this._Price = value;
 					this.SendPropertyChanged("Price");
 					this.OnPriceChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Images_Url")]
+	public partial class Images_Url : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private long _Building_ID;
+		
+		private string _Url;
+		
+		private EntityRef<Building> _Building;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnBuilding_IDChanging(long value);
+    partial void OnBuilding_IDChanged();
+    partial void OnUrlChanging(string value);
+    partial void OnUrlChanged();
+    #endregion
+		
+		public Images_Url()
+		{
+			this._Building = default(EntityRef<Building>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Building_ID", DbType="BigInt NOT NULL")]
+		public long Building_ID
+		{
+			get
+			{
+				return this._Building_ID;
+			}
+			set
+			{
+				if ((this._Building_ID != value))
+				{
+					if (this._Building.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBuilding_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Building_ID = value;
+					this.SendPropertyChanged("Building_ID");
+					this.OnBuilding_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NVarChar(2000) NOT NULL", CanBeNull=false)]
+		public string Url
+		{
+			get
+			{
+				return this._Url;
+			}
+			set
+			{
+				if ((this._Url != value))
+				{
+					this.OnUrlChanging(value);
+					this.SendPropertyChanging();
+					this._Url = value;
+					this.SendPropertyChanged("Url");
+					this.OnUrlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building_Images_Url", Storage="_Building", ThisKey="Building_ID", OtherKey="ID", IsForeignKey=true)]
+		public Building Building
+		{
+			get
+			{
+				return this._Building.Entity;
+			}
+			set
+			{
+				Building previousValue = this._Building.Entity;
+				if (((previousValue != value) 
+							|| (this._Building.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Building.Entity = null;
+						previousValue.Images_Urls.Remove(this);
+					}
+					this._Building.Entity = value;
+					if ((value != null))
+					{
+						value.Images_Urls.Add(this);
+						this._Building_ID = value.ID;
+					}
+					else
+					{
+						this._Building_ID = default(long);
+					}
+					this.SendPropertyChanged("Building");
 				}
 			}
 		}
@@ -1809,363 +2166,6 @@ namespace Du_Toan_Xay_Dung.Models
 		{
 			this.SendPropertyChanging();
 			entity.User = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UserWorks")]
-	public partial class UserWork : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _BuildingItem_ID;
-		
-		private long _ID;
-		
-		private string _UserWork_ID;
-		
-		private string _NormWork_ID;
-		
-		private string _Name;
-		
-		private string _Unit_Measure;
-		
-		private decimal _Amount_Work;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnBuildingItem_IDChanging(long value);
-    partial void OnBuildingItem_IDChanged();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnUserWork_IDChanging(string value);
-    partial void OnUserWork_IDChanged();
-    partial void OnNormWork_IDChanging(string value);
-    partial void OnNormWork_IDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnUnit_MeasureChanging(string value);
-    partial void OnUnit_MeasureChanged();
-    partial void OnAmount_WorkChanging(decimal value);
-    partial void OnAmount_WorkChanged();
-    #endregion
-		
-		public UserWork()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BuildingItem_ID", DbType="BigInt NOT NULL")]
-		public long BuildingItem_ID
-		{
-			get
-			{
-				return this._BuildingItem_ID;
-			}
-			set
-			{
-				if ((this._BuildingItem_ID != value))
-				{
-					this.OnBuildingItem_IDChanging(value);
-					this.SendPropertyChanging();
-					this._BuildingItem_ID = value;
-					this.SendPropertyChanged("BuildingItem_ID");
-					this.OnBuildingItem_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserWork_ID", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string UserWork_ID
-		{
-			get
-			{
-				return this._UserWork_ID;
-			}
-			set
-			{
-				if ((this._UserWork_ID != value))
-				{
-					this.OnUserWork_IDChanging(value);
-					this.SendPropertyChanging();
-					this._UserWork_ID = value;
-					this.SendPropertyChanged("UserWork_ID");
-					this.OnUserWork_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NormWork_ID", DbType="NVarChar(50)")]
-		public string NormWork_ID
-		{
-			get
-			{
-				return this._NormWork_ID;
-			}
-			set
-			{
-				if ((this._NormWork_ID != value))
-				{
-					this.OnNormWork_IDChanging(value);
-					this.SendPropertyChanging();
-					this._NormWork_ID = value;
-					this.SendPropertyChanged("NormWork_ID");
-					this.OnNormWork_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(3000) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit_Measure", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Unit_Measure
-		{
-			get
-			{
-				return this._Unit_Measure;
-			}
-			set
-			{
-				if ((this._Unit_Measure != value))
-				{
-					this.OnUnit_MeasureChanging(value);
-					this.SendPropertyChanging();
-					this._Unit_Measure = value;
-					this.SendPropertyChanged("Unit_Measure");
-					this.OnUnit_MeasureChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount_Work", DbType="Decimal(18,0) NOT NULL")]
-		public decimal Amount_Work
-		{
-			get
-			{
-				return this._Amount_Work;
-			}
-			set
-			{
-				if ((this._Amount_Work != value))
-				{
-					this.OnAmount_WorkChanging(value);
-					this.SendPropertyChanging();
-					this._Amount_Work = value;
-					this.SendPropertyChanged("Amount_Work");
-					this.OnAmount_WorkChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Images_Url")]
-	public partial class Images_Url : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private long _Building_ID;
-		
-		private string _Url;
-		
-		private EntityRef<Building> _Building;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnBuilding_IDChanging(long value);
-    partial void OnBuilding_IDChanged();
-    partial void OnUrlChanging(string value);
-    partial void OnUrlChanged();
-    #endregion
-		
-		public Images_Url()
-		{
-			this._Building = default(EntityRef<Building>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Building_ID", DbType="BigInt NOT NULL")]
-		public long Building_ID
-		{
-			get
-			{
-				return this._Building_ID;
-			}
-			set
-			{
-				if ((this._Building_ID != value))
-				{
-					if (this._Building.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnBuilding_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Building_ID = value;
-					this.SendPropertyChanged("Building_ID");
-					this.OnBuilding_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NVarChar(2000) NOT NULL", CanBeNull=false)]
-		public string Url
-		{
-			get
-			{
-				return this._Url;
-			}
-			set
-			{
-				if ((this._Url != value))
-				{
-					this.OnUrlChanging(value);
-					this.SendPropertyChanging();
-					this._Url = value;
-					this.SendPropertyChanged("Url");
-					this.OnUrlChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building_Images_Url", Storage="_Building", ThisKey="Building_ID", OtherKey="ID", IsForeignKey=true)]
-		public Building Building
-		{
-			get
-			{
-				return this._Building.Entity;
-			}
-			set
-			{
-				Building previousValue = this._Building.Entity;
-				if (((previousValue != value) 
-							|| (this._Building.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Building.Entity = null;
-						previousValue.Images_Urls.Remove(this);
-					}
-					this._Building.Entity = value;
-					if ((value != null))
-					{
-						value.Images_Urls.Add(this);
-						this._Building_ID = value.ID;
-					}
-					else
-					{
-						this._Building_ID = default(long);
-					}
-					this.SendPropertyChanged("Building");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 }
