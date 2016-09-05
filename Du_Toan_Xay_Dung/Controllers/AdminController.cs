@@ -517,17 +517,17 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
             string tukhoa = f["txttimkiem"].ToString();
             ViewBag.tukhoa = tukhoa;
-            List<DonGia> listdongia = _db.DonGias.Where(n => n.Ten.Contains(tukhoa)).ToList();
+            List<UnitPrice> listdongia = _db.UnitPrices.Where(n => n.Name.Contains(tukhoa)).ToList();
             // phân trang
             int pagenumber = (page ?? 1);
             int pagesize = 10;
             if (listdongia.Count == 0)
             {
                 ViewBag.ThongBao = "Không tìm thấy bản ghi phù hợp";
-                return View(_db.DonGias.OrderBy(n => n.Ten).ToPagedList(pagenumber, pagesize));
+                return View(_db.UnitPrices.OrderBy(n => n.Name).ToPagedList(pagenumber, pagesize));
             }
             ViewBag.ThongBao = "Đã tìm thấy" + "    " + listdongia.Count + "kết quả";
-            return View(listdongia.OrderBy(n => n.Ten).ToPagedList(pagenumber, pagesize));
+            return View(listdongia.OrderBy(n => n.Name).ToPagedList(pagenumber, pagesize));
         }
         [HttpGet]
         public ActionResult timkiem(string tukhoa, int? page)
@@ -542,21 +542,21 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
             string tukhoa1 = tukhoa;
             ViewBag.tukhoa = tukhoa1;
-            List<DonGia> listdongia = _db.DonGias.Where(n => n.Ten.Contains(tukhoa)).ToList();
+            List<UnitPrice> listdongia = _db.UnitPrices.Where(n => n.Name.Contains(tukhoa)).ToList();
             // phân trang
             int pagenumber = (page ?? 1);
             int pagesize = 10;
             if (listdongia.Count == 0)
             {
                 ViewBag.ThongBao = "Không tìm thấy bản ghi phù hợp";
-                return View(_db.DonGias.OrderBy(n => n.Ten).ToPagedList(pagenumber, pagesize));
+                return View(_db.UnitPrices.OrderBy(n => n.Name).ToPagedList(pagenumber, pagesize));
             }
             ViewBag.ThongBao = "Đã tìm thấy" + listdongia.Count + "kết quả";
-            return View(listdongia.OrderBy(n => n.Ten).ToPagedList(pagenumber, pagesize));
+            return View(listdongia.OrderBy(n => n.Name).ToPagedList(pagenumber, pagesize));
         }
-        public IEnumerable<DonGia> ListAllPageging(int page, int pagesize)
+        public IEnumerable<UnitPrice> ListAllPageging(int page, int pagesize)
         {
-            return _db.DonGias.OrderByDescending(x => x.MaKV).ToPagedList(page, pagesize);
+            return _db.UnitPrices.OrderByDescending(x => x.ID).ToPagedList(page, pagesize);
         }
         public ActionResult danhsachdongia(int page = 1, int pagesize = 10)
         {
@@ -573,7 +573,7 @@ namespace Du_Toan_Xay_Dung.Controllers
         }
         public ActionResult suadongia(string MaVL_NC_MTC)
         {
-            var dongia = _db.DonGias.Where(i => i.MaVL_NC_MTC.Equals(MaVL_NC_MTC)).Select(i => new DonGiaViewModel(i)).FirstOrDefault();
+            var dongia = _db.UnitPrices.Where(i => i.ID.Equals(MaVL_NC_MTC)).Select(i => new DonGiaViewModel(i)).FirstOrDefault();
             if (SessionHandler.User != null)
             {
                 var user = SessionHandler.User;
@@ -588,18 +588,20 @@ namespace Du_Toan_Xay_Dung.Controllers
         [HttpPost]
         public ActionResult post_suadongia(string mathanhphan, FormCollection form)
         {
-            var dongia = _db.DonGias.First(n => n.MaVL_NC_MTC.Equals(mathanhphan));
+            var dongia = _db.UnitPrices.First(n => n.ID.Equals(mathanhphan));
+            var dongia_khuvuc = _db.UnitPrice_Areas.First(i => i.UnitPrice_ID.Equals(mathanhphan));
             string gia1 = form["dongia"];
             decimal gia;
             gia = Convert.ToDecimal(gia1);
             string donvi = form["donvi"];
             string mathanhphan1 = form["mathanhphan"];
             // gán dữ liệu
-            dongia.Gia = gia;
-            dongia.DonVi = donvi;
-            dongia.MaVL_NC_MTC = mathanhphan1;
+            dongia_khuvuc.Price = gia;
+            dongia.Unit = donvi;
+            dongia.ID = mathanhphan1;
             // thực thi câu truy vấn
             UpdateModel(dongia);
+            UpdateModel(dongia_khuvuc);
             _db.SubmitChanges();
             return RedirectToAction("danhsachdongia");
         }

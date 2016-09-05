@@ -22,7 +22,7 @@ namespace Du_Toan_Xay_Dung.Controllers
         [HttpPost]
         public JsonResult post_formAngular(string MaHieuCV_DM)
         {
-            var congviec = _db.DinhMucs.Where(i => i.MaHieuCV_DM.Equals(MaHieuCV_DM)).Select(i => new DinhMucViewModel(i)).ToList();
+            var congviec = _db.NormWorks.Where(i => i.ID.Equals(MaHieuCV_DM)).Select(i => new DinhMucViewModel(i)).ToList();
             return Json(congviec);
         }
 
@@ -107,13 +107,19 @@ namespace Du_Toan_Xay_Dung.Controllers
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    var dongia = new DonGia();
-                    dongia.MaKV = ds.Tables[0].Rows[i][0].ToString();
-                    dongia.MaVL_NC_MTC = ds.Tables[0].Rows[i][1].ToString();
-                    dongia.Ten = ds.Tables[0].Rows[i][2].ToString();
-                    dongia.DonVi = ds.Tables[0].Rows[i][3].ToString();
-                    dongia.Gia = Convert.ToDecimal(ds.Tables[0].Rows[i][4].ToString());
-                    _db.DonGias.InsertOnSubmit(dongia);
+                    var khuvuc = new Area();
+                    var dongia = new UnitPrice();
+                    var dongia_khuvuc = new UnitPrice_Area();
+                    khuvuc.ID = Convert.ToInt64(ds.Tables[0].Rows[i][0].ToString());
+                    dongia.ID = ds.Tables[0].Rows[i][1].ToString();
+                    dongia_khuvuc.Area_ID = Convert.ToInt64(ds.Tables[0].Rows[i][0].ToString());
+                    dongia_khuvuc.UnitPrice_ID = ds.Tables[0].Rows[i][1].ToString();
+                    dongia.Name = ds.Tables[0].Rows[i][2].ToString();
+                    dongia.Unit = ds.Tables[0].Rows[i][3].ToString();
+                    dongia_khuvuc.Price = Convert.ToDecimal(ds.Tables[0].Rows[i][4].ToString());
+                    _db.Areas.InsertOnSubmit(khuvuc);
+                    _db.UnitPrices.InsertOnSubmit(dongia);
+                    _db.UnitPrice_Areas.InsertOnSubmit(dongia_khuvuc);
                 }
                 _db.SubmitChanges();
 

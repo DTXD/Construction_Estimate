@@ -15,7 +15,6 @@ namespace Du_Toan_Xay_Dung.Models
             NormWork_ID=obj.NormWork_ID;
             UnitPrice_ID = obj.UnitPrice_ID;
             Numbers = obj.Numbers;
-            Unit = obj.Unit;
         }
         public long ID { get; set; }
         public string NormWork_ID  { get; set; }

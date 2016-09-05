@@ -14,13 +14,11 @@ namespace Du_Toan_Xay_Dung.Models
             NormWork_ID = Convert.ToDecimal(obj.NormWork_ID);
             UnitPrice_ID = obj.UnitPrice_ID;
             Numbers = obj.Numbers;
-            Unit = obj.Unit;
         }
 
         public long ID{ get; set; }
         public decimal NormWork_ID { get; set; }
         public string UnitPrice_ID { get; set; }
         public decimal ?Numbers { get; set; }
-        public string Unit { get; set; }
     }
 }
