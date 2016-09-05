@@ -441,12 +441,12 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
             User nguoidung = new User();
             nguoidung = _db.Users.Where(i => i.Email.Equals(email)).FirstOrDefault();
-            var congtrinh = _db.CongTrinhs.Where(i => i.Email.Equals(email)).ToList();
+            var congtrinh = _db.Buildings.Where(i => i.Email.Equals(email)).ToList();
             if(congtrinh.Count>0)
             {
                 for(var i=0;i<congtrinh.Count;i++)
                 {
-                    _db.CongTrinhs.DeleteOnSubmit(congtrinh[i]);
+                    _db.Buildings.DeleteOnSubmit(congtrinh[i]);
                 }
             }
 
@@ -474,7 +474,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             if (listnguoidung.Count == 0)
             {
                 ViewBag.ThongBao = "Không tìm thấy bản ghi phù hợp";
-                return View(_db.Users.OrderBy(n => n.Ten).ToPagedList(pagenumber, pagesize));
+                return View(_db.Users.OrderBy(n => n.Last_Name).ToPagedList(pagenumber, pagesize));
             }
             ViewBag.ThongBao = "Đã tìm thấy" + "    " + listnguoidung.Count + "kết quả";
             return View(listnguoidung.OrderBy(n => n.Last_Name).ToPagedList(pagenumber, pagesize));
@@ -492,14 +492,14 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
             string tukhoa1 = tukhoa;
             ViewBag.tukhoa = tukhoa1;
-            List<User> listnguoidung = _db.Users.Where(n => n.Ten.Contains(tukhoa)).ToList();
+            List<User> listnguoidung = _db.Users.Where(n => n.Last_Name.Contains(tukhoa)).ToList();
             // phân trang
             int pagenumber = (page ?? 1);
             int pagesize = 10;
             if (listnguoidung.Count == 0)
             {
                 ViewBag.ThongBao = "Không tìm thấy bản ghi phù hợp";
-                return View(_db.DonGias.OrderBy(n => n.Ten).ToPagedList(pagenumber, pagesize));
+                return View(_db.UnitPrices.OrderBy(n => n.Name).ToPagedList(pagenumber, pagesize));
             }
             ViewBag.ThongBao = "Đã tìm thấy" + listnguoidung.Count + "kết quả";
             return View(listnguoidung.OrderBy(n => n.Last_Name).ToPagedList(pagenumber, pagesize));
