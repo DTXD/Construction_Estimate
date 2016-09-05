@@ -405,7 +405,6 @@ C:\Users\HHD\Documents\GitHub\Dutoan\Du_Toan_Xay_Dung\bin\PagedList.Mvc.xml
 C:\Users\Administrator\Documents\GitHub\Dutoan\Du_Toan_Xay_Dung\bin\Dropbox.Api.dll
 C:\Users\Administrator\Documents\GitHub\Dutoan\Du_Toan_Xay_Dung\bin\Dropbox.Api.xml
 C:\Users\Administrator\Documents\GitHub\Dutoan\Du_Toan_Xay_Dung\obj\Debug\Du_Toan_Xay_Dung.csprojResolveAssemblyReference.cache
-C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\obj\Debug\Du_Toan_Xay_Dung.csprojResolveAssemblyReference.cache
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\obj\Debug\Du_Toan_Xay_Dung.dll
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\obj\Debug\Du_Toan_Xay_Dung.pdb
 C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\Du_Toan_Xay_Dung.dll.config
@@ -594,3 +593,9 @@ C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay
 C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay_Dung\bin\System.Web.Http.xml
 C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay_Dung\bin\System.Web.Http.WebHost.xml
 C:\Users\Administrator\Documents\DuToanXayDung\Construction_Estimate\Du_Toan_Xay_Dung\obj\Debug\Du_Toan_Xay_Dung.csprojResolveAssemblyReference.cache
+C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\System.Net.Http.Formatting.dll
+C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\System.Web.Http.dll
+C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\System.Web.Http.WebHost.dll
+C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\System.Net.Http.Formatting.xml
+C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\System.Web.Http.xml
+C:\Users\HHD\Documents\GitHub\Construction_Estimate\Du_Toan_Xay_Dung\bin\System.Web.Http.WebHost.xml

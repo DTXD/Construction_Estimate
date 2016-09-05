@@ -216,7 +216,9 @@
     <Compile Include="Handlers\SessionHandler.cs" />
     <Compile Include="Models\AreaViewModel.cs" />
     <Compile Include="Models\ChiTiet_DinhMucViewModel.cs" />
-    <Compile Include="Models\DataDTXD.cs">
+    <Compile Include="Models\DataDTXD.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>DataDTXD.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\DonGiaChiTiet_DM_ViewModel.cs" />
@@ -224,11 +226,6 @@
     <Compile Include="Models\DetailNormWork_PriceViewModel.cs" />
     <Compile Include="Models\Export_CongViec_ViewModel.cs" />
     <Compile Include="Models\CongViec_User_ViewModel.cs" />
-    <Compile Include="Models\DataDTXD.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataDTXD.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Models\DinhMucViewModel.cs" />
     <Compile Include="Models\DonGiaViewModel.cs" />
     <Compile Include="Models\HangMucViewModel.cs" />
@@ -298,6 +295,56 @@
     <Content Include="App_Start\Content\Style.css" />
     <Content Include="App_Start\Content\vendor\wijmo.min.css" />
     <Content Include="App_Start\Content\vendor\wijmo.theme.office.min.css" />
+    <Content Include="Content\AdminLTE.css" />
+    <Content Include="Content\AdminLTE.min.css" />
+    <Content Include="Content\admin\css\buttons.bootstrap.min.css" />
+    <Content Include="Content\admin\css\dataTables.bootstrap.min.css" />
+    <Content Include="Content\admin\css\fixedHeader.bootstrap.min.css" />
+    <Content Include="Content\admin\css\prettify.min.css" />
+    <Content Include="Content\admin\css\responsive.bootstrap.min.css" />
+    <Content Include="Content\admin\css\scroller.bootstrap.min.css" />
+    <Content Include="Content\admin\css\select2.min.css" />
+    <Content Include="Content\admin\css\starrr.css" />
+    <Content Include="Content\admin\css\switchery.min.css" />
+    <Content Include="Content\Bootstrap\bootstrap-progressbar-3.3.4.min.css" />
+    <Content Include="Content\Bootstrap\bootstrap-select.css" />
+    <Content Include="Content\Bootstrap\bootstrap-select.min.css" />
+    <Content Include="Content\Bootstrap\bootstrap-theme.css" />
+    <Content Include="Content\Bootstrap\bootstrap-theme.min.css" />
+    <Content Include="Content\Bootstrap\bootstrap.css" />
+    <Content Include="Content\Bootstrap\bootstrap.min.css" />
+    <Content Include="Content\CongTrinh\congtrinh.css" />
+    <Content Include="Content\custom.min.css" />
+    <Content Include="Content\dutoan\estimate_work.css" />
+    <Content Include="Content\fileinput.min.css" />
+    <Content Include="Content\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\green.css" />
+    <Content Include="Content\HangMuc\jquery.editable-select.css" />
+    <Content Include="Content\HangMuc\jquery.editable-select.min.css" />
+    <Content Include="Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jqvmap.min.css" />
+    <Content Include="Content\nprogress.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\simple-sidebar.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\Style.css" />
+    <Content Include="Content\vendor\wijmo.min.css" />
+    <Content Include="Content\vendor\wijmo.theme.office.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -318,11 +365,6 @@
     <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.dll" />
     <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.pdb" />
     <Content Include="obj\x86\Debug\TempPE\Models.DataDTXD.designer.cs.dll" />
-    <Content Include="Models\DataDTXD.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DataDTXD.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="App_Start\Content\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="App_Start\Content\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="App_Start\Content\font-awesome\fonts\fontawesome-webfont.woff" />
@@ -420,6 +462,42 @@
     <Content Include="Scripts\Difference\sortable.min.js" />
     <Content Include="Scripts\Bootstrap\bootstrap-select.js.map" />
     <Content Include="App_Start\Content\Bootstrap\bootstrap-select.css.map" />
+    <Content Include="Content\Bootstrap\bootstrap-select.css.map" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Content\font-awesome\less\core.less" />
+    <Content Include="Content\font-awesome\less\fixed-width.less" />
+    <Content Include="Content\font-awesome\less\font-awesome.less" />
+    <Content Include="Content\font-awesome\less\icons.less" />
+    <Content Include="Content\font-awesome\less\larger.less" />
+    <Content Include="Content\font-awesome\less\list.less" />
+    <Content Include="Content\font-awesome\less\mixins.less" />
+    <Content Include="Content\font-awesome\less\path.less" />
+    <Content Include="Content\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Content\font-awesome\less\spinning.less" />
+    <Content Include="Content\font-awesome\less\stacked.less" />
+    <Content Include="Content\font-awesome\less\variables.less" />
+    <Content Include="Content\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Content\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Content\font-awesome\scss\_core.scss" />
+    <Content Include="Content\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Content\font-awesome\scss\_icons.scss" />
+    <Content Include="Content\font-awesome\scss\_larger.scss" />
+    <Content Include="Content\font-awesome\scss\_list.scss" />
+    <Content Include="Content\font-awesome\scss\_mixins.scss" />
+    <Content Include="Content\font-awesome\scss\_path.scss" />
+    <Content Include="Content\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Content\font-awesome\scss\_spinning.scss" />
+    <Content Include="Content\font-awesome\scss\_stacked.scss" />
+    <Content Include="Content\font-awesome\scss\_variables.scss" />
+    <Content Include="Models\DataDTXD.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataDTXD.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Scripts\Difference\_references.js" />
     <Content Include="Scripts\Dropbox_API\dropins.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\App_work.js" />
