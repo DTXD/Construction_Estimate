@@ -9,17 +9,18 @@ namespace Du_Toan_Xay_Dung.Models
     {
         public ChiTiet_DinhMucViewModel() { }
 
-        public ChiTiet_DinhMucViewModel(ChiTiet_DinhMuc obj) 
+        public ChiTiet_DinhMucViewModel(NormDetail obj) 
         {
-            MaHieuCV_DM = obj.MaHieuCV_DM;
-            MaVL_NC_MTC = obj.MaVL_NC_MTC;
-            SoLuong = obj.SoLuong;
-            DonVi = obj.DonVi;
+            ID = obj.ID;
+            NormWork_ID=obj.NormWork_ID;
+            UnitPrice_ID = obj.UnitPrice_ID;
+            Numbers = obj.Numbers;
+            Unit = obj.Unit;
         }
-
-        public string MaHieuCV_DM { get; set; }
-        public string MaVL_NC_MTC { get; set; }
-        public decimal SoLuong { get; set; }
-        public string DonVi { get; set; }
+        public long ID { get; set; }
+        public string NormWork_ID  { get; set; }
+        public string UnitPrice_ID { get; set; }
+        public decimal Numbers { get; set; }
+        public string Unit { get; set; }
     }
 }

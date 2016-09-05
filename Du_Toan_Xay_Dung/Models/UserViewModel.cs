@@ -10,26 +10,26 @@ namespace Du_Toan_Xay_Dung.Models
     {
         public UserViewModel() { }
 
-        public UserViewModel(Nguoi_Dung obj)
+        public UserViewModel(User obj)
         {
             Email = obj.Email;
-            MatKhau = obj.MatKhau;
-            Ho_TenLot = obj.Ho_TenLot;
-            Ten = obj.Ten;
-            SDT = obj.SDT;
-            NoiLamViec = obj.NoiLamViec;
-            ThanhPho = obj.ThanhPho;
-            Quyen = obj.Quyen;
+            Passwork = obj.Password;
+            Last_Name = obj.Last_Name;
+            First_Name = obj.First_Name;
+            Phone = obj.Phone;
+           WorkPlace = obj.Workplace;
+            City = obj.City;
+            Role = obj.Role;
         }
         public string Email { get; set; }
-        public string MatKhau { get; set; }
-        public string Ho_TenLot { get; set; }
-        public string Ten { get; set; }
-        public string SDT { get; set; }
-        public string NoiLamViec { get; set; }
-        public string ThanhPho { get; set; }
-        public string Quyen { get; set; }
-        public List<HttpPostedFileBase> img_user { get; set; }
+        public string Passwork { get; set; }
+        public string Last_Name { get; set; }
+        public string First_Name { get; set; }
+        public string Phone { get; set; }
+        public string WorkPlace { get; set; }
+        public string City { get; set; }
+        public string Role { get; set; }
+        public List<HttpPostedFileBase> Url_Image { get; set; }
 
     }
 }

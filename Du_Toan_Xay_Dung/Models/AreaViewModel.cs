@@ -4,20 +4,18 @@ using System.Linq;
 using System.Web;
 
 namespace Du_Toan_Xay_Dung.Models
-{
-    public class DonGiaViewModel
+{  
+    public class AreaViewModel
     {
-        public DonGiaViewModel() { }
-
-        public DonGiaViewModel(UnitPrice obj) 
+        public AreaViewModel() { }
+        public AreaViewModel(AreaViewModel obj)
         {
             ID = obj.ID;
             Name = obj.Name;
-            Unit = obj.Unit;
+            Address = obj.Address;
         }
-        public string ID { get; set; }
+        public long ID { get; set; }
         public string Name { get; set; }
-        public string Unit { get; set; }
-
+        public string Address { get; set; }
     }
 }

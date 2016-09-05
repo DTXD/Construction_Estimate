@@ -8,13 +8,15 @@ namespace Du_Toan_Xay_Dung.Models
     {
         public Images_CongTrinhViewModel() { }
 
-        public Images_CongTrinhViewModel(Images_CongTrinh obj)
+        public Images_CongTrinhViewModel(Image obj)
         {
-            MaCT = obj.MaCT;
+            ID = obj.ID;
+            Building_ID = obj.Building_ID;
             Url = obj.Url;
         }
 
-        public string MaCT { get; set; }
+        public long ID { get; set; }
+        public long Building_ID { get; set; }
         public string Url { get; set; }
     }
 }

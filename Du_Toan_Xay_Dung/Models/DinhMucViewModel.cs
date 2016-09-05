@@ -9,19 +9,17 @@ namespace Du_Toan_Xay_Dung.Models
     {
         public DinhMucViewModel() { }
 
-        public DinhMucViewModel(DinhMuc obj)
+        public DinhMucViewModel(NormWork obj)
         {
-            MaHieuCV_DM = obj.MaHieuCV_DM;
-            CongTac = obj.CongTac;
-            DonVi = obj.DonVi;
-            RangBuoc = obj.RangBuoc;
+            ID = obj.ID;
+            Name = obj.Name;
+            Unit = obj.Unit;
 
         }
 
-        public string MaHieuCV_DM { get; set; }
-        public string CongTac { get; set; }
-        public string DonVi { get; set; }
-        public string RangBuoc { get; set; }
+        public string ID { get; set; }
+        public string Name { get; set; }
+        public string Unit { get; set; }
 
     }
 }

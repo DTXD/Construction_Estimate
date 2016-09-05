@@ -9,23 +9,21 @@ namespace Du_Toan_Xay_Dung.Models
     {
         public CongTrinhViewModel() { }
 
-        public CongTrinhViewModel(CongTrinh obj)
+        public CongTrinhViewModel(Building obj)
         {
-            Id = obj.Id;
-            MaCT = obj.MaCT;
+            ID = obj.ID;  
             Email = obj.Email;
-            TenCT = obj.TenCT;
-            MoTa = obj.MoTa;
-            DiaChi = obj.DiaChi;
-            Gia = obj.Gia;
+            Name = obj.Name;
+            Description = obj.Description;
+            Address = obj.Address;
+            Sum = obj.Sum;
         }
-        public long Id { get; set; }
-        public string MaCT { get; set; }
+        public long ID { get; set; }
         public string Email { get; set; }
-        public string TenCT { get; set; }
-        public string MoTa { get; set; }
-        public string DiaChi { get; set; }
-        public decimal Gia { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Address { get; set; }
+        public decimal Sum { get; set; }
         public List<HttpPostedFileBase> img_congtrinh { get; set; }
         public List<HttpPostedFileBase> img_old { get; set; }
     }

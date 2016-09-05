@@ -214,7 +214,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handlers\SessionHandler.cs" />
+    <Compile Include="Models\AreaViewModel.cs" />
     <Compile Include="Models\ChiTiet_DinhMucViewModel.cs" />
+    <Compile Include="Models\DataDTXD.cs">
+      <DependentUpon>DataDTXD.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Models\DonGiaChiTiet_DM_ViewModel.cs" />
     <Compile Include="Models\CongTrinhViewModel.cs" />
     <Compile Include="Models\DetailNormWork_PriceViewModel.cs" />
@@ -232,6 +236,7 @@
     <Compile Include="Models\HaoPhi_User_ViewModel.cs" />
     <Compile Include="Models\Images_CongTrinhViewModel.cs" />
     <Compile Include="Models\Submit_CongViec_User_ViewModel.cs" />
+    <Compile Include="Models\UnitPrice_AreaViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />

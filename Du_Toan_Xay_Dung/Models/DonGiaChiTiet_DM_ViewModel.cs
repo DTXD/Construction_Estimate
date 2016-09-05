@@ -8,21 +8,19 @@ namespace Du_Toan_Xay_Dung.Models
     public class DonGiaChiTiet_DM_ViewModel
     {
         public DonGiaChiTiet_DM_ViewModel() { }
-        public DonGiaChiTiet_DM_ViewModel(ChiTiet_DinhMuc obj)
+        public DonGiaChiTiet_DM_ViewModel(NormDetail obj)
         {
-            MaHieuCV_DM = obj.MaHieuCV_DM;
-            SoLuong = obj.SoLuong;
-            DonViCV = obj.DonVi;
-            TenHP = obj.DonGia.Ten;
-            DonViHP = obj.DonGia.DonVi;
-            Gia = obj.DonGia.Gia;
+            ID = obj.ID;
+            NormWork_ID = Convert.ToDecimal(obj.NormWork_ID);
+            UnitPrice_ID = obj.UnitPrice_ID;
+            Numbers = obj.Numbers;
+            Unit = obj.Unit;
         }
 
-        public string MaHieuCV_DM { get; set; }
-        public decimal SoLuong { get; set; }
-        public string DonViCV { get; set; }
-        public string TenHP { get; set; }
-        public string DonViHP { get; set; }
-        public decimal? Gia { get; set; }
+        public long ID{ get; set; }
+        public decimal NormWork_ID { get; set; }
+        public string UnitPrice_ID { get; set; }
+        public decimal ?Numbers { get; set; }
+        public string Unit { get; set; }
     }
 }

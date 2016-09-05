@@ -9,23 +9,24 @@ namespace Du_Toan_Xay_Dung.Models
     {
         public HaoPhi_User_ViewModel() { }
 
-        public HaoPhi_User_ViewModel(ThanhPhanHaoPhi obj)
+        public HaoPhi_User_ViewModel(ConstructionMaterial obj)
         {
-            Id = obj.Id;
-            MaHP = obj.MaHP;
-            MaHieuCV_User = obj.MaHieuCV_User;
-            Ten = obj.Ten;
-            DonVi = obj.DonVi;
-            SoLuong_DM = obj.SoLuong_DM;
-            Gia = obj.Gia;
+            ID = obj.Id;
+            Key_ConstructionMaterial = obj.Key_ConstructionMaterials;
+            Key_UserWork = obj.Key_UserWork;
+            Name = obj.Name;
+            Unit_Measure = obj.Unit_Measure;
+            Numbers = obj.Numbers;
+            Price = obj.Price;
         }
-        public long Id { get; set; }
-        public string MaHP { get; set; }
-        public string MaHieuCV_User { get; set; }
-        public string Ten { get; set; }
-        public string DonVi { get; set; }
-        public decimal SoLuong_DM { get; set; }
-        public decimal Gia { get; set; }
+        public long ID { get; set; }
+        public string Key_ConstructionMaterial { get; set; }
+        public string Key_UserWork { get; set; }
+        public string Name { get; set; }
+        public string Unit_Measure { get; set; }
+        public decimal ?Price { get; set; }
+        public decimal ?Numbers { get; set; }
+
     }
 
     public class Update_HaoPhi_User

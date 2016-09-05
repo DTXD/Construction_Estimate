@@ -353,8 +353,8 @@ namespace Du_Toan_Xay_Dung.Controllers
         [HttpPost]
         public JsonResult post_themhangmuc(HangMucViewModel obj)
         {
-            //try
-            //{
+            try
+            {
                 string ID = obj.MaCT;
                 //lay dong cuoi cung bang hangmuc
                 var idhm_last = _db.HangMucs.OrderByDescending(i => i.Id).Select(i => i.Id).FirstOrDefault();
@@ -370,11 +370,11 @@ namespace Du_Toan_Xay_Dung.Controllers
                 _db.SubmitChanges();
 
                 return Json("ok");
-            //}
-           // catch (Exception)
-           // {
-                //return Json("error");
-            //}
+            }
+           catch (Exception)
+           {
+                return Json("error");
+            }
         }
         public ActionResult ExportToExcel(string ID)
         {
