@@ -29,7 +29,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 int d = ID.IndexOf(',');
                 if (d == -1)
                 {
-                    ViewData["CongTrinh"] = _db.CongTrinhs.Where(i => i.MaCT.Equals(ID)).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
+                    ViewData["CongTrinh"] = _db.Buildings.Where(i => i.MaCT.Equals(ID)).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
                 }
                 else
                 {
