@@ -25,17 +25,20 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', 'dataService', 
             var eachItem;
             angular.forEach(data, function (value, key) {
                 eachItem = {
-                    ID: value.MaHieuCV_DM,
-                    Name: value.CongTac + " " + value.RangBuoc,
-                    Unit: value.DonVi,
-                    pricematerial: 0,
-                    pricelabor: 0,
-                    pricemachine: 0
+                    ID: value.ID,
+                    Name: value.Name,
+                    Unit: value.Unit,
+                    summaterial: 0,
+                    sumlabor: 0,
+                    summachine: 0
                 };
                 $scope.list_Normwork.push(eachItem);
             });
         });
     };
+
+    //modify list_normwork only have 100 record
+
 
     function getListPrice() {
         dataService.getListPrice().then(function (data) {
@@ -63,6 +66,8 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', 'dataService', 
 
     //intialize variable get current element when double click
     $scope.current_doubleclick;
+
+
     //double click and show div popup for search
     $scope.search_work = function ($event) {
         $scope.popupsearch = !($scope.popupsearch);
@@ -94,25 +99,25 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', 'dataService', 
         }
         else {
             //push price data from database
-            var pricematerial = 0;
-            var pricelabol = 0;
-            var pricemachine = 0;
+            var summaterial = 0;
+            var sumlabor = 0;
+            var summachine = 0;
             angular.forEach($scope.ListDetailNormWork_Price, function (value, key) {
                 if (x.ID == value.Key_NormWork) {
                     if (value.Key_Material.substring(0, 1) == "N") {
-                        pricematerial = parseFloat(pricematerial + (value.Number * value.Price));
+                        summaterial = parseFloat(summaterial + (value.Number * value.Price));
                     }
                     if (value.Key_Material.substring(0, 1) == "M") {
-                        pricelabol = parseFloat(pricelabol + (value.Number * value.Price));
+                        sumlabor = parseFloat(sumlabor + (value.Number * value.Price));
                     }
                     if (value.Key_Material.substring(0, 1) == "V") {
-                        pricemachine = parseFloat(pricemachine + (value.Number * value.Price));
+                        summachine = parseFloat(summachine + (value.Number * value.Price));
                     }
                 }
             });
-            x.pricematerial = pricematerial.toFixed(3);
-            x.pricelabor = pricelabol.toFixed(3);
-            x.pricemachine = pricemachine.toFixed(3);
+            x.summaterial = summaterial.toFixed(3);
+            x.sumlabor = sumlabor.toFixed(3);
+            x.summachine = summachine.toFixed(3);
             $scope.list_searched.push(x);
         }
 
@@ -125,7 +130,6 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', 'dataService', 
         }
     };
 
-
     $scope.save_search = function () {
         if ($scope.popupsearch == true && $scope.list_searched != 0) {
             var div = angular.element($scope.current_doubleclick.parent().parent());
@@ -137,9 +141,9 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', 'dataService', 
                 $scope.works[index].key = value.ID;
                 $scope.works[index].name = value.Name;
                 $scope.works[index].unit = value.Unit;
-                $scope.works[index].pricematerial = value.pricematerial;
-                $scope.works[index].pricelabor = value.pricelabor;
-                $scope.works[index].pricemachine = value.pricemachine;
+                $scope.works[index].summaterial = value.summaterial;
+                $scope.works[index].sumlabor = value.sumlabor;
+                $scope.works[index].summachine = value.summachine;
 
                 index = index + 1;
                 index_work = parseInt(index_work) + 1;
@@ -158,15 +162,17 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', 'dataService', 
         return string;
     };
 
+
+
     $scope.change = function ($event) {
         var div = angular.element($event.currentTarget).parent().parent();
         var id_work = div.find(".column_header").html();
         var id = div.find("input").eq(0).val();
-        var number = div.find("input").eq(4).val();
-        var horizontal = div.find("input").eq(5).val();
-        var vertical = div.find("input").eq(6).val();
-        var height = div.find("input").eq(7).val();
-        var area = div.find("input").eq(8).val();
+        var number = div.find("input").eq(3).val();
+        var horizontal = div.find("input").eq(4).val();
+        var vertical = div.find("input").eq(5).val();
+        var height = div.find("input").eq(6).val();
+        var area = div.find("input").eq(7).val();
 
         //mean work
         var regular_expression1 = /^\d+$/;
@@ -184,12 +190,18 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', 'dataService', 
             if (height == "") {
                 $scope.works[id_work].height = 1;
             }
+            if (area == "") {
+                area = 1;
+            }
 
             $scope.works[id_work].area = ($scope.works[id_work].number * $scope.works[id_work].horizontal * $scope.works[id_work].vertical * $scope.works[id_work].height).toFixed(3);
+            var summaterial = parseFloat($scope.works[id_work].summaterial) / parseFloat(area);
+            var sumlabor = parseFloat($scope.works[id_work].sumlabor) / parseFloat(area);
+            var summachine = parseFloat($scope.works[id_work].summachine) / parseFloat(area);
 
-            $scope.works[id_work].summaterial = (parseFloat($scope.works[id_work].pricematerial) * parseFloat($scope.works[id_work].area)).toFixed(3);
-            $scope.works[id_work].sumlabor = (parseFloat($scope.works[id_work].pricelabor) * parseFloat($scope.works[id_work].area)).toFixed(3);
-            $scope.works[id_work].summachine = (parseFloat($scope.works[id_work].pricemachine) * parseFloat($scope.works[id_work].area)).toFixed(3);
+            $scope.works[id_work].summaterial = (parseFloat(summaterial) * parseFloat($scope.works[id_work].area)).toFixed(3);
+            $scope.works[id_work].sumlabor = (parseFloat(sumlabor) * parseFloat($scope.works[id_work].area)).toFixed(3);
+            $scope.works[id_work].summachine = (parseFloat(summachine) * parseFloat($scope.works[id_work].area)).toFixed(3);
         }
 
 
@@ -213,28 +225,74 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', 'dataService', 
 
             var d = id.indexOf(".");
             var temp = id.substring(0, d);
-            var id_meanwork = 0;
-            
+            var id_meanwork = -1;
+
+
             for (var i = id_work; i >= 0; i--) {
                 if ($scope.works[i].id == temp) {
                     id_meanwork = i;
+                    console.log(id_meanwork);
                     break;
                 }
             }
 
-            var sum = 0;
-            var index_while = id_meanwork + 1;
-            while (substring_array($scope.works[index_while].id, 0, d) == temp && $scope.works[index_while].id != "") {
+            if (id_meanwork != -1) {
+                var sum = 0;
+                var index_while = id_meanwork + 1;
+                while (substring_array($scope.works[index_while].id, 0, d) == temp && $scope.works[index_while].id != "") {
 
-                sum = parseFloat(sum) + parseFloat($scope.works[index_while].area);
-                index_while = parseInt(index_while) + 1;
+                    sum = parseFloat(sum) + parseFloat($scope.works[index_while].area);
+                    index_while = parseInt(index_while) + 1;
+                }
+
+                if (typeof ($scope.works[id_meanwork].area) == "undefined") {
+                    $scope.works[id_meanwork].area = 1;
+
+                }
+
+                var summaterial = parseFloat($scope.works[id_meanwork].summaterial) / parseFloat($scope.works[id_meanwork].area);
+                var sumlabor = parseFloat($scope.works[id_meanwork].sumlabor) / parseFloat($scope.works[id_meanwork].area);
+                var summachine = parseFloat($scope.works[id_meanwork].summachine) / parseFloat($scope.works[id_meanwork].area);
+
+                $scope.works[id_meanwork].area = sum.toFixed(3);
+
+                $scope.works[id_meanwork].summaterial = (parseFloat(summaterial) * parseFloat($scope.works[id_meanwork].area)).toFixed(3);
+                $scope.works[id_meanwork].sumlabor = (parseFloat(sumlabor) * parseFloat($scope.works[id_meanwork].area)).toFixed(3);
+                $scope.works[id_meanwork].summachine = (parseFloat(summachine) * parseFloat($scope.works[id_meanwork].area)).toFixed(3);
             }
-
-            $scope.works[id_meanwork].area = sum.toFixed(3);
-            $scope.works[id_meanwork].summaterial = (parseFloat($scope.works[id_meanwork].pricematerial) * parseFloat($scope.works[id_meanwork].area)).toFixed(3);
-            $scope.works[id_meanwork].sumlabor = (parseFloat($scope.works[id_meanwork].pricelabor) * parseFloat($scope.works[id_meanwork].area)).toFixed(3);
-            $scope.works[id_meanwork].summachine = (parseFloat($scope.works[id_meanwork].pricemachine) * parseFloat($scope.works[id_meanwork].area)).toFixed(3);
         }
 
     };
+
+
+    $scope.save_work = function () {
+
+        var buildingitem_ID = angular.element("#txt_building_item").val();
+        console.log(buildingitem_ID);
+        //check work
+        angular.forEach($scope.works, function (value, key) {
+
+        });
+
+
+        /*
+        $http({
+            method: 'POST',
+            url: '/HangMuc/post_updatework',
+            data: JSON.stringify($scope.works),
+            headers: { 'Content-Type': 'application/json' }
+        })
+                 .success(function (result) {
+                     if (result == "error") {
+                         angular.element("#response_savesheet").html("Lỗi...!!!")
+                         return;
+                     } else {
+                         //$scope.message = data.message;
+                         angular.element("#response_savesheet").html("Dữ liệu đã lưu...!!!")
+                     }
+                 });
+                 */
+
+    };
+
 }])

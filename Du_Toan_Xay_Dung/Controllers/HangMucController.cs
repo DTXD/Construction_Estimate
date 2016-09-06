@@ -56,5 +56,10 @@ namespace Du_Toan_Xay_Dung.Controllers
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult post_updatework(UserWorkViewModel obj)
+        {
+            return Json("ok");
+        }
     }
 }

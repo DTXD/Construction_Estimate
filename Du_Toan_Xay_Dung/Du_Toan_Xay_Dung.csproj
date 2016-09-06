@@ -232,7 +232,7 @@
     <Compile Include="Models\HaoPhi_DM_ViewModel.cs" />
     <Compile Include="Models\HaoPhi_User_ViewModel.cs" />
     <Compile Include="Models\Images_CongTrinhViewModel.cs" />
-    <Compile Include="Models\Submit_CongViec_User_ViewModel.cs" />
+    <Compile Include="Models\UserWorkViewModel.cs" />
     <Compile Include="Models\UnitPrice_AreaViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />

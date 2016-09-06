@@ -301,15 +301,29 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		private long _ID;
 		
-		private string _UserWork_ID;
-		
 		private string _NormWork_ID;
 		
 		private string _Name;
 		
-		private string _Unit_Measure;
+		private string _Unit;
 		
-		private decimal _Amount_Work;
+		private System.Nullable<decimal> _Number;
+		
+		private System.Nullable<decimal> _Horizontal;
+		
+		private System.Nullable<decimal> _Vertical;
+		
+		private System.Nullable<decimal> _Height;
+		
+		private System.Nullable<decimal> _Area;
+		
+		private System.Nullable<decimal> _SumMaterial;
+		
+		private System.Nullable<decimal> _SumLabor;
+		
+		private System.Nullable<decimal> _SumMachine;
+		
+		private EntityRef<BuildingItem> _BuildingItem;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -319,20 +333,33 @@ namespace Du_Toan_Xay_Dung.Models
     partial void OnBuildingItem_IDChanged();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnUserWork_IDChanging(string value);
-    partial void OnUserWork_IDChanged();
     partial void OnNormWork_IDChanging(string value);
     partial void OnNormWork_IDChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
-    partial void OnUnit_MeasureChanging(string value);
-    partial void OnUnit_MeasureChanged();
-    partial void OnAmount_WorkChanging(decimal value);
-    partial void OnAmount_WorkChanged();
+    partial void OnUnitChanging(string value);
+    partial void OnUnitChanged();
+    partial void OnNumberChanging(System.Nullable<decimal> value);
+    partial void OnNumberChanged();
+    partial void OnHorizontalChanging(System.Nullable<decimal> value);
+    partial void OnHorizontalChanged();
+    partial void OnVerticalChanging(System.Nullable<decimal> value);
+    partial void OnVerticalChanged();
+    partial void OnHeightChanging(System.Nullable<decimal> value);
+    partial void OnHeightChanged();
+    partial void OnAreaChanging(System.Nullable<decimal> value);
+    partial void OnAreaChanged();
+    partial void OnSumMaterialChanging(System.Nullable<decimal> value);
+    partial void OnSumMaterialChanged();
+    partial void OnSumLaborChanging(System.Nullable<decimal> value);
+    partial void OnSumLaborChanged();
+    partial void OnSumMachineChanging(System.Nullable<decimal> value);
+    partial void OnSumMachineChanged();
     #endregion
 		
 		public UserWork()
 		{
+			this._BuildingItem = default(EntityRef<BuildingItem>);
 			OnCreated();
 		}
 		
@@ -347,6 +374,10 @@ namespace Du_Toan_Xay_Dung.Models
 			{
 				if ((this._BuildingItem_ID != value))
 				{
+					if (this._BuildingItem.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnBuildingItem_IDChanging(value);
 					this.SendPropertyChanging();
 					this._BuildingItem_ID = value;
@@ -376,26 +407,6 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserWork_ID", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string UserWork_ID
-		{
-			get
-			{
-				return this._UserWork_ID;
-			}
-			set
-			{
-				if ((this._UserWork_ID != value))
-				{
-					this.OnUserWork_IDChanging(value);
-					this.SendPropertyChanging();
-					this._UserWork_ID = value;
-					this.SendPropertyChanged("UserWork_ID");
-					this.OnUserWork_IDChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NormWork_ID", DbType="NVarChar(50)")]
 		public string NormWork_ID
 		{
@@ -416,7 +427,7 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(3000) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(3000)")]
 		public string Name
 		{
 			get
@@ -436,42 +447,216 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit_Measure", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Unit_Measure
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="NVarChar(50)")]
+		public string Unit
 		{
 			get
 			{
-				return this._Unit_Measure;
+				return this._Unit;
 			}
 			set
 			{
-				if ((this._Unit_Measure != value))
+				if ((this._Unit != value))
 				{
-					this.OnUnit_MeasureChanging(value);
+					this.OnUnitChanging(value);
 					this.SendPropertyChanging();
-					this._Unit_Measure = value;
-					this.SendPropertyChanged("Unit_Measure");
-					this.OnUnit_MeasureChanged();
+					this._Unit = value;
+					this.SendPropertyChanged("Unit");
+					this.OnUnitChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount_Work", DbType="Decimal(18,0) NOT NULL")]
-		public decimal Amount_Work
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number", DbType="Decimal(18,3)")]
+		public System.Nullable<decimal> Number
 		{
 			get
 			{
-				return this._Amount_Work;
+				return this._Number;
 			}
 			set
 			{
-				if ((this._Amount_Work != value))
+				if ((this._Number != value))
 				{
-					this.OnAmount_WorkChanging(value);
+					this.OnNumberChanging(value);
 					this.SendPropertyChanging();
-					this._Amount_Work = value;
-					this.SendPropertyChanged("Amount_Work");
-					this.OnAmount_WorkChanged();
+					this._Number = value;
+					this.SendPropertyChanged("Number");
+					this.OnNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Horizontal", DbType="Decimal(18,3)")]
+		public System.Nullable<decimal> Horizontal
+		{
+			get
+			{
+				return this._Horizontal;
+			}
+			set
+			{
+				if ((this._Horizontal != value))
+				{
+					this.OnHorizontalChanging(value);
+					this.SendPropertyChanging();
+					this._Horizontal = value;
+					this.SendPropertyChanged("Horizontal");
+					this.OnHorizontalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Vertical", DbType="Decimal(18,3)")]
+		public System.Nullable<decimal> Vertical
+		{
+			get
+			{
+				return this._Vertical;
+			}
+			set
+			{
+				if ((this._Vertical != value))
+				{
+					this.OnVerticalChanging(value);
+					this.SendPropertyChanging();
+					this._Vertical = value;
+					this.SendPropertyChanged("Vertical");
+					this.OnVerticalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Height", DbType="Decimal(18,3)")]
+		public System.Nullable<decimal> Height
+		{
+			get
+			{
+				return this._Height;
+			}
+			set
+			{
+				if ((this._Height != value))
+				{
+					this.OnHeightChanging(value);
+					this.SendPropertyChanging();
+					this._Height = value;
+					this.SendPropertyChanged("Height");
+					this.OnHeightChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Area", DbType="Decimal(18,3)")]
+		public System.Nullable<decimal> Area
+		{
+			get
+			{
+				return this._Area;
+			}
+			set
+			{
+				if ((this._Area != value))
+				{
+					this.OnAreaChanging(value);
+					this.SendPropertyChanging();
+					this._Area = value;
+					this.SendPropertyChanged("Area");
+					this.OnAreaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SumMaterial", DbType="Decimal(18,3)")]
+		public System.Nullable<decimal> SumMaterial
+		{
+			get
+			{
+				return this._SumMaterial;
+			}
+			set
+			{
+				if ((this._SumMaterial != value))
+				{
+					this.OnSumMaterialChanging(value);
+					this.SendPropertyChanging();
+					this._SumMaterial = value;
+					this.SendPropertyChanged("SumMaterial");
+					this.OnSumMaterialChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SumLabor", DbType="Decimal(18,3)")]
+		public System.Nullable<decimal> SumLabor
+		{
+			get
+			{
+				return this._SumLabor;
+			}
+			set
+			{
+				if ((this._SumLabor != value))
+				{
+					this.OnSumLaborChanging(value);
+					this.SendPropertyChanging();
+					this._SumLabor = value;
+					this.SendPropertyChanged("SumLabor");
+					this.OnSumLaborChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SumMachine", DbType="Decimal(18,3)")]
+		public System.Nullable<decimal> SumMachine
+		{
+			get
+			{
+				return this._SumMachine;
+			}
+			set
+			{
+				if ((this._SumMachine != value))
+				{
+					this.OnSumMachineChanging(value);
+					this.SendPropertyChanging();
+					this._SumMachine = value;
+					this.SendPropertyChanged("SumMachine");
+					this.OnSumMachineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BuildingItem_UserWork", Storage="_BuildingItem", ThisKey="BuildingItem_ID", OtherKey="ID", IsForeignKey=true)]
+		public BuildingItem BuildingItem
+		{
+			get
+			{
+				return this._BuildingItem.Entity;
+			}
+			set
+			{
+				BuildingItem previousValue = this._BuildingItem.Entity;
+				if (((previousValue != value) 
+							|| (this._BuildingItem.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BuildingItem.Entity = null;
+						previousValue.UserWorks.Remove(this);
+					}
+					this._BuildingItem.Entity = value;
+					if ((value != null))
+					{
+						value.UserWorks.Add(this);
+						this._BuildingItem_ID = value.ID;
+					}
+					else
+					{
+						this._BuildingItem_ID = default(long);
+					}
+					this.SendPropertyChanged("BuildingItem");
 				}
 			}
 		}
@@ -547,7 +732,7 @@ namespace Du_Toan_Xay_Dung.Models
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -792,6 +977,8 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		private decimal _Sum;
 		
+		private EntitySet<UserWork> _UserWorks;
+		
 		private EntityRef<Building> _Building;
 		
     #region Extensibility Method Definitions
@@ -812,11 +999,12 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		public BuildingItem()
 		{
+			this._UserWorks = new EntitySet<UserWork>(new Action<UserWork>(this.attach_UserWorks), new Action<UserWork>(this.detach_UserWorks));
 			this._Building = default(EntityRef<Building>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -920,6 +1108,19 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BuildingItem_UserWork", Storage="_UserWorks", ThisKey="ID", OtherKey="BuildingItem_ID")]
+		public EntitySet<UserWork> UserWorks
+		{
+			get
+			{
+				return this._UserWorks;
+			}
+			set
+			{
+				this._UserWorks.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building_BuildingItem", Storage="_Building", ThisKey="Building_ID", OtherKey="ID", IsForeignKey=true)]
 		public Building Building
 		{
@@ -972,6 +1173,18 @@ namespace Du_Toan_Xay_Dung.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_UserWorks(UserWork entity)
+		{
+			this.SendPropertyChanging();
+			entity.BuildingItem = this;
+		}
+		
+		private void detach_UserWorks(UserWork entity)
+		{
+			this.SendPropertyChanging();
+			entity.BuildingItem = null;
 		}
 	}
 	
