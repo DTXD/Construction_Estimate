@@ -9,7 +9,7 @@
     <h1>Sửa Hạng Mục</h1>
     <ol class="breadcrumb">
         <li><a href="/CongTrinh/Index"><i class="fa fa-dashboard"></i>Công Trình</a></li>
-        <li><a href="/CongTrinh/ChiTiet_CongTrinh/?ID=@hangmuc1.MaCT"><i class="fa fa-dashboard"></i>Hạng Mục</a></li>
+        <li><a href="/CongTrinh/ChiTiet_CongTrinh/?ID=@hangmuc1.Building_ID"><i class="fa fa-dashboard"></i>Hạng Mục</a></li>
         <li class="active">Sửa Hạng Mục</li>
     </ol>
 </section>
@@ -34,7 +34,7 @@
                      } else {
                          //$scope.message = data.message;
                          alert("Lưu thành công");
-                         window.location.href = "/CongTrinh/ChiTiet_CongTrinh/@hangmuc1.MaCT";
+                         window.location.href = "/CongTrinh/ChiTiet_CongTrinh/@hangmuc1.Building_ID";
                      }
                  });
          };
@@ -42,28 +42,28 @@
      }]);
 </script>
 <section class="content" ng-app="postApp" ng-controller="postController"
-         ng-init="hangmuc.MaHM='@hangmuc1.MaHM';hangmuc.MaCT='@hangmuc1.MaCT';hangmuc.TenHM='@hangmuc1.TenHM';hangmuc.MoTa='@hangmuc1.MoTa';hangmuc.Gia='@hangmuc1.Gia'">
+         ng-init="hangmuc.ID='@hangmuc1.ID';hangmuc.Building_ID='@hangmuc1.Building_ID';hangmuc.Name='@hangmuc1.Name';hangmuc.Descrtiption='@hangmuc1.Description';hangmuc.Sum='@hangmuc1.Sum'">
     <div class="container body-content">
         <div class="row">
             <form class="form-horizontal" method="post">
-                <input type="hidden" id="txtma" name="txtma" ng-model="hangmuc.MaHM" />
-                <input type="hidden" id="txtmact" name="txtmact" ng-model="hangmuc.MaCT" />
+                <input type="hidden" id="txtma" name="txtma" ng-model="hangmuc.ID" />
+                <input type="hidden" id="txtmact" name="txtmact" ng-model="hangmuc.Building_ID" />
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="">Tên hạng mục:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="txttenhm" name="txttenhm" ng-model="hangmuc.TenHM" placeholder="Tên công trình">
+                        <input type="text" class="form-control" id="txttenhm" name="txttenhm" ng-model="hangmuc.Name" placeholder="Tên công trình">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="">Mô tả:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" ng-model="hangmuc.MoTa" id="txtmota" name="txtmota" placeholder="Mô tả" >
+                        <input type="text" class="form-control" ng-model="hangmuc.Description" id="txtmota" name="txtmota" placeholder="Mô tả" >
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="">Giá:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="txtgia" ng-model="hangmuc.Gia" name="txtgia" placeholder="Giá" >
+                        <input type="text" class="form-control" id="txtgia" ng-model="hangmuc.Sum" name="txtgia" placeholder="Giá" >
                     </div>
                 </div>
                 <div class="form-group">

@@ -6,7 +6,7 @@
     var hinhanh = (dynamic)null;
     if (ViewData["CongTrinh_Update"] != null && ViewData["image_congtrinh"] != null)
     {
-        congtrinh = ViewData["CongTrinh_Update"] as CongTrinhViewModel;
+        congtrinh = ViewData["CongTrinh_Update"] as BuildingViewModel;
         hinhanh = ViewData["image_congtrinh"] as List<Images_CongTrinhViewModel>;
     }
 }
@@ -50,10 +50,10 @@
            });
        }
        $scope.submit = function (files) {
-           fd.append("MaCT", $scope.congtrinh.MaCT);
-           fd.append("TenCT", $scope.congtrinh.TenCT);
-           fd.append("MoTa", $scope.congtrinh.MoTa);
-           fd.append("DiaChi", $scope.congtrinh.DiaChi);
+           fd.append("ID", $scope.congtrinh.ID);
+           fd.append("Name", $scope.congtrinh.Name);
+           fd.append("Description", $scope.congtrinh.Description);
+           fd.append("Address", $scope.congtrinh.Address);
            if ($scope.listfile) {
                for (var i = 0; i < $scope.listfile.length; i++) {
 
@@ -200,27 +200,27 @@
 @if (congtrinh != null && hinhanh != null)
 {
     <section class="content row" style="margin-top:50px" ng-app="postApp" ng-controller="postController"
-             ng-init="congtrinh.MaCT='@congtrinh.MaCT';congtrinh.TenCT='@congtrinh.TenCT'; congtrinh.MoTa='@congtrinh.MoTa';congtrinh.DiaChi='@congtrinh.DiaChi'">
+             ng-init="congtrinh.ID='@congtrinh.ID';congtrinh.Name='@congtrinh.Name'; congtrinh.Description='@congtrinh.Description';congtrinh.Address='@congtrinh.Address'">
         <div class=" container body-content">
             <div class="col-sm-12">
                 <form class="form-horizontal" method="post" data-ng-submit="addFile(congtrinh)">
-                    <input type="text" style="display:none" ng-model="congtrinh.MaCT" />
+                    <input type="text" style="display:none" ng-model="congtrinh.ID" />
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="">Tên công trình:</label>
                         <div class="col-sm-10">
-                            <input type="text" ng-model="congtrinh.TenCT" class="form-control" placeholder="Tên công trình">
+                            <input type="text" ng-model="congtrinh.Name" class="form-control" placeholder="Tên công trình">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="">Mô tả:</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" rows="3" ng-model="congtrinh.MoTa" placeholder="Công trình nhu th? nào ..."></textarea>
+                            <textarea class="form-control" rows="3" ng-model="congtrinh.Description" placeholder="Công trình nhu th? nào ..."></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="">Ðịa chỉ:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" ng-model="congtrinh.DiaChi" placeholder="Ð?a ch?">
+                            <input type="text" class="form-control" ng-model="congtrinh.Address" placeholder="Ð?a ch?">
                         </div>
                     </div>
                     <div class="form-group">

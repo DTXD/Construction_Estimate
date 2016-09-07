@@ -28,11 +28,10 @@ namespace Du_Toan_Xay_Dung.Controllers
         [PageLogin]
         public ActionResult Index()
         {
-            /*
+          
             ViewData["List_CongTrinh"] = _db.Buildings.Where(i => i.Email.Equals(SessionHandler.User.Email)).Select(i => new BuildingViewModel(i)).ToList();
-            ViewData["List_CongTrinh_Null"] = _db.Buildings.Where(i => i.Email.Equals(SessionHandler.User.Email) && !i.Any(o => o.MaCT.Equals(i.MaCT))).Select(i => i.MaCT).ToList();
-            ViewData["list_hinhanh"] = _db.Images.Select(i => new Images_CongTrinhViewModel(i)).ToList();
-             */
+            ViewData["List_CongTrinh_Null"] = _db.Buildings.Where(i => i.Email.Equals(SessionHandler.User.Email) && !i.BuildingItems.Any(o => o.ID.Equals(i.ID))).Select(i => i.ID).ToList();
+            ViewData["list_hinhanh"] = _db.Images_Urls.Select(i => new Images_CongTrinhViewModel(i)).ToList();
             return View();
         }
         [PageLogin]
@@ -74,7 +73,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             {
                 var img_congtrinh = _db.Images_Urls.Where(i => i.Building_ID.Equals(obj.ID)).ToList();
                 var hangmuc = _db.BuildingItems.Where(i => i.Building_ID.Equals(obj.ID)).ToList();
-                var congtrinh = _db.BuildingItems.Single(i => i.Building_ID.Equals(obj.ID));
+                var congtrinh = _db.Buildings.Single(i => i.ID.Equals(obj.ID));
                 for (var i = 0; i < img_congtrinh.Count; i++)
                 {
                     _db.Images_Urls.DeleteOnSubmit(img_congtrinh[i]);
@@ -86,14 +85,14 @@ namespace Du_Toan_Xay_Dung.Controllers
                         _db.BuildingItems.DeleteOnSubmit(hangmuc[i]);
                     }
                 }
-                _db.BuildingItems.DeleteOnSubmit(congtrinh);
+                _db.Buildings.DeleteOnSubmit(congtrinh);
 
                 _db.SubmitChanges();
-                return Json("ok", JsonRequestBehavior.AllowGet);
+                return Json("ok");
             }
-            catch (Exception e)
-            {
-                return Json("error", JsonRequestBehavior.AllowGet);
+            catch (Exception e){
+            
+                return Json("error");
             }
         }
 
@@ -112,8 +111,8 @@ namespace Du_Toan_Xay_Dung.Controllers
         [HttpPost]
         public JsonResult post_updatecongtrinh(BuildingViewModel obj)
         {
-            try
-            {
+            //try
+            //{
                 var congtrinh = _db.Buildings.First(m => m.ID == obj.ID);
                 if (obj.img_congtrinh != null)
                 {
@@ -155,11 +154,11 @@ namespace Du_Toan_Xay_Dung.Controllers
                 }
                 _db.SubmitChanges();
                 return Json("ok");
-            }
-            catch (Exception)
-            {
-                return Json("error");
-            }
+            //}
+            //catch (Exception)
+            //{
+               // return Json("error");
+            //}
         }
         [PageLogin]
         public ActionResult UpdateHangMuc(string ID)
@@ -217,6 +216,8 @@ namespace Du_Toan_Xay_Dung.Controllers
         {
             try
             {
+                var index = _db.Buildings.OrderByDescending(i => i.ID).Select(i => i.ID).FirstOrDefault();
+                //index = index + 1;
                 if (obj.img_congtrinh != null)
                 {
                     if (obj.img_congtrinh.Count() > 0)
@@ -254,7 +255,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                         {
                             //them image vao database
                             var image = new Images_Url();
-                            image.Building_ID = congtrinh.ID;
+                            image.Building_ID = index;
                             image.Url = "~/Images/CongTrinh/" + file.FileName;
                             _db.Images_Urls.InsertOnSubmit(image);
                         }
@@ -264,14 +265,14 @@ namespace Du_Toan_Xay_Dung.Controllers
 
                 return Json("ok");
             }
-            catch (Exception)
+                catch (Exception)
             {
                 return Json("error");
             }
         }
 
         [PageLogin]
-        public ActionResult ThemHangMuc(string id)
+        public ActionResult ThemHangMuc(long id)
         {
             ViewData["MaCT_ThemHangMuc"] = id;
             return View();
@@ -280,8 +281,8 @@ namespace Du_Toan_Xay_Dung.Controllers
         [HttpPost]
         public JsonResult post_themhangmuc(HangMucViewModel obj)
         {
-            try
-            {
+            //try
+            //{
 
                 BuildingItem hm = new BuildingItem();
                 hm.Building_ID = obj.Building_ID;
@@ -292,26 +293,26 @@ namespace Du_Toan_Xay_Dung.Controllers
                 _db.SubmitChanges();
 
                 return Json("ok");
-            }
-            catch (Exception)
-            {
-                return Json("error");
-            }
+            //}
+            //catch (Exception)
+            //{
+//return Json("error");
+            //}
         }
 
 
 
         public ActionResult ExportToExcel(string ID)
         {
-            /*
-            if (ID != null)
+            
+            /*if (ID != null)
             {
 
-                var congtrinh = _db.Buildings.Where(i => i.MaCT.Equals(ID)).Select(i => new BuildingViewModel(i)).FirstOrDefault();
-                var hangmuc = _db.BuildingItems.Where(i => i.MaCT.Equals(ID)).Select(i => new HangMucViewModel(i)).ToList();
-                var mahangmucs = _db.BuildingItems.Where(i => i.MaCT.Equals(ID)).Select(i => i.MaHM).ToList();
-                List<string> mahangmucs1 = _db.BuildingItems.Where(i => i.MaCT.Equals(ID)).Select(i => i.MaHM).ToList();
-                var congviec = _db.CongViecs.Where(i => mahangmucs1.Contains(i.MaHM)).Select(i => new CongViec_User_ViewModel(i)).ToList();
+                var congtrinh = _db.Buildings.Where(i => i.ID.Equals(ID)).Select(i => new BuildingViewModel(i)).FirstOrDefault();
+                var hangmuc = _db.BuildingItems.Where(i => i.Building_ID.Equals(ID)).Select(i => new HangMucViewModel(i)).ToList();
+                var mahangmucs = _db.BuildingItems.Where(i => i.Building_ID.Equals(ID)).Select(i => i.ID).ToList();
+                List<string> mahangmucs1 = _db.BuildingItems.Where(i => i.Building_ID.Equals(ID)).Select(i => i.ID).ToList();
+                var congviec = _db.UserWorks.Where(i => mahangmucs1.Contains(i.BuildingItem_ID)).Select(i => new CongViec_User_ViewModel(i)).ToList();
                 List<string> macongviecs = _db.CongViecs.Where(i => mahangmucs.Contains(i.MaHM)).Select(i => i.MaHieuCV_User).ToList();
                 var haophi = _db.ThanhPhanHaoPhis.Where(i => macongviecs.Contains(i.MaHieuCV_User)).Select(i => new HaoPhi_User_ViewModel(i)).ToList();
                 //var congtrinh = _db.CongTrinhs.Where(i => i.MaCT.Equals(ID)).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
@@ -522,8 +523,7 @@ namespace Du_Toan_Xay_Dung.Controllers
 
                 return RedirectToAction("Index");
 
-            }
-             */
+            }*/
             return View();
         }
     }

@@ -1,7 +1,7 @@
 ﻿@using Du_Toan_Xay_Dung.Models
 @{
-    var CongTrinhs = ViewData["List_CongTrinh"] as List<CongTrinhViewModel>;
-    var congtrinh = ViewData["CongTrinh_Detail"] as CongTrinhViewModel;
+    var CongTrinhs = ViewData["List_CongTrinh"] as List<BuildingViewModel>;
+    var congtrinh = ViewData["CongTrinh_Detail"] as BuildingViewModel;
     var HangMucs_IdCT = ViewData["List_HangMuc_IdCT"] as List<HangMucViewModel>;
     ViewBag.Title = "ChiTiet_CongTrinh";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,8 +10,6 @@
 <script>
     angular.module('postApp', [])
      .controller('postController', ['$scope', '$http','$filter', function ($scope, $http, $filter) {
-
-
          //load list hangmuc
          $scope.list_hangmuc = [];
          $http.get('/CongTrinh/Get_AllHangMuc').then(function (response) {
@@ -37,8 +35,8 @@
                      var mact = document.getElementById("mact").value;
                      console.log(mahm);
                      var postdata = {
-                         MaHM: mahm,
-                         MaCT: mact
+                         ID: mahm,
+                         Building_ID: mact
                      };
                      $http({
                          method: 'POST',
@@ -49,7 +47,7 @@
                          .success(function (result) {
                              if (result == "ok") {
                                  alert("Xóa thành công");
-                                 window.location.href = "/CongTrinh/ChiTiet_CongTrinh";
+                                 window.location.href = "/CongTrinh/ChiTiet_CongTrinh/@congtrinh.ID";
                              }
                              else {
                                  alert("Xảy ra lỗi");
@@ -72,21 +70,24 @@
 
 <section class="content" ng-app="postApp" ng-controller="postController">
     <select ng-model="hangmucfilter" ng-change="change_select(hangmucfilter)" class="selectpicker" data-width="200px">
-        @foreach (var item in CongTrinhs)
+        @if(CongTrinhs!=null && HangMucs_IdCT.Count!=0)
+        { 
+        foreach (var item in CongTrinhs)
         {
-            if (item.MaCT.Equals(HangMucs_IdCT.First().MaCT))
+            if (item.ID.Equals(HangMucs_IdCT.First().Building_ID))
             {
-                <option value="@item.MaCT" selected>@item.TenCT</option>
+                <option value="@item.ID" selected>@item.Name</option>
             }
             else
             {
-                <option value="@item.MaCT">@item.TenCT</option>
+                <option value="@item.ID">@item.Name</option>
             }
+        }
         }
     </select>
     <br /><br />
     <div class="col-lg-12">
-        <a class="btn btn-primary" id="btn_themhm" href="/CongTrinh/ThemHangMuc/@congtrinh.MaCT"><i class="fa fa-fw fa-plus"></i>Thêm Hạng Mục</a>
+        <a class="btn btn-primary" id="btn_themhm" href="/CongTrinh/ThemHangMuc/@congtrinh.ID"><i class="fa fa-fw fa-plus"></i>Thêm Hạng Mục</a>
     </div>
     <div id="container" class="container" style="margin-top:100px">
         <form method="post" name="formAdd" id="formAdd" ng-submit="submitForm()">
@@ -106,22 +107,22 @@
                             </tr>
                             <tr ng-repeat="data in items">
                                 <td></td>
-                                <td>{{data.TenHM}}</td>
-                                <td>{{data.MoTa}}</td>
-                                <td>{{data.Gia}}</td>
+                                <td>{{data.Name}}</td>
+                                <td>{{data.Description}}</td>
+                                <td>{{data.Sum}}</td>
                                 <td>
-                                    <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/CongTrinh/UpdateHangMuc/?ID={{data.MaHM}}" target="_blank">
+                                    <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/CongTrinh/UpdateHangMuc/?ID={{data.ID}}" target="_blank">
                                         <i class="fa fa-edit"></i>Sửa
                                     </a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/HangMuc/Index/?ID={{data.MaHM}}" target="_blank">
+                                    <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/HangMuc/Index/?ID={{data.ID}}" target="_blank">
                                         <i class="fa fa-edit"></i>Dự Toán
                                     </a>
                                 </td>
                                 <td>
-                                    <input type="hidden" name="mahm" id="mahm" ng-model="hangmuc.MaHM" value="{{data.MaHM}}" />
-                                    <input type="hidden" name="mact" id="mact" value="{{data.MaHM}}" />
+                                    <input type="hidden" name="mahm" id="mahm" ng-model="hangmuc.ID" value="{{data.ID}}" />
+                                    <input type="hidden" name="mact" id="mact" value="{{data.Building_ID}}" />
                                     <button type="submit" class="btn btn-danger btn-flat btn-xs">
                                         <i class="fa fa-edit">
                                             Xóa
