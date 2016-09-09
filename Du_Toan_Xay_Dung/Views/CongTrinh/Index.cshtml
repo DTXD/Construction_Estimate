@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var list_congtrinh = ViewData["List_CongTrinh"] as List<BuildingViewModel>;
     var congtrinhs_null = ViewData["List_CongTrinh_Null"] as List<long>;
+    
 }
 <style>
     .custom-file-upload {
@@ -69,7 +70,7 @@
 
 <script>
     angular.module('postApp', [])
-   .controller('postController', ['$scope', '$http', function ($scope, $http) {
+   .controller('postController', ['$scope', '$http','$filter', function ($scope, $http,$filter) {
        // xóa công trình
        $scope.submitForm = function () {
            var hoi = confirm("Bạn có chắc chắn muốn xóa công trình này??");
@@ -207,7 +208,21 @@
                fd.delete(idx, x);
                alert("Đã xóa");
            }
-       }    
+       }
+       //load list  chi tiết công trình
+       $scope.list_thongtin = [];
+       $http.get('/CongTrinh/Get_Allinf').then(function (response) {
+           $scope.list_thongtin = response.data;
+       }, function (response) {
+           //Showing errors
+       });
+
+       //array did filter
+       $scope.chitiet = [];
+       $scope.changeclick = function (value) {
+           $scope.chitiet = $filter('filter')($scope.list_thongtin, value);
+       };
+
    }]);
 </script>
 
@@ -263,7 +278,7 @@
                                         <a class="green-light">@item.Name</a>
                                         <p class="text-danger">Giá tiền: <small class="badge font-orbitron">@item.Sum</small></p>
                                     </h3>
-                                    <button class="btn btn-primary btn-xs" data-toggle="modal" da ta-target="#modal_info_building">
+                                    <button class="btn btn-primary btn-xs" ng-click="changeclick(@item.ID)" data-toggle="modal" data-target="#modal_info_building">
                                         Xem thông tin
                                     </button>
                                 </div>
@@ -326,10 +341,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
+                    <h4 class="modal-title">Thông tin công trình</h4>
                 </div>
-                <div class="modal-body">
-                    <p>Some text in the modal.</p>
+                <div class="modal-body" ng-repeat="data in chitiet">
+                    <p>Tên công trình:{{data.Name}}</p>
+                    <p>Địa chỉ:{{data.Address}}</p>
+                    <p>Mô tả:{{data.Description}}</p>
+                    <p>Giá:{{data.Sum}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

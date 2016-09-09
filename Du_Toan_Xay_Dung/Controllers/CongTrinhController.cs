@@ -65,6 +65,11 @@ namespace Du_Toan_Xay_Dung.Controllers
             var list = _db.BuildingItems.Select(i => new HangMucViewModel(i)).ToList();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult Get_Allinf()
+        {
+            var list = _db.Buildings.Select(i => new BuildingViewModel(i)).ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
 
         [PageLogin]
         public JsonResult Delete_CongTrinh(BuildingViewModel obj)
@@ -104,16 +109,17 @@ namespace Du_Toan_Xay_Dung.Controllers
                 ID = "";
             }
             ViewData["CongTrinh_Update"] = _db.Buildings.Where(i => i.ID.Equals(ID)).Select(i => new BuildingViewModel(i)).FirstOrDefault();
-            ViewData["image_congtrinh"] = _db.Images_Urls.Where(a => a.ID.Equals(ID)).Select(i => new Images_CongTrinhViewModel(i)).ToList();
+            ViewData["image_congtrinh"] = _db.Images_Urls.Where(a => a.Building_ID.Equals(ID)).Select(i => new Images_CongTrinhViewModel(i)).ToList();
             return View();
         }
         [PageLogin]
         [HttpPost]
         public JsonResult post_updatecongtrinh(BuildingViewModel obj)
         {
-            //try
-            //{
+            try
+            {
                 var congtrinh = _db.Buildings.First(m => m.ID == obj.ID);
+                var index1 = _db.Images_Urls.OrderByDescending(i => i.ID).Select(i => i.ID).FirstOrDefault();
                 if (obj.img_congtrinh != null)
                 {
                     if (obj.img_congtrinh.Count() > 0)
@@ -146,6 +152,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                         {
                             //them image vao database
                             var image = new Images_Url();
+                            image.ID = index1+1;
                             image.Building_ID = obj.ID;
                             image.Url = "~/Images/CongTrinh/" + file.FileName;
                             _db.Images_Urls.InsertOnSubmit(image);
@@ -154,11 +161,11 @@ namespace Du_Toan_Xay_Dung.Controllers
                 }
                 _db.SubmitChanges();
                 return Json("ok");
-            //}
-            //catch (Exception)
-            //{
-               // return Json("error");
-            //}
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
         }
         [PageLogin]
         public ActionResult UpdateHangMuc(string ID)
@@ -217,6 +224,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             try
             {
                 var index = _db.Buildings.OrderByDescending(i => i.ID).Select(i => i.ID).FirstOrDefault();
+                var index1 = _db.Images_Urls.OrderByDescending(i => i.ID).Select(i => i.ID).FirstOrDefault();
                 //index = index + 1;
                 if (obj.img_congtrinh != null)
                 {
@@ -255,7 +263,8 @@ namespace Du_Toan_Xay_Dung.Controllers
                         {
                             //them image vao database
                             var image = new Images_Url();
-                            image.Building_ID = index;
+                            image.ID = index1 + 1;
+                            image.Building_ID = index+1;
                             image.Url = "~/Images/CongTrinh/" + file.FileName;
                             _db.Images_Urls.InsertOnSubmit(image);
                         }
@@ -267,7 +276,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
                 catch (Exception)
             {
-                return Json("error");
+               return Json("error");
             }
         }
 
@@ -281,8 +290,8 @@ namespace Du_Toan_Xay_Dung.Controllers
         [HttpPost]
         public JsonResult post_themhangmuc(HangMucViewModel obj)
         {
-            //try
-            //{
+            try
+            {
 
                 BuildingItem hm = new BuildingItem();
                 hm.Building_ID = obj.Building_ID;
@@ -293,14 +302,12 @@ namespace Du_Toan_Xay_Dung.Controllers
                 _db.SubmitChanges();
 
                 return Json("ok");
-            //}
-            //catch (Exception)
-            //{
-//return Json("error");
-            //}
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
         }
-
-
 
         public ActionResult ExportToExcel(string ID)
         {
