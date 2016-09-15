@@ -225,12 +225,10 @@
     <Compile Include="Models\BuildingViewModel.cs" />
     <Compile Include="Models\DetailNormWork_PriceViewModel.cs" />
     <Compile Include="Models\Export_CongViec_ViewModel.cs" />
-    <Compile Include="Models\CongViec_User_ViewModel.cs" />
     <Compile Include="Models\DinhMucViewModel.cs" />
     <Compile Include="Models\DonGiaViewModel.cs" />
     <Compile Include="Models\HangMucViewModel.cs" />
-    <Compile Include="Models\HaoPhi_DM_ViewModel.cs" />
-    <Compile Include="Models\HaoPhi_User_ViewModel.cs" />
+    <Compile Include="Models\UserWorkResourceViewModel.cs" />
     <Compile Include="Models\Images_CongTrinhViewModel.cs" />
     <Compile Include="Models\UserWorkViewModel.cs" />
     <Compile Include="Models\UnitPrice_AreaViewModel.cs" />
@@ -502,6 +500,8 @@
     <Content Include="Scripts\Dropbox_API\dropins.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\App_work.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\Controllers\EstimateCtrl.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\Controllers\MaterialCtrl.js" />
+    <Content Include="Scripts\DuToan\Estimate_Work\Controllers\SpecificationCtrl.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\JQuery\sheet_mainwork.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\services\dataService.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\vendor\wijmo.angular.min.js" />

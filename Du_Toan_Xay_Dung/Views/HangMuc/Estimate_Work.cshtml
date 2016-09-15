@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Du_Toan_Xay_Dung.Handlers;
+@{
     ViewBag.Title = "Work_SPA";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -28,6 +29,10 @@
     <script src="~/Scripts/DuToan/Estimate_Work/services/dataService.js"></script>
 
     <script src="~/Scripts/DuToan/Estimate_Work/Controllers/EstimateCtrl.js"></script>
+
+    <script src="~/Scripts/DuToan/Estimate_Work/Controllers/MaterialCtrl.js"></script>
+
+    <script src="~/Scripts/DuToan/Estimate_Work/Controllers/SpecificationCtrl.js"></script>
 }
 
 @section CSS{
@@ -98,6 +103,10 @@
                     <div class="col-sm-10">
                         <h4>Nhà cấp 3 / Đào Móng</h4>
                         <input type="hidden" value="1" id="txt_building_item" />
+                        @if (SessionHandler.User != null)
+                        {
+                            <input type="hidden" value="@SessionHandler.User.Email" id="txt_session_user" />
+                        }
                     </div>
                     <div class="col-sm-12" style="margin-top:20px">
                         <uib-tabset active="active">

@@ -11,7 +11,7 @@ namespace Du_Toan_Xay_Dung.Models
 
         public HangMucViewModel(BuildingItem obj)
         {
-             ID= obj.ID;
+            ID = obj.ID;
             Building_ID = obj.Building_ID;
             Name = obj.Name;
             Description = obj.Description;
@@ -21,6 +21,6 @@ namespace Du_Toan_Xay_Dung.Models
         public long Building_ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Decimal ?Sum { get; set; }
+        public Decimal? Sum { get; set; }
     }
 }

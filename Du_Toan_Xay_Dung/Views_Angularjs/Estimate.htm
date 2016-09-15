@@ -99,11 +99,11 @@
             -->
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <button ng-click="save_work()">Save</button>
+                <button ng-click="save_work()">save</button>
             </div>
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
-                <span id="response_savesheet"></span>
+                <span id="Message_saved"></span>
             </div>
         </div>
         <div class="col-sm-12" style="height:400px;">
@@ -132,19 +132,47 @@
                     <div style="position: absolute; top: 0px; width: 100%; height: 70%; background-color: white; overflow-y:auto" id="sheet_cellcenter">
                         <!--sheet-->
                         <div class="row_sheet" ng-repeat="work in works">
-                            <div style="left:0%;width:3%;border-left: 1px solid #c6c6c6;" class="column_header">{{work.index}}<input type="hidden" ng-model="work.buildingitem_ID" /></div>
-                            <div style="left:3%;width:4%" class="cell"><input type="text" ng-model="work.id" class="input_sheet" /></div>
-                            <div style="left:7%;width:7%" class="cell"><input type="text" ng-model="work.key" class="input_sheet" /></div>
-                            <div style="left: 14%; width: 30%;" class="cell"><textarea ng-model="work.name" ng-dblclick="search_work($event);" class="input_sheet" style="font-size:13px;overflow:hidden"></textarea></div>
-                            <div style="left:44%;width:8%;" class="cell"><input type="text" ng-model="work.unit" class="input_sheet" /></div>
-                            <div style="left:52%;width:5%;" class="cell"><input type="text" ng-model="work.number" class="input_sheet" ng-blur="change($event)" /></div>
-                            <div style="left:57%;width:5%;" class="cell"><input type="text" ng-model="work.horizontal" class="input_sheet" ng-blur="change($event)" /></div>
-                            <div style="left:62%;width:5%;" class="cell"><input type="text" ng-model="work.vertical" class="input_sheet" ng-blur="change($event)" /></div>
-                            <div style="left:67%;width:5%;" class="cell"><input type="text" ng-model="work.height" class="input_sheet" ng-blur="change($event)" /></div>
-                            <div style="left:72%;width:7%;" class="cell"><input type="text" ng-model="work.area" class="input_sheet" /></div>
-                            <div style="left:79%;width:7%;" class="cell"><input type="text" ng-model="work.summaterial" class="input_sheet" /></div>
-                            <div style="left:86%;width:7%;" class="cell"><input type="text" ng-model="work.sumlabor" class="input_sheet" /></div>
-                            <div style="left:93%;width:7%;" class="cell"><input type="text" ng-model="work.summachine" class="input_sheet" /></div>
+                            <div style="left:0%;width:3%;border-left: 1px solid #c6c6c6;" class="column_header">
+                                <input type="text" readonly ng-model="work.IndexSheet" style=" background: #eaeaea; border: none; width: 100%; text-align: center;" />
+                            </div>
+                            <div style="left:3%;width:4%" class="cell">
+                                <input type="text" ng-model="work.ID" ng-focus="focus(work.ID, $event)" ng-blur="blur(work.ID)" class="input_sheet" />
+                            </div>
+                            <div style="left:7%;width:7%" class="cell">
+                                <input type="text" ng-model="work.NormWork_ID" ng-focus="focus(work.NormWork_ID , $event)" ng-blur="blur(work.NormWork_ID)" class="input_sheet" />
+                            </div>
+                            <div style="left: 14%; width: 30%;" class="cell">
+                                <textarea ng-model="work.Name" ng-dblclick="search_work($event);" ng-focus="focus(work.Name,$event)" ng-blur="blur(work.Name)" class="input_sheet" style="font-size:13px;overflow:hidden"></textarea>
+                            </div>
+                            <div style="left:44%;width:8%;" class="cell">
+                                <input type="text" ng-model="work.Unit" ng-focus="focus(work.Unit, $event)" ng-blur="blur(work.Unit)" class="input_sheet" />
+                            </div>
+                            <div style="left:52%;width:5%;" class="cell">
+                                <input type="text" ng-model="work.Number" ng-focus="focus(work.Number , $event)" class="input_sheet" ng-blur="change($event); blur(work.Number)" />
+                            </div>
+                            <div style="left:57%;width:5%;" class="cell">
+                                <input type="text" ng-model="work.Horizontal" ng-focus="focus(work.Horizontal, $event)" class="input_sheet" ng-blur="change($event) ; blur(work.Horizontal)" />
+                            </div>
+                            <div style="left:62%;width:5%;" class="cell">
+                                <input type="text" ng-model="work.Vertical" ng-focus="focus(work.Vertical, $event)" class="input_sheet" ng-blur="change($event) ; blur(work.Vertical)" />
+                            </div>
+                            <div style="left:67%;width:5%;" class="cell">
+                                <input type="text" ng-model="work.Height" ng-focus="focus(work.Height, $event)" class="input_sheet" ng-blur="change($event) ; blur(work.Height)" />
+                            </div>
+                            <div style="left:72%;width:7%;" class="cell">
+                                <input type="text" ng-model="work.Area" ng-focus="focus(work.Area, $event)" ng-blur="blur(work.Area)" class="input_sheet" />
+                            </div>
+                            <div style="left:79%;width:7%;" class="cell">
+                                <input type="text" ng-model="work.SumMaterial" class="input_sheet" />
+                            </div>
+                            <div style="left:86%;width:7%;" class="cell">
+                                <input type="text" ng-model="work.SumLabor" class="input_sheet" />
+                            </div>
+                            <div style="left:93%;width:7%;" class="cell">
+                                <input type="text" ng-model="work.SumMachine" class="input_sheet" />
+                            </div>
+                            <input type="hidden" ng-model="work.BuildingItem_ID" />
+                            <input type="hidden" ng-model="work.Sub_BuildingItem_ID" />
                         </div>
                     </div>
                 </div>

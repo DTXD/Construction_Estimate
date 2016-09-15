@@ -1,5 +1,10 @@
 ﻿var app = angular.module("app_work", ["ui.router", "ui.bootstrap"]);
 
+app.run(function ($rootScope) {
+    $rootScope.works = [];
+    $rootScope.allmaterials = [];
+});
+
 app.config(function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/');              //home
@@ -24,8 +29,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         })
 });
 
-
-app.controller("mainController", ['$scope', function ($scope) {
+app.controller("mainController", ['$scope', '$rootScope', function ($scope, root) {
 
     $scope.treeview = function ($event) {
 

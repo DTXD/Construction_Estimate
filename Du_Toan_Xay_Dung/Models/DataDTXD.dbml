@@ -10,8 +10,11 @@
   </Table>
   <Table Name="dbo.UserWorks" Member="UserWorks">
     <Type Name="UserWork">
+      <Column Name="ID_Primary" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="BuildingItem_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Sub_BuildingItem_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="IndexSheet" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="NormWork_ID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(3000)" CanBeNull="true" />
       <Column Name="Unit" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
@@ -20,6 +23,9 @@
       <Column Name="Vertical" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
       <Column Name="Height" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
       <Column Name="Area" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="PriceMaterial" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="PriceLabor" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="PriceMachine" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
       <Column Name="SumMaterial" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
       <Column Name="SumLabor" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
       <Column Name="SumMachine" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
@@ -47,18 +53,8 @@
       <Column Name="Description" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
       <Column Name="Sum" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
       <Association Name="BuildingItem_UserWork" Member="UserWorks" ThisKey="ID" OtherKey="BuildingItem_ID" Type="UserWork" />
+      <Association Name="BuildingItem_UserWork_Resource" Member="UserWork_Resources" ThisKey="ID" OtherKey="BuildingItem_ID" Type="UserWork_Resource" />
       <Association Name="Building_BuildingItem" Member="Building" ThisKey="Building_ID" OtherKey="ID" Type="Building" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ConstructionMaterials" Member="ConstructionMaterials">
-    <Type Name="ConstructionMaterial">
-      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="Key_ConstructionMaterials" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Key_UserWork" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
-      <Column Name="Unit_Measure" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Numbers" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
-      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.Images_Url" Member="Images_Urls">
@@ -90,7 +86,7 @@
   <Table Name="dbo.UnitPrice" Member="UnitPrices">
     <Type Name="UnitPrice">
       <Column Name="ID" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
       <Column Name="Unit" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Association Name="UnitPrice_NormDetail" Member="NormDetails" ThisKey="ID" OtherKey="UnitPrice_ID" Type="NormDetail" />
       <Association Name="UnitPrice_UnitPrice_Area" Member="UnitPrice_Areas" ThisKey="ID" OtherKey="UnitPrice_ID" Type="UnitPrice_Area" />
@@ -117,6 +113,19 @@
       <Column Name="Url_Image" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="Role" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Association Name="User_Building" Member="Buildings" ThisKey="Email" OtherKey="Email" Type="Building" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserWork_Resource" Member="UserWork_Resources">
+    <Type Name="UserWork_Resource">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BuildingItem_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UserWork_ID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitPrice_ID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
+      <Column Name="Unit" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Numbers" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
+      <Association Name="BuildingItem_UserWork_Resource" Member="BuildingItem" ThisKey="BuildingItem_ID" OtherKey="ID" Type="BuildingItem" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

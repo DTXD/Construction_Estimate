@@ -57,9 +57,100 @@ namespace Du_Toan_Xay_Dung.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult post_updatework(UserWorkViewModel obj)
+        public JsonResult getAllSheet(string buildingitem_id)
         {
-            return Json("ok");
+            if (buildingitem_id != null)
+            {
+                var sheet = _db.UserWorks.Where(i => i.BuildingItem_ID.Equals(buildingitem_id)).Select(i => new UserWorkViewModel(i)).ToList();
+                return Json(sheet, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("error", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult post_updatework(UserWorkViewModel model)
+        {
+            try
+            {
+                if (model.BuildingItem_ID != null)
+                {
+                    var work = _db.UserWorks.FirstOrDefault(i => i.IndexSheet.Equals(model.IndexSheet));
+                    if (work != null)
+                    {
+                        work.ID = model.ID;
+                        work.NormWork_ID = model.NormWork_ID;
+                        work.Name = model.Name;
+                        work.Unit = model.Unit;
+                        work.Number = model.Number;
+                        work.Horizontal = model.Horizontal;
+                        work.Vertical = model.Vertical;
+                        work.Height = model.Height;
+                        work.Area = model.Area;
+                        work.SumMaterial = model.SumMaterial;
+                        work.SumLabor = model.SumLabor;
+                        work.SumMachine = model.SumMachine;
+                    }
+                    else
+                    {
+                        UserWork ew = new UserWork();
+                        ew.BuildingItem_ID = model.BuildingItem_ID;
+                        ew.Sub_BuildingItem_ID = model.Sub_BuildingItem_ID;
+                        ew.IndexSheet = model.IndexSheet;
+                        ew.ID = model.ID;
+                        ew.NormWork_ID = model.NormWork_ID;
+                        ew.Name = model.Name;
+                        ew.Unit = model.Unit;
+                        ew.Number = model.Number;
+                        ew.Horizontal = model.Horizontal;
+                        ew.Vertical = model.Vertical;
+                        ew.Height = model.Height;
+                        ew.Area = model.Area;
+                        ew.PriceLabor = model.PriceLabor;
+                        ew.PriceMaterial = model.PriceMaterial;
+                        ew.PriceMachine = model.PriceMachine;
+                        ew.SumMaterial = model.SumMaterial;
+                        ew.SumLabor = model.SumLabor;
+                        ew.SumMachine = model.SumMachine;
+                        _db.UserWorks.InsertOnSubmit(ew);
+                    }
+                    _db.SubmitChanges();
+                }
+                return Json("ok");
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
+        }
+
+        public JsonResult post_updateresource(List<UserWorkResourceViewModel> list)
+        {
+            try
+            {
+                if (list[0].BuildingItem_ID != null)
+                {
+                    foreach (var item in list)
+                    {
+                        UserWork_Resource ewr = new UserWork_Resource();
+                        ewr.BuildingItem_ID = item.BuildingItem_ID;
+                        ewr.UserWork_ID = item.UserWork_ID;
+                        ewr.UnitPrice_ID = item.UnitPrice_ID;
+                        ewr.Name = item.Name;
+                        ewr.Unit = item.Unit;
+                        ewr.Numbers = item.Number;
+                        ewr.Price = item.Price;
+                        _db.UserWork_Resources.InsertOnSubmit(ewr);
+                    }
+                    _db.SubmitChanges();
+                }
+                return Json("ok");
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
         }
     }
 }

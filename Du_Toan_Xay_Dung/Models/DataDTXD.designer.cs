@@ -42,9 +42,6 @@ namespace Du_Toan_Xay_Dung.Models
     partial void InsertBuildingItem(BuildingItem instance);
     partial void UpdateBuildingItem(BuildingItem instance);
     partial void DeleteBuildingItem(BuildingItem instance);
-    partial void InsertConstructionMaterial(ConstructionMaterial instance);
-    partial void UpdateConstructionMaterial(ConstructionMaterial instance);
-    partial void DeleteConstructionMaterial(ConstructionMaterial instance);
     partial void InsertImages_Url(Images_Url instance);
     partial void UpdateImages_Url(Images_Url instance);
     partial void DeleteImages_Url(Images_Url instance);
@@ -60,6 +57,9 @@ namespace Du_Toan_Xay_Dung.Models
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
+    partial void InsertUserWork_Resource(UserWork_Resource instance);
+    partial void UpdateUserWork_Resource(UserWork_Resource instance);
+    partial void DeleteUserWork_Resource(UserWork_Resource instance);
     #endregion
 		
 		public DataDTXDDataContext() : 
@@ -124,14 +124,6 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<ConstructionMaterial> ConstructionMaterials
-		{
-			get
-			{
-				return this.GetTable<ConstructionMaterial>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Images_Url> Images_Urls
 		{
 			get
@@ -177,6 +169,14 @@ namespace Du_Toan_Xay_Dung.Models
 			get
 			{
 				return this.GetTable<User>();
+			}
+		}
+		
+		public System.Data.Linq.Table<UserWork_Resource> UserWork_Resources
+		{
+			get
+			{
+				return this.GetTable<UserWork_Resource>();
 			}
 		}
 	}
@@ -297,9 +297,15 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
+		private long _ID_Primary;
+		
 		private long _BuildingItem_ID;
 		
-		private long _ID;
+		private long _Sub_BuildingItem_ID;
+		
+		private long _IndexSheet;
+		
+		private string _ID;
 		
 		private string _NormWork_ID;
 		
@@ -317,6 +323,12 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		private System.Nullable<decimal> _Area;
 		
+		private System.Nullable<decimal> _PriceMaterial;
+		
+		private System.Nullable<decimal> _PriceLabor;
+		
+		private System.Nullable<decimal> _PriceMachine;
+		
 		private System.Nullable<decimal> _SumMaterial;
 		
 		private System.Nullable<decimal> _SumLabor;
@@ -329,9 +341,15 @@ namespace Du_Toan_Xay_Dung.Models
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
+    partial void OnID_PrimaryChanging(long value);
+    partial void OnID_PrimaryChanged();
     partial void OnBuildingItem_IDChanging(long value);
     partial void OnBuildingItem_IDChanged();
-    partial void OnIDChanging(long value);
+    partial void OnSub_BuildingItem_IDChanging(long value);
+    partial void OnSub_BuildingItem_IDChanged();
+    partial void OnIndexSheetChanging(long value);
+    partial void OnIndexSheetChanged();
+    partial void OnIDChanging(string value);
     partial void OnIDChanged();
     partial void OnNormWork_IDChanging(string value);
     partial void OnNormWork_IDChanged();
@@ -349,6 +367,12 @@ namespace Du_Toan_Xay_Dung.Models
     partial void OnHeightChanged();
     partial void OnAreaChanging(System.Nullable<decimal> value);
     partial void OnAreaChanged();
+    partial void OnPriceMaterialChanging(System.Nullable<decimal> value);
+    partial void OnPriceMaterialChanged();
+    partial void OnPriceLaborChanging(System.Nullable<decimal> value);
+    partial void OnPriceLaborChanged();
+    partial void OnPriceMachineChanging(System.Nullable<decimal> value);
+    partial void OnPriceMachineChanged();
     partial void OnSumMaterialChanging(System.Nullable<decimal> value);
     partial void OnSumMaterialChanged();
     partial void OnSumLaborChanging(System.Nullable<decimal> value);
@@ -361,6 +385,26 @@ namespace Du_Toan_Xay_Dung.Models
 		{
 			this._BuildingItem = default(EntityRef<BuildingItem>);
 			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Primary", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID_Primary
+		{
+			get
+			{
+				return this._ID_Primary;
+			}
+			set
+			{
+				if ((this._ID_Primary != value))
+				{
+					this.OnID_PrimaryChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Primary = value;
+					this.SendPropertyChanged("ID_Primary");
+					this.OnID_PrimaryChanged();
+				}
+			}
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BuildingItem_ID", DbType="BigInt NOT NULL")]
@@ -387,8 +431,48 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
-		public long ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Sub_BuildingItem_ID", DbType="BigInt NOT NULL")]
+		public long Sub_BuildingItem_ID
+		{
+			get
+			{
+				return this._Sub_BuildingItem_ID;
+			}
+			set
+			{
+				if ((this._Sub_BuildingItem_ID != value))
+				{
+					this.OnSub_BuildingItem_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Sub_BuildingItem_ID = value;
+					this.SendPropertyChanged("Sub_BuildingItem_ID");
+					this.OnSub_BuildingItem_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IndexSheet", DbType="BigInt NOT NULL")]
+		public long IndexSheet
+		{
+			get
+			{
+				return this._IndexSheet;
+			}
+			set
+			{
+				if ((this._IndexSheet != value))
+				{
+					this.OnIndexSheetChanging(value);
+					this.SendPropertyChanging();
+					this._IndexSheet = value;
+					this.SendPropertyChanged("IndexSheet");
+					this.OnIndexSheetChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="NVarChar(50)")]
+		public string ID
 		{
 			get
 			{
@@ -563,6 +647,66 @@ namespace Du_Toan_Xay_Dung.Models
 					this._Area = value;
 					this.SendPropertyChanged("Area");
 					this.OnAreaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PriceMaterial", DbType="Decimal(18,3)")]
+		public System.Nullable<decimal> PriceMaterial
+		{
+			get
+			{
+				return this._PriceMaterial;
+			}
+			set
+			{
+				if ((this._PriceMaterial != value))
+				{
+					this.OnPriceMaterialChanging(value);
+					this.SendPropertyChanging();
+					this._PriceMaterial = value;
+					this.SendPropertyChanged("PriceMaterial");
+					this.OnPriceMaterialChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PriceLabor", DbType="Decimal(18,3)")]
+		public System.Nullable<decimal> PriceLabor
+		{
+			get
+			{
+				return this._PriceLabor;
+			}
+			set
+			{
+				if ((this._PriceLabor != value))
+				{
+					this.OnPriceLaborChanging(value);
+					this.SendPropertyChanging();
+					this._PriceLabor = value;
+					this.SendPropertyChanged("PriceLabor");
+					this.OnPriceLaborChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PriceMachine", DbType="Decimal(18,3)")]
+		public System.Nullable<decimal> PriceMachine
+		{
+			get
+			{
+				return this._PriceMachine;
+			}
+			set
+			{
+				if ((this._PriceMachine != value))
+				{
+					this.OnPriceMachineChanging(value);
+					this.SendPropertyChanging();
+					this._PriceMachine = value;
+					this.SendPropertyChanged("PriceMachine");
+					this.OnPriceMachineChanged();
 				}
 			}
 		}
@@ -979,6 +1123,8 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		private EntitySet<UserWork> _UserWorks;
 		
+		private EntitySet<UserWork_Resource> _UserWork_Resources;
+		
 		private EntityRef<Building> _Building;
 		
     #region Extensibility Method Definitions
@@ -1000,6 +1146,7 @@ namespace Du_Toan_Xay_Dung.Models
 		public BuildingItem()
 		{
 			this._UserWorks = new EntitySet<UserWork>(new Action<UserWork>(this.attach_UserWorks), new Action<UserWork>(this.detach_UserWorks));
+			this._UserWork_Resources = new EntitySet<UserWork_Resource>(new Action<UserWork_Resource>(this.attach_UserWork_Resources), new Action<UserWork_Resource>(this.detach_UserWork_Resources));
 			this._Building = default(EntityRef<Building>);
 			OnCreated();
 		}
@@ -1121,6 +1268,19 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BuildingItem_UserWork_Resource", Storage="_UserWork_Resources", ThisKey="ID", OtherKey="BuildingItem_ID")]
+		public EntitySet<UserWork_Resource> UserWork_Resources
+		{
+			get
+			{
+				return this._UserWork_Resources;
+			}
+			set
+			{
+				this._UserWork_Resources.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building_BuildingItem", Storage="_Building", ThisKey="Building_ID", OtherKey="ID", IsForeignKey=true)]
 		public Building Building
 		{
@@ -1186,211 +1346,17 @@ namespace Du_Toan_Xay_Dung.Models
 			this.SendPropertyChanging();
 			entity.BuildingItem = null;
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ConstructionMaterials")]
-	public partial class ConstructionMaterial : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _Id;
-		
-		private string _Key_ConstructionMaterials;
-		
-		private string _Key_UserWork;
-		
-		private string _Name;
-		
-		private string _Unit_Measure;
-		
-		private decimal _Numbers;
-		
-		private decimal _Price;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(long value);
-    partial void OnIdChanged();
-    partial void OnKey_ConstructionMaterialsChanging(string value);
-    partial void OnKey_ConstructionMaterialsChanged();
-    partial void OnKey_UserWorkChanging(string value);
-    partial void OnKey_UserWorkChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnUnit_MeasureChanging(string value);
-    partial void OnUnit_MeasureChanged();
-    partial void OnNumbersChanging(decimal value);
-    partial void OnNumbersChanged();
-    partial void OnPriceChanging(decimal value);
-    partial void OnPriceChanged();
-    #endregion
-		
-		public ConstructionMaterial()
+		private void attach_UserWork_Resources(UserWork_Resource entity)
 		{
-			OnCreated();
+			this.SendPropertyChanging();
+			entity.BuildingItem = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="BigInt NOT NULL")]
-		public long Id
+		private void detach_UserWork_Resources(UserWork_Resource entity)
 		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Key_ConstructionMaterials", DbType="NVarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string Key_ConstructionMaterials
-		{
-			get
-			{
-				return this._Key_ConstructionMaterials;
-			}
-			set
-			{
-				if ((this._Key_ConstructionMaterials != value))
-				{
-					this.OnKey_ConstructionMaterialsChanging(value);
-					this.SendPropertyChanging();
-					this._Key_ConstructionMaterials = value;
-					this.SendPropertyChanged("Key_ConstructionMaterials");
-					this.OnKey_ConstructionMaterialsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Key_UserWork", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Key_UserWork
-		{
-			get
-			{
-				return this._Key_UserWork;
-			}
-			set
-			{
-				if ((this._Key_UserWork != value))
-				{
-					this.OnKey_UserWorkChanging(value);
-					this.SendPropertyChanging();
-					this._Key_UserWork = value;
-					this.SendPropertyChanged("Key_UserWork");
-					this.OnKey_UserWorkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(2000) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit_Measure", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Unit_Measure
-		{
-			get
-			{
-				return this._Unit_Measure;
-			}
-			set
-			{
-				if ((this._Unit_Measure != value))
-				{
-					this.OnUnit_MeasureChanging(value);
-					this.SendPropertyChanging();
-					this._Unit_Measure = value;
-					this.SendPropertyChanged("Unit_Measure");
-					this.OnUnit_MeasureChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Numbers", DbType="Decimal(18,3) NOT NULL")]
-		public decimal Numbers
-		{
-			get
-			{
-				return this._Numbers;
-			}
-			set
-			{
-				if ((this._Numbers != value))
-				{
-					this.OnNumbersChanging(value);
-					this.SendPropertyChanging();
-					this._Numbers = value;
-					this.SendPropertyChanged("Numbers");
-					this.OnNumbersChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Decimal(18,3) NOT NULL")]
-		public decimal Price
-		{
-			get
-			{
-				return this._Price;
-			}
-			set
-			{
-				if ((this._Price != value))
-				{
-					this.OnPriceChanging(value);
-					this.SendPropertyChanging();
-					this._Price = value;
-					this.SendPropertyChanged("Price");
-					this.OnPriceChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
+			this.SendPropertyChanging();
+			entity.BuildingItem = null;
 		}
 	}
 	
@@ -1951,7 +1917,7 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(1000) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(2000) NOT NULL", CanBeNull=false)]
 		public string Name
 		{
 			get
@@ -2379,6 +2345,277 @@ namespace Du_Toan_Xay_Dung.Models
 		{
 			this.SendPropertyChanging();
 			entity.User = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UserWork_Resource")]
+	public partial class UserWork_Resource : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private long _BuildingItem_ID;
+		
+		private string _UserWork_ID;
+		
+		private string _UnitPrice_ID;
+		
+		private string _Name;
+		
+		private string _Unit;
+		
+		private decimal _Numbers;
+		
+		private decimal _Price;
+		
+		private EntityRef<BuildingItem> _BuildingItem;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnBuildingItem_IDChanging(long value);
+    partial void OnBuildingItem_IDChanged();
+    partial void OnUserWork_IDChanging(string value);
+    partial void OnUserWork_IDChanged();
+    partial void OnUnitPrice_IDChanging(string value);
+    partial void OnUnitPrice_IDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnUnitChanging(string value);
+    partial void OnUnitChanged();
+    partial void OnNumbersChanging(decimal value);
+    partial void OnNumbersChanged();
+    partial void OnPriceChanging(decimal value);
+    partial void OnPriceChanged();
+    #endregion
+		
+		public UserWork_Resource()
+		{
+			this._BuildingItem = default(EntityRef<BuildingItem>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BuildingItem_ID", DbType="BigInt NOT NULL")]
+		public long BuildingItem_ID
+		{
+			get
+			{
+				return this._BuildingItem_ID;
+			}
+			set
+			{
+				if ((this._BuildingItem_ID != value))
+				{
+					if (this._BuildingItem.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBuildingItem_IDChanging(value);
+					this.SendPropertyChanging();
+					this._BuildingItem_ID = value;
+					this.SendPropertyChanged("BuildingItem_ID");
+					this.OnBuildingItem_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserWork_ID", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string UserWork_ID
+		{
+			get
+			{
+				return this._UserWork_ID;
+			}
+			set
+			{
+				if ((this._UserWork_ID != value))
+				{
+					this.OnUserWork_IDChanging(value);
+					this.SendPropertyChanging();
+					this._UserWork_ID = value;
+					this.SendPropertyChanged("UserWork_ID");
+					this.OnUserWork_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitPrice_ID", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string UnitPrice_ID
+		{
+			get
+			{
+				return this._UnitPrice_ID;
+			}
+			set
+			{
+				if ((this._UnitPrice_ID != value))
+				{
+					this.OnUnitPrice_IDChanging(value);
+					this.SendPropertyChanging();
+					this._UnitPrice_ID = value;
+					this.SendPropertyChanged("UnitPrice_ID");
+					this.OnUnitPrice_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(2000) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Unit
+		{
+			get
+			{
+				return this._Unit;
+			}
+			set
+			{
+				if ((this._Unit != value))
+				{
+					this.OnUnitChanging(value);
+					this.SendPropertyChanging();
+					this._Unit = value;
+					this.SendPropertyChanged("Unit");
+					this.OnUnitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Numbers", DbType="Decimal(18,3) NOT NULL")]
+		public decimal Numbers
+		{
+			get
+			{
+				return this._Numbers;
+			}
+			set
+			{
+				if ((this._Numbers != value))
+				{
+					this.OnNumbersChanging(value);
+					this.SendPropertyChanging();
+					this._Numbers = value;
+					this.SendPropertyChanged("Numbers");
+					this.OnNumbersChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Decimal(18,3) NOT NULL")]
+		public decimal Price
+		{
+			get
+			{
+				return this._Price;
+			}
+			set
+			{
+				if ((this._Price != value))
+				{
+					this.OnPriceChanging(value);
+					this.SendPropertyChanging();
+					this._Price = value;
+					this.SendPropertyChanged("Price");
+					this.OnPriceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BuildingItem_UserWork_Resource", Storage="_BuildingItem", ThisKey="BuildingItem_ID", OtherKey="ID", IsForeignKey=true)]
+		public BuildingItem BuildingItem
+		{
+			get
+			{
+				return this._BuildingItem.Entity;
+			}
+			set
+			{
+				BuildingItem previousValue = this._BuildingItem.Entity;
+				if (((previousValue != value) 
+							|| (this._BuildingItem.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BuildingItem.Entity = null;
+						previousValue.UserWork_Resources.Remove(this);
+					}
+					this._BuildingItem.Entity = value;
+					if ((value != null))
+					{
+						value.UserWork_Resources.Add(this);
+						this._BuildingItem_ID = value.ID;
+					}
+					else
+					{
+						this._BuildingItem_ID = default(long);
+					}
+					this.SendPropertyChanged("BuildingItem");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }
