@@ -40,7 +40,6 @@ namespace Du_Toan_Xay_Dung.Controllers
             var data = _db.Images_Urls.Where(i => i.Building_ID.Equals(ID)).Select(i => i.Url).ToList();
             return Json(data);
         }
-
         /*
         public ActionResult HinhAnhCT(string Id)
         {
@@ -49,7 +48,6 @@ namespace Du_Toan_Xay_Dung.Controllers
             return View();
         }
         */
-
         [PageLogin]
         public ActionResult ChiTiet_CongTrinh(string Id)
         {
@@ -59,7 +57,6 @@ namespace Du_Toan_Xay_Dung.Controllers
 
             return View();
         }
-
         public JsonResult Get_AllHangMuc()
         {
             var list = _db.BuildingItems.Select(i => new HangMucViewModel(i)).ToList();
@@ -70,7 +67,6 @@ namespace Du_Toan_Xay_Dung.Controllers
             var list = _db.Buildings.Select(i => new BuildingViewModel(i)).ToList();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-
         [PageLogin]
         public JsonResult Delete_CongTrinh(BuildingViewModel obj)
         {
@@ -100,7 +96,6 @@ namespace Du_Toan_Xay_Dung.Controllers
                 return Json("error");
             }
         }
-
         [PageLogin]
         public ActionResult UpdateCongTrinh(string ID)
         {
@@ -167,16 +162,14 @@ namespace Du_Toan_Xay_Dung.Controllers
                 return Json("error");
             }
         }
-        [PageLogin]
-        public ActionResult UpdateHangMuc(string ID)
+        public JsonResult Get_Allinf1()
         {
-
-            ViewData["HangMuc_Update"] = _db.BuildingItems.Where(i => i.ID.Equals(ID)).Select(i => new HangMucViewModel(i)).FirstOrDefault();
-            return View();
+            var list = _db.BuildingItems.Select(i => new HangMucViewModel(i)).ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
         [PageLogin]
         [HttpPost]
-        public JsonResult updatehangmuc(HangMucViewModel obj)
+        public JsonResult post_updatehangmuc(HangMucViewModel obj)
         {
             try
             {
@@ -184,11 +177,12 @@ namespace Du_Toan_Xay_Dung.Controllers
                 hangmuc.ID = obj.ID;
                 hangmuc.Description = obj.Description;
                 hangmuc.Name = obj.Name;
+                hangmuc.Sum = Convert.ToDecimal(obj.Sum);
                 _db.SubmitChanges();
                 return Json("ok");
             }
             catch (Exception)
-            {
+           {
                 return Json("error");
             }
         }
@@ -210,12 +204,11 @@ namespace Du_Toan_Xay_Dung.Controllers
                 return Json("error");
             }
         }
-
-        [PageLogin]
+        /*[PageLogin]
         public ActionResult ThemCongTrinh()
         {
             return View();
-        }
+        }*/
 
         [PageLogin]
         [HttpPost]
@@ -279,13 +272,12 @@ namespace Du_Toan_Xay_Dung.Controllers
                return Json("error");
             }
         }
-
-        [PageLogin]
+        /*[PageLogin]
         public ActionResult ThemHangMuc(long id)
         {
             ViewData["MaCT_ThemHangMuc"] = id;
             return View();
-        }
+        }*/
         [PageLogin]
         [HttpPost]
         public JsonResult post_themhangmuc(HangMucViewModel obj)
@@ -312,16 +304,15 @@ namespace Du_Toan_Xay_Dung.Controllers
         public ActionResult ExportToExcel(string ID)
         {
             
-            /*if (ID != null)
+            if (ID != null)
             {
-
                 var congtrinh = _db.Buildings.Where(i => i.ID.Equals(ID)).Select(i => new BuildingViewModel(i)).FirstOrDefault();
                 var hangmuc = _db.BuildingItems.Where(i => i.Building_ID.Equals(ID)).Select(i => new HangMucViewModel(i)).ToList();
                 var mahangmucs = _db.BuildingItems.Where(i => i.Building_ID.Equals(ID)).Select(i => i.ID).ToList();
-                List<string> mahangmucs1 = _db.BuildingItems.Where(i => i.Building_ID.Equals(ID)).Select(i => i.ID).ToList();
+                List<long> mahangmucs1 = _db.BuildingItems.Where(i => i.Building_ID.Equals(ID)).Select(i => i.ID).ToList();
                 var congviec = _db.UserWorks.Where(i => mahangmucs1.Contains(i.BuildingItem_ID)).Select(i => new CongViec_User_ViewModel(i)).ToList();
-                List<string> macongviecs = _db.CongViecs.Where(i => mahangmucs.Contains(i.MaHM)).Select(i => i.MaHieuCV_User).ToList();
-                var haophi = _db.ThanhPhanHaoPhis.Where(i => macongviecs.Contains(i.MaHieuCV_User)).Select(i => new HaoPhi_User_ViewModel(i)).ToList();
+                List<string> macongviecs = _db.UserWorks.Where(i => mahangmucs.Contains(i.BuildingItem_ID)).Select(i => i.NormWork_ID).ToList();
+                var haophi = _db.NormDetails.Where(i => macongviecs.Contains(i.NormWork_ID)).Select(i => new DetailNormWork_PriceViewModel(i)).ToList();
                 //var congtrinh = _db.CongTrinhs.Where(i => i.MaCT.Equals(ID)).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
 
                 //var hangmuc = _db.HangMucs.Where(i => i.MaCT.Equals(ID)).Select(i => new HangMucViewModel(i)).ToList();
@@ -341,7 +332,7 @@ namespace Du_Toan_Xay_Dung.Controllers
 
                     // ADD dữ liệu cho sheet hạng mục
                     ws.Cells["I5"].Value = "BẢNG DỰ TOÁN HẠNG MỤC CÔNG TRÌNH";
-                    ws.Cells["J7"].Value = "Tên công trình;" + "   " + congtrinh.TenCT;
+                    ws.Cells["J7"].Value = "Tên công trình;" + "   " + congtrinh.Name;
 
                     // table  
                     ws.Cells["B8"].Value = "Mã hạng mục";
@@ -383,10 +374,10 @@ namespace Du_Toan_Xay_Dung.Controllers
 
                         //  content
 
-                        ws.Cells[B].Value = row.MaHM;
-                        ws.Cells[E].Value = row.MaCT;
-                        ws.Cells[H].Value = row.TenHM;
-                        ws.Cells[N].Value = row.MoTa;
+                        ws.Cells[B].Value = row.ID;
+                        ws.Cells[E].Value = row.Building_ID;
+                        ws.Cells[H].Value = row.Name;
+                        ws.Cells[N].Value = row.Description;
                         ws.Cells[R].Formula = "+SUMIFS('Công việc'!U9:U" + (congvieccout + 1 + 9) + ",'Công việc'!D9:D" + (congvieccout + 1 + 9) + ",B" + r + "" + ")";
                         ws.Cells[dong2].Formula = "+SUM(R9:R" + (hangmuccout + 1 + 9) + ")";
                         r++;
@@ -459,16 +450,16 @@ namespace Du_Toan_Xay_Dung.Controllers
 
                         //  content
 
-                        ws1.Cells[A].Value = row.MaHieuCV_User;
-                        ws1.Cells[D].Value = row.MaHM;
-                        ws1.Cells[F].Value = row.MaHieuCV_DM;
-                        ws1.Cells[I].Value = row.TenCongViec;
-                        ws1.Cells[K].Value = row.DonVi;
-                        ws1.Cells[M].Value = row.KhoiLuong;
+                        ws1.Cells[A].Value = row.ID;
+                        ws1.Cells[D].Value = row.BuildingItem_ID;
+                        ws1.Cells[F].Value = row.NormWork_ID;
+                        ws1.Cells[I].Value = row.Name;
+                        ws1.Cells[K].Value = row.Unit;
+                        ws1.Cells[M].Value = row.Numbers;
                         // chỉnh lại công thức excel
-                        ws1.Cells[O].Value = row.GiaVL;
-                        ws1.Cells[Q].Value = row.GiaNC;
-                        ws1.Cells[S].Value = row.GiaMTC;
+                        ws1.Cells[O].Value = row.SumMaterial;
+                        ws1.Cells[Q].Value = row.SumLabor;
+                        ws1.Cells[S].Value = row.SumMachine;
                         ws1.Cells[U].Formula = "+PRODUCT(SUM(O" + r1 + ":S" + r1 + "),M" + r1 + ")";
                         r1++;
                     }
@@ -508,11 +499,11 @@ namespace Du_Toan_Xay_Dung.Controllers
 
                         //  content
 
-                        ws2.Cells[B].Value = row.MaHP;
-                        ws2.Cells[E].Value = row.MaHieuCV_User;
-                        ws2.Cells[H].Value = row.Ten;
-                        ws2.Cells[N].Value = row.DonVi;
-                        ws2.Cells[R].Value = row.Gia;
+                        ws2.Cells[B].Value = row.Key_Material;
+                        ws2.Cells[E].Value = row.Key_NormWork;
+                        ws2.Cells[H].Value = row.Name_Material;
+                        ws2.Cells[N].Value = row.Unit;
+                        ws2.Cells[R].Value = row.Price_Material;
                         r2++;
                     }
 
@@ -530,7 +521,7 @@ namespace Du_Toan_Xay_Dung.Controllers
 
                 return RedirectToAction("Index");
 
-            }*/
+            }
             return View();
         }
     }

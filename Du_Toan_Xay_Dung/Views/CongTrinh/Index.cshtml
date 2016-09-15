@@ -67,7 +67,6 @@
 
         });
 </script>
-
 <script>
     angular.module('postApp', [])
    .controller('postController', ['$scope', '$http','$filter', function ($scope, $http,$filter) {
@@ -216,12 +215,12 @@
        }, function (response) {
            //Showing errors
        });
-
        //array did filter
        $scope.chitiet = [];
        $scope.changeclick = function (value) {
            $scope.chitiet = $filter('filter')($scope.list_thongtin, value);
        };
+
 
    }]);
 </script>
@@ -233,11 +232,6 @@
     }
 </style>
 
-<!--<section class="content-header">
-    <ol class="breadcrumb">
-        <li class="active">Công Trình</li>
-    </ol>
-</section>-->
 
 <section class="content" ng-app="postApp" ng-controller="postController">
     @if (SessionHandler.User != null)
@@ -248,7 +242,7 @@
             </div>
             <div class="col-xs-12 col-sm-2">
                 <p style="padding:5px"></p>
-                <button style="margin-right:100px" class="btn btn-primary form-control" data-toggle="modal" data-target="#modal_add_building"><b><span class="glyphicon glyphicon-plus"></span>&nbsp;</b>ADD</button>
+                <button style="margin-right:100px" class="btn btn-primary form-control" data-toggle="modal" data-target="#modal_add_building"><b><span class="glyphicon glyphicon-plus"></span>&nbsp;</b>THÊM</button>
             </div>
         </div><br /><hr />    
         <!--list cong trinh, copy ra 1 file rieng de de~
@@ -309,12 +303,13 @@
                                             }
                                             else
                                             {
-                                                <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ThemHangMuc/@item.ID" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
+                                                <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ChiTiet_CongTrinh/@item.ID" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
                                             }
                                         }
-                                        else { 
-                                      
-                                            <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ThemHangMuc/@item.ID" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
+                                        else
+                                        {
+
+                                            <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ChiTiet_CongTrinh/@item.ID" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
                                         }
                                         <form method="post" name="formAdd" id="formAdd" ng-submit="submitForm()">
                                             <input type="hidden" value="@item.ID" id="mact" />
@@ -328,15 +323,15 @@
                         </li>
                     }
                     }
+                    
                     <!--// ket thuc vong lap ở đây-->
                 </ul>
             </div>
-        </div>
-    }
+            </div>
+    
     <!-- Modal -->
     <div class="modal fade" id="modal_info_building" role="dialog" >
         <div class="modal-dialog">
-
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -433,4 +428,6 @@
 
         </div>
     </div>
+            
+      }   
 </section>
