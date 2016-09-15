@@ -4,7 +4,8 @@
     ViewBag.Title = "Danh Sách Công Trình";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var list_congtrinh = ViewData["List_CongTrinh"] as List<BuildingViewModel>;
-    var congtrinhs_null = ViewData["List_CongTrinh_Null"] as List<string>;
+    var congtrinhs_null = ViewData["List_CongTrinh_Null"] as List<long>;
+    
 }
 <style>
     .custom-file-upload {
@@ -69,7 +70,7 @@
 
 <script>
     angular.module('postApp', [])
-   .controller('postController', ['$scope', '$http', function ($scope, $http) {
+   .controller('postController', ['$scope', '$http','$filter', function ($scope, $http,$filter) {
        // xóa công trình
        $scope.submitForm = function () {
            var hoi = confirm("Bạn có chắc chắn muốn xóa công trình này??");
@@ -78,7 +79,7 @@
                    var mact = document.getElementById("mact").value;
                    console.log(mact);
                    var postdata = {
-                       MaCT: mact
+                      ID: mact
                    };
                    $http({
                        method: 'POST',
@@ -142,9 +143,9 @@
                var tenct = document.getElementById("TenCT").value;
                var mota = document.getElementById("MoTa").value;
                var diachi = document.getElementById("DiaChi").value;
-               fd.append("TenCT", tenct);
-               fd.append("MoTa", mota);
-               fd.append("DiaChi", diachi);
+               fd.append("Name", tenct);
+               fd.append("Description", mota);
+               fd.append("Address", diachi);
                if ($scope.listfile) {
                    for (var i = 0; i < $scope.listfile.length; i++) {
 
@@ -207,7 +208,21 @@
                fd.delete(idx, x);
                alert("Đã xóa");
            }
-       }    
+       }
+       //load list  chi tiết công trình
+       $scope.list_thongtin = [];
+       $http.get('/CongTrinh/Get_Allinf').then(function (response) {
+           $scope.list_thongtin = response.data;
+       }, function (response) {
+           //Showing errors
+       });
+
+       //array did filter
+       $scope.chitiet = [];
+       $scope.changeclick = function (value) {
+           $scope.chitiet = $filter('filter')($scope.list_thongtin, value);
+       };
+
    }]);
 </script>
 
@@ -242,26 +257,28 @@
             <div class="col-xs-12">
                 <ul class="list-unstyled">
                     <!--for each in here-->
-                    @foreach (var item in list_congtrinh)
+                    @if (list_congtrinh!=null){
+                    
+                    foreach (var item in list_congtrinh)
                     {
                         var d = 0;
                         var description = "";
-                        if (Convert.ToString(item.MoTa).Length > 60)
+                        if (Convert.ToString(item.Description).Length > 60)
                         {
-                            description = Convert.ToString(item.MoTa).Substring(0, 60);
+                            description = Convert.ToString(item.Description).Substring(0, 60);
                         }
                         else
                         {
-                            description = item.MoTa;
+                            description = item.Description;
                         }
                         <li class="col-sm-4">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">
-                                        <a class="green-light">@item.TenCT</a>
-                                        <p class="text-danger">Giá tiền: <small class="badge font-orbitron">@item.Gia</small></p>
+                                        <a class="green-light">@item.Name</a>
+                                        <p class="text-danger">Giá tiền: <small class="badge font-orbitron">@item.Sum</small></p>
                                     </h3>
-                                    <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal_info_building">
+                                    <button class="btn btn-primary btn-xs" ng-click="changeclick(@item.ID)" data-toggle="modal" data-target="#modal_info_building">
                                         Xem thông tin
                                     </button>
                                 </div>
@@ -279,7 +296,7 @@
                                         {
                                             foreach (var k in congtrinhs_null)
                                             {
-                                                if (k.Equals(item.MaCT))
+                                                if (k.Equals(item.ID))
                                                 {
                                                     d = 1;
                                                     break;
@@ -288,27 +305,28 @@
                                             //if d=0 ==> khong tim thay cong trinh null trong toan bo cong trinh user
                                             if (d == 0)
                                             {
-                                                <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ChiTiet_CongTrinh/@item.MaCT" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
+                                                <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ChiTiet_CongTrinh/@item.ID" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
                                             }
                                             else
                                             {
-                                                <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ThemHangMuc/@item.MaCT" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
+                                                <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ThemHangMuc/@item.ID" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
                                             }
                                         }
-                                        else
-                                        {
-                                            <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ThemHangMuc/@item.MaCT" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
+                                        else { 
+                                      
+                                            <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ThemHangMuc/@item.ID" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
                                         }
                                         <form method="post" name="formAdd" id="formAdd" ng-submit="submitForm()">
-                                            <input type="hidden" value="@item.MaCT" id="mact" />
-                                            <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/UpdateCongTrinh/@item.MaCT" target="_blank"><i class="fa fa-fw fa-edit" style="font-size:large"></i></a>
-                                            <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ExportToExcel/@item.MaCT"><i class="fa fa-fw fa-file-excel-o" style="font-size: initial"></i></a>
+                                            <input type="hidden" value="@item.ID" id="mact" />
+                                            <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/UpdateCongTrinh/@item.ID" target="_blank"><i class="fa fa-fw fa-edit" style="font-size:large"></i></a>
+                                            <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ExportToExcel/@item.ID"><i class="fa fa-fw fa-file-excel-o" style="font-size: initial"></i></a>
                                             <button type="submit" class="btn btn-danger btn_deleteproject" style="float:left;margin-left:20px"><i class="fa fa-fw fa-trash-o" style="font-size: initial"></i></button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </li>
+                    }
                     }
                     <!--// ket thuc vong lap ở đây-->
                 </ul>
@@ -323,10 +341,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
+                    <h4 class="modal-title">Thông tin công trình</h4>
                 </div>
-                <div class="modal-body">
-                    <p>Some text in the modal.</p>
+                <div class="modal-body" ng-repeat="data in chitiet">
+                    <p>Tên công trình:{{data.Name}}</p>
+                    <p>Địa chỉ:{{data.Address}}</p>
+                    <p>Mô tả:{{data.Description}}</p>
+                    <p>Giá:{{data.Sum}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

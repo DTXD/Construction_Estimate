@@ -57,7 +57,11 @@ namespace Du_Toan_Xay_Dung.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
+<<<<<<< HEAD
         public JsonResult getAllSheet(string buildingitem_id)
+=======
+        public JsonResult post_updatework(CongViec_User_ViewModel obj)
+>>>>>>> origin/Version_1
         {
             if (buildingitem_id != null)
             {

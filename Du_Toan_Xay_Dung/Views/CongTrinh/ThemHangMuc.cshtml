@@ -38,22 +38,21 @@
         <li><a href="/CongTrinh/ChiTiet_CongTrinh/?ID=@mact"><i class="fa fa-dashboard"></i>Hạng Mục</a></li>
         <li class="active">Thêm Hạng Mục</li>
     </ol>
-</section>
-<section class="content" ng-app="postApp" ng-controller="postController"  ng-init="hangmuc.MaCT='@mact'">
+</section><section class="content" ng-app="postApp" ng-controller="postController"  ng-init="hangmuc.Building_ID='@mact'">
     <div class="container body-content">
         <div class="row">
             <form class="form-horizontal" method="post">
-                <input type="hidden" id="MaCT" name="MaCT" ng-model="hangmuc.MaCT" />
+                <input type="hidden" id="MaCT" name="MaCT" ng-model="hangmuc.Building_ID" />
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="">Tên Hạng Mục:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" ng-model="hangmuc.TenHM" id="TenHM" name="TenHM" placeholder="Tên Hạng Mục" value="">
+                        <input type="text" class="form-control" ng-model="hangmuc.Name" id="TenHM" name="TenHM" placeholder="Tên Hạng Mục" value="">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="">Mô tả:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" ng-model="hangmuc.MoTa" id="MoTa" name="MoTa" placeholder="Mô tả" value="">
+                        <input type="text" class="form-control" ng-model="hangmuc.Description" id="MoTa" name="MoTa" placeholder="Mô tả" value="">
                     </div>
                 </div>
                 <div class="form-group">
