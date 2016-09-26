@@ -84,11 +84,10 @@
                 <div class="col-sm-12 treeview-menu" style="display:none">
                     <div>
                         <h4>Chọn Đơn Giá:</h4>
-                        <select>
-                            <option>Hồ Chí Minh</option>
-                            <option>Hà Nội</option>
-                            <option selected>Đơn giá của tôi</option>
-                        </select>
+                        <select name="change_unitprice" id="change_unitprice"
+                                ng-options="option.Name for option in unitprice.availableOptions track by option.ID"
+                                ng-model="unitprice.selectedOption"
+                                ng-change="change_price(unitprice.selectedOption.ID)"></select>
                     </div>
                 </div>
             </div>

@@ -3,13 +3,39 @@
 angular.module('app_work').controller('MaterialCtrl', ['$scope', '$http', 'dataService', function ($scope, $http, dataService) {
 
 
-
     $scope.materials = [];
-    var buildingitem_ID = angular.element("#txt_building_item").val();
+    var buildingItem_id = angular.element("#txt_building_item").val();
     var session_user = angular.element("#txt_session_user").val();
-    if (typeof (buildingitem_ID) != "undefined" && typeof (session_user) != "undefined") {
-        dataService.getAllSheet(buildingitem_ID).then(function (data) {
+
+
+    if (typeof (buildingItem_id) != "undefined" && typeof (session_user) != "undefined") {
+        dataService.getGroupbyResource(buildingItem_id).then(function (data) {
+
+            var d = 0;
             //load data saved of user
+            angular.forEach(data, function (value, key) {
+
+                var obj = {
+                    IndexSheet: d,
+                    Category: value.Category,
+                    Name: value.Name,
+                    Unit: value.Unit,
+                    Number: value.Number_Norm,
+                    Price: value.Price,
+                    Sum: parseFloat(value.Number) * parseFloat(value.Price),
+                    UnitPrice_ID: value.UnitPrice_ID,
+                    BuildingItem_ID: ""
+                };
+
+                $scope.materials.push(obj);
+                d = parseInt(d) + 1;
+
+            });
+
+            for (var i = d; i < 10; i++) {
+                $scope.materials.push({ IndexSheet: i });
+            }
+
         });
     }
     else {

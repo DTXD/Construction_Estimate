@@ -1,16 +1,82 @@
 ﻿'use strict';
 
-angular.module('app_work').controller('SpecificationCtrl', ['$scope', '$http', 'dataService', function ($scope, $http, dataService) {
+angular.module('app_work').controller('SpecificationCtrl', ['$scope', '$http', '$rootScope', 'dataService', function ($scope, $http, $rootScope, dataService) {
 
 
 
     $scope.specifications = [];
-    var buildingitem_ID = angular.element("#txt_building_item").val();
+
+
+    //check session and building id
+    var buildingItem_id = angular.element("#txt_building_item").val();
     var session_user = angular.element("#txt_session_user").val();
-    if (typeof (buildingitem_ID) != "undefined" && typeof (session_user) != "undefined") {
-        dataService.getAllSheet(buildingitem_ID).then(function (data) {
-            //load data saved of user
+
+    if (typeof (buildingItem_id) != "undefined" && typeof (session_user) != "undefined") {
+
+        var temp = [];
+        var d = 0;
+
+        dataService.getAllResource(buildingItem_id).then(function (resources) {
+            //console.log(works);
+            angular.forEach($rootScope.works, function (value, key) {
+
+                //each work
+                var regular_expression = /^\d+$/;
+                if (regular_expression.test(value.ID) && value.ID != null) {
+                    var obj_work = {
+                        IndexSheet: d,
+                        ID: value.ID,
+                        NormWork_ID: value.NormWork_ID,
+                        Name: value.Name,
+                        Unit: value.Unit,
+                        Number_Work: value.Area,
+                        Norm: "",
+                        Number_Resource: "",
+                        Price: value.Price,
+                        Category: "",
+                        Sum: "",
+                        BuildingItem_ID: ""
+                    };
+
+                    $scope.specifications.push(obj_work);
+                    d = parseInt(d) + 1;
+                }
+
+                //filter resource
+                temp = resources.filter(function (item) {
+                    return (item.UserWork_ID == value.ID);
+                });
+
+                //display resource
+                angular.forEach(temp, function (v, k) {
+                    var obj_resource = {
+                        IndexSheet: d,
+                        ID: value.ID,
+                        NormWork_ID: "",
+                        Name: v.Name,
+                        Unit: v.Unit,
+                        Number_Work: "",
+                        Norm: v.Number,
+                        Number_Resource: parseFloat(value.Area) * parseFloat(v.Number),
+                        Price: v.Price,
+                        Category: v.UnitPrice_ID.substring(0, 1),
+                        Sum: parseFloat(value.Area) * parseFloat(v.Number) * parseFloat(v.Price),
+                        BuildingItem_ID: ""
+                    };
+                    $scope.specifications.push(obj_resource);
+                    d = parseInt(d) + 1;
+                });
+
+
+            });
+
+            for (var i = d; i < 10; i++) {
+                $scope.specifications.push({ IndexSheet: i });
+            }
+
         });
+
+
     }
     else {
         //create sheet
@@ -20,6 +86,6 @@ angular.module('app_work').controller('SpecificationCtrl', ['$scope', '$http', '
     }
 
     //var works = dataService.getProperty();
-    
+    //user just change Norm, Price resource.
 
 }]);
