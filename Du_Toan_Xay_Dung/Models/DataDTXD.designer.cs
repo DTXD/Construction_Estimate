@@ -57,11 +57,6 @@ namespace Du_Toan_Xay_Dung.Models
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
-<<<<<<< HEAD
-    partial void InsertUserWork_Resource(UserWork_Resource instance);
-    partial void UpdateUserWork_Resource(UserWork_Resource instance);
-    partial void DeleteUserWork_Resource(UserWork_Resource instance);
-=======
     partial void InsertArea1(Area1 instance);
     partial void UpdateArea1(Area1 instance);
     partial void DeleteArea1(Area1 instance);
@@ -92,7 +87,9 @@ namespace Du_Toan_Xay_Dung.Models
     partial void InsertUserWork1(UserWork1 instance);
     partial void UpdateUserWork1(UserWork1 instance);
     partial void DeleteUserWork1(UserWork1 instance);
->>>>>>> origin/Version_1
+    partial void InsertUserWork_Resource(UserWork_Resource instance);
+    partial void UpdateUserWork_Resource(UserWork_Resource instance);
+    partial void DeleteUserWork_Resource(UserWork_Resource instance);
     #endregion
 		
 		public DataDTXDDataContext() : 
@@ -205,13 +202,6 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-<<<<<<< HEAD
-		public System.Data.Linq.Table<UserWork_Resource> UserWork_Resources
-		{
-			get
-			{
-				return this.GetTable<UserWork_Resource>();
-=======
 		public System.Data.Linq.Table<Area1> Area1s
 		{
 			get
@@ -297,7 +287,14 @@ namespace Du_Toan_Xay_Dung.Models
 			get
 			{
 				return this.GetTable<UserWork1>();
->>>>>>> origin/Version_1
+			}
+		}
+		
+		public System.Data.Linq.Table<UserWork_Resource> UserWork_Resources
+		{
+			get
+			{
+				return this.GetTable<UserWork_Resource>();
 			}
 		}
 	}
@@ -1374,11 +1371,9 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		private EntitySet<UserWork> _UserWorks;
 		
-<<<<<<< HEAD
-		private EntitySet<UserWork_Resource> _UserWork_Resources;
-=======
 		private EntitySet<UserWork1> _UserWork1s;
->>>>>>> origin/Version_1
+		
+		private EntitySet<UserWork_Resource> _UserWork_Resources;
 		
 		private EntityRef<Building> _Building;
 		
@@ -1403,11 +1398,8 @@ namespace Du_Toan_Xay_Dung.Models
 		public BuildingItem()
 		{
 			this._UserWorks = new EntitySet<UserWork>(new Action<UserWork>(this.attach_UserWorks), new Action<UserWork>(this.detach_UserWorks));
-<<<<<<< HEAD
-			this._UserWork_Resources = new EntitySet<UserWork_Resource>(new Action<UserWork_Resource>(this.attach_UserWork_Resources), new Action<UserWork_Resource>(this.detach_UserWork_Resources));
-=======
 			this._UserWork1s = new EntitySet<UserWork1>(new Action<UserWork1>(this.attach_UserWork1s), new Action<UserWork1>(this.detach_UserWork1s));
->>>>>>> origin/Version_1
+			this._UserWork_Resources = new EntitySet<UserWork_Resource>(new Action<UserWork_Resource>(this.attach_UserWork_Resources), new Action<UserWork_Resource>(this.detach_UserWork_Resources));
 			this._Building = default(EntityRef<Building>);
 			this._Building1 = default(EntityRef<Building1>);
 			OnCreated();
@@ -1530,18 +1522,6 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
-<<<<<<< HEAD
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BuildingItem_UserWork_Resource", Storage="_UserWork_Resources", ThisKey="ID", OtherKey="BuildingItem_ID")]
-		public EntitySet<UserWork_Resource> UserWork_Resources
-		{
-			get
-			{
-				return this._UserWork_Resources;
-			}
-			set
-			{
-				this._UserWork_Resources.Assign(value);
-=======
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BuildingItem_UserWork1", Storage="_UserWork1s", ThisKey="ID", OtherKey="BuildingItem_ID")]
 		public EntitySet<UserWork1> UserWork1s
 		{
@@ -1552,7 +1532,19 @@ namespace Du_Toan_Xay_Dung.Models
 			set
 			{
 				this._UserWork1s.Assign(value);
->>>>>>> origin/Version_1
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BuildingItem_UserWork_Resource", Storage="_UserWork_Resources", ThisKey="ID", OtherKey="BuildingItem_ID")]
+		public EntitySet<UserWork_Resource> UserWork_Resources
+		{
+			get
+			{
+				return this._UserWork_Resources;
+			}
+			set
+			{
+				this._UserWork_Resources.Assign(value);
 			}
 		}
 		
@@ -1656,164 +1648,28 @@ namespace Du_Toan_Xay_Dung.Models
 			entity.BuildingItem = null;
 		}
 		
-<<<<<<< HEAD
-		private void attach_UserWork_Resources(UserWork_Resource entity)
-=======
 		private void attach_UserWork1s(UserWork1 entity)
->>>>>>> origin/Version_1
 		{
 			this.SendPropertyChanging();
 			entity.BuildingItem = this;
 		}
 		
-<<<<<<< HEAD
-		private void detach_UserWork_Resources(UserWork_Resource entity)
-=======
 		private void detach_UserWork1s(UserWork1 entity)
->>>>>>> origin/Version_1
 		{
 			this.SendPropertyChanging();
 			entity.BuildingItem = null;
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Images_Url")]
-	public partial class Images_Url : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private long _Building_ID;
-		
-		private string _Url;
-		
-		private EntityRef<Building> _Building;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnBuilding_IDChanging(long value);
-    partial void OnBuilding_IDChanged();
-    partial void OnUrlChanging(string value);
-    partial void OnUrlChanged();
-    #endregion
-		
-		public Images_Url()
+		private void attach_UserWork_Resources(UserWork_Resource entity)
 		{
-			this._Building = default(EntityRef<Building>);
-			OnCreated();
+			this.SendPropertyChanging();
+			entity.BuildingItem = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
-		public long ID
+		private void detach_UserWork_Resources(UserWork_Resource entity)
 		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Building_ID", DbType="BigInt NOT NULL")]
-		public long Building_ID
-		{
-			get
-			{
-				return this._Building_ID;
-			}
-			set
-			{
-				if ((this._Building_ID != value))
-				{
-					if (this._Building.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnBuilding_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Building_ID = value;
-					this.SendPropertyChanged("Building_ID");
-					this.OnBuilding_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NVarChar(2000) NOT NULL", CanBeNull=false)]
-		public string Url
-		{
-			get
-			{
-				return this._Url;
-			}
-			set
-			{
-				if ((this._Url != value))
-				{
-					this.OnUrlChanging(value);
-					this.SendPropertyChanging();
-					this._Url = value;
-					this.SendPropertyChanged("Url");
-					this.OnUrlChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Building_Images_Url", Storage="_Building", ThisKey="Building_ID", OtherKey="ID", IsForeignKey=true)]
-		public Building Building
-		{
-			get
-			{
-				return this._Building.Entity;
-			}
-			set
-			{
-				Building previousValue = this._Building.Entity;
-				if (((previousValue != value) 
-							|| (this._Building.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-<<<<<<< HEAD
-=======
-					this._Price = value;
-					this.SendPropertyChanged("Price");
-					this.OnPriceChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
+			this.SendPropertyChanging();
+			entity.BuildingItem = null;
 		}
 	}
 	
@@ -1930,7 +1786,6 @@ namespace Du_Toan_Xay_Dung.Models
 							|| (this._Building.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
->>>>>>> origin/Version_1
 					if ((previousValue != null))
 					{
 						this._Building.Entity = null;

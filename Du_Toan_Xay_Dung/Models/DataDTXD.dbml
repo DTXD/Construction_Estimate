@@ -58,11 +58,8 @@
       <Column Name="Description" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
       <Column Name="Sum" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
       <Association Name="BuildingItem_UserWork" Member="UserWorks" ThisKey="ID" OtherKey="BuildingItem_ID" Type="UserWork" />
-<<<<<<< HEAD
       <Association Name="BuildingItem_UserWork_Resource" Member="UserWork_Resources" ThisKey="ID" OtherKey="BuildingItem_ID" Type="UserWork_Resource" />
-=======
       <Association Name="BuildingItem_UserWork1" Member="UserWork1s" ThisKey="ID" OtherKey="BuildingItem_ID" Type="UserWork1" />
->>>>>>> origin/Version_1
       <Association Name="Building_BuildingItem" Member="Building" ThisKey="Building_ID" OtherKey="ID" Type="Building" IsForeignKey="true" />
       <Association Name="Building1_BuildingItem" Member="Building1" ThisKey="Building_ID" OtherKey="ID" Type="Building1" IsForeignKey="true" />
     </Type>
