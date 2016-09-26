@@ -6,10 +6,10 @@
     ViewBag.Title = "ChiTiet_CongTrinh";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script>
     angular.module('postApp', [])
      .controller('postController', ['$scope', '$http','$filter', function ($scope, $http, $filter) {
+         $scope.alert = false;
          //load list hangmuc
          $scope.list_hangmuc = [];
          $http.get('/CongTrinh/Get_AllHangMuc').then(function (response) {
@@ -24,19 +24,22 @@
              $scope.items = $filter('filter')($scope.list_hangmuc, value);
          };
 
+         // array after search
+         $scope.search = function (value) {
+             $scope.items = $filter('filter')($scope.items, value);
+         }
 
          //delete hang muc
          $scope.itemList = [];
-         $scope.submitForm = function () {
-             var hoi = confirm("Bạn có chắc chắn muốn xóa hạng mục này");
-             if (hoi == true) {
-                 if ($scope.formAdd.$valid) {
-                     var mahm = document.getElementById("mahm").value;
-                     var mact = document.getElementById("mact").value;
-                     console.log(mahm);
+         $scope.xoa = function () {
+             //var hoi = confirm("Bạn có chắc chắn muốn xóa hạng mục này");
+             //if (hoi == true) {
+                 var mahm = $scope.MaHM;
+                     //var mact = document.getElementById("mact").value;
+                     //console.log(mahm);
                      var postdata = {
                          ID: mahm,
-                         Building_ID: mact
+                         //Building_ID: mact
                      };
                      $http({
                          method: 'POST',
@@ -46,8 +49,8 @@
                      })
                          .success(function (result) {
                              if (result == "ok") {
-                                 alert("Xóa thành công");
-                                 window.location.href = "/CongTrinh/ChiTiet_CongTrinh/@congtrinh.ID";
+                                 var x = document.getElementById("alertxoa");
+                                 x.style.display = "block";
                              }
                              else {
                                  alert("Xảy ra lỗi");
@@ -55,88 +58,347 @@
 
 
                          });
-                 }
+                 
+             
+         };
+         // thêm hạng mục
+         $scope.submit = function () {
+             var fd = new FormData();
+             if ($scope.add.$valid) {
+                 var mact = document.getElementById("MaCT").value;
+                 var tenhm = document.getElementById("TenHM").value;
+                 var mota = document.getElementById("MoTa").value;
+                 fd.append("Building_ID", mact);
+                 fd.append("Name", tenhm);
+                 fd.append("Description", mota);  
+                 $http.post('/CongTrinh/post_themhangmuc', fd, {
+                     transformRequest: angular.identity,
+                     headers: { 'Content-Type': undefined }
+                 })
+                   .success(function (result) {
+                       if (result == "error") {
+                           alert("Xảy ra lỗi");
+                           return;
+                       } else {
+                           var x = document.getElementById("alert");
+                           x.style.display = "block";
+
+                       }
+                   });
              }
          };
+         $scope.return = function ()
+         {
+             window.location.href = "/CongTrinh/ChiTiet_CongTrinh/@congtrinh.ID";
 
+         };
+     
+       //load list  chi tiết hạng mục
+       $scope.list_thongtin = [];
+    $http.get('/CongTrinh/Get_Allinf1').then(function (response) {
+        $scope.list_thongtin = response.data;
+    }, function (response) {
+        //Showing errors
+    });
+    //array did filter
+    $scope.chitiet = [];
+    $scope.changeclick = function (data) {
+        $scope.chitiet = $filter('filter')($scope.list_thongtin, data.ID);
+        $scope.MaHM = $scope.chitiet[0].ID;
+        $scope.Description = $scope.chitiet[0].Description;
+        $scope.Name = $scope.chitiet[0].Name;
+        $scope.Sum = $scope.chitiet[0].Sum;
+    };
+         // lấy dữ liệu phục vụ cho việc xóa
+    $scope.laydulieu = function (data) {
+        $scope.chitiet = $filter('filter')($scope.list_thongtin, data.ID);
+        $scope.MaHM = $scope.chitiet[0].ID;
+    };
+         // sửa hạng mục
+    $scope.modify = function () {
+        var fd1 = new FormData();
+            var mahm =$scope.MaHM;
+            var tenhm = $scope.Name;
+            var mota = $scope.Description;
+            var gia = $scope.Sum;
+            fd1.append("ID", mahm);
+            fd1.append("Name", tenhm);
+            fd1.append("Description", mota);
+            fd1.append("Sum", gia);
+            $http.post('/CongTrinh/post_updatehangmuc', fd1, {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            })
+              .success(function (result) {
+                  if (result == "error") {
+                      alert("Xảy ra lỗi");
+                      return;
+                  } else {
+                      var x = document.getElementById("alert");
+                      x.style.display = "block";
+
+                  }
+              });
+        
+    };
+       
      }]);
 </script>
-<section class="content-header">
-    <ol class="breadcrumb">
-        <li><a href="/CongTrinh/Index"><i class="fa fa-dashboard"></i>Công Trình</a></li>
-        <li class="active">Hạng Mục</li>
-    </ol>
-</section>
-
 <section class="content" ng-app="postApp" ng-controller="postController">
-    <select ng-model="hangmucfilter" ng-change="change_select(hangmucfilter)" class="selectpicker" data-width="200px">
-        @if(CongTrinhs!=null && HangMucs_IdCT.Count!=0)
-        { 
-        foreach (var item in CongTrinhs)
-        {
-            if (item.ID.Equals(HangMucs_IdCT.First().Building_ID))
-            {
-                <option value="@item.ID" selected>@item.Name</option>
-            }
-            else
-            {
-                <option value="@item.ID">@item.Name</option>
-            }
-        }
-        }
-    </select>
-    <br /><br />
-    <div class="col-lg-12">
-        <a class="btn btn-primary" id="btn_themhm" href="/CongTrinh/ThemHangMuc/@congtrinh.ID"><i class="fa fa-fw fa-plus"></i>Thêm Hạng Mục</a>
-    </div>
-    <div id="container" class="container" style="margin-top:100px">
-        <form method="post" name="formAdd" id="formAdd" ng-submit="submitForm()">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Hạng Mục</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body no-padding">
-                    <table class="table table-condensed">
-                        <tbody>
-                            <tr>
-                                <th style="width: 50px">#</th>
-                                <th style="width: 250px">Tên</th>
-                                <th style="width: 250px">Mô Tả</th>
-                                <th style="width: 80px">Giá</th>
-                                <th colspan="3"></th>
-                            </tr>
-                            <tr ng-repeat="data in items">
-                                <td></td>
-                                <td>{{data.Name}}</td>
-                                <td>{{data.Description}}</td>
-                                <td>{{data.Sum}}</td>
-                                <td>
-                                    <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/CongTrinh/UpdateHangMuc/?ID={{data.ID}}" target="_blank">
-                                        <i class="fa fa-edit"></i>Sửa
-                                    </a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/HangMuc/Index/?ID={{data.ID}}" target="_blank">
-                                        <i class="fa fa-edit"></i>Dự Toán
-                                    </a>
-                                </td>
-                                <td>
-                                    <input type="hidden" name="mahm" id="mahm" ng-model="hangmuc.ID" value="{{data.ID}}" />
-                                    <input type="hidden" name="mact" id="mact" value="{{data.Building_ID}}" />
-                                    <button type="submit" class="btn btn-danger btn-flat btn-xs">
-                                        <i class="fa fa-edit">
-                                            Xóa
-                                        </i>
-                                    </button>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
+    <div class="row">
+        <div class="col-xs-12 col-sm-10">
+            <h3>Hạng mục <small class="label label-info">List</small></h3>
+            <div style="float:right">
+                <h4>Chọn công trình</h4>
+                <select ng-model="hangmucfilter" ng-change="change_select(hangmucfilter)" class="selectpicker" data-width="200px">
+                    @if (CongTrinhs != null && HangMucs_IdCT.Count != 0)
+                    {
+                        foreach (var item in CongTrinhs)
+                        {
+                            if (item.ID.Equals(HangMucs_IdCT.First().Building_ID))
+                            {
+                                <option value="@item.ID" selected>@item.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
+                        }
+                    }
+                </select>
                 </div>
-            </div>
-        </form>
+        </div>
+        </div> 
+    <div class="row">
+        <div class="col-xs-12 col-sm-10">
+            <form class="form-horizontal">
+                <div class="row font-orbitron">
+                    <div id="myTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap4">
+                        <div class="row">
+                        <div class="col-md-6">
+                            <div class="dataTables_length" id="myTable_length">
+                            <label>Tìm kiếm:<input type="search" ng-model="data" ng-change="search(data)" class="form-control input-sm" placeholder="" aria-controls="myTable"></label></div>
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="myTable" class="table table-striped table-bordered table-hover dataTable" role="grid" aria-describedby="myTable_info">
+                                    <thead>
+                                        <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 8px;">#</th><th class="sorting" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" aria-label="Danh mục: activate to sort column ascending" style="width: 790px;">Danh mục</th><th class="sorting" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" aria-label="Controls: activate to sort column ascending" style="width: 59px;">Điều khiễn</th></tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr><th rowspan="1" colspan="1">#</th><th rowspan="1" colspan="1">Danh mục</th><th rowspan="1" colspan="1">Điều khiển</th></tr>
+                                    </tfoot>
+                                    <tbody>
+
+
+                                        <!--                                    ket thuc vong lap-->
+                                        <tr role="row" class="odd" ng-repeat="data in items">
+                                            <td></td>
+                                            <td>
+                                                <div class="media font-arial">
+                                                    <div class="media-body">
+                                                        <h2 class="media-heading text-info font-telegrafico"><a href="#" class="underline-none">{{data.Name}}</a></h2>
+                                                        <p class="text-danger">Giá tiền: <small class="badge font-orbitron">{{data.Sum}}</small></p>
+                                                        <small class="text-default">{{data.Description}}</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td class="center">
+                                                <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" ng-click="changeclick(data)" data-placement="top" data-toggle="modal" data-target="#modal_modify_buildingitem">
+                                                    <i class="fa fa-edit"></i>Sửa
+                                                </a><br /><br />
+                                                <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/HangMuc/Index/?ID={{data.MaHM}}" target="_blank">
+                                                    <i class="fa fa-edit"></i>Dự Toán
+                                                </a><br /><br />
+                                                <button data-toggle="modal" ng-click="laydulieu(data)" data-target="#myModal" class="btn btn-danger btn-flat btn-xs">
+                                                    <i class="fa fa-edit">
+                                                        Xóa
+                                                    </i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--                    finish form-->
+        </div>
+        <!--                scroll here-->
+        <div id="myscroll" class="col-xs-12 col-sm-2" data-toggle="modal" data-target="#modal_add_buildingitem">
+            <ul class="nav nav-pills nav-stacked affix">
+                <li class="active">
+                    <a href="#"><i class="fa fa-plus"></i>Thêm</a>
+                </li>
+            </ul>
+        </div>
     </div>
     <!-- /.box-body -->
+    <div class="modal fade" id="modal_add_buildingitem" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">THÊM HẠNG MỤC</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form id="add" name="add" class="form-horizontal" role="form" method="post">
+                            <div class="form-group" style="margin-right:20px">
+                                <input type="hidden" id="MaCT" value="@congtrinh.ID" />
+                                <label class="control-label col-sm-2" for="">Tên hạng mục:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" ng-model="hangmuc.Name" class="form-control" id="TenHM" name="TenHM" placeholder="Tên hạng mục">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-right:20px">
+                                <label class="control-label col-sm-2" for="">Mô tả:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" ng-model="hangmuc.Description" id="MoTa" name="MoTa" placeholder="Mô tả">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-4 col-sm-4">
+                                    <button type="button" class="btn btn-block btn-primary btn-lg" id="btn_submit" ng-click="submit()">Lưu</button>
+                                </div>
+                            </div>
+                       </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="modal_modify_buildingitem" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">SỬA HẠNG MỤC</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row" ng-repeat="data in chitiet">
+                                <input type="hidden" ng-model="MaHM" id="MaHM" name="MaHM" />
+
+                                <label class="control-label col-sm-2" for="" style="width:200px">Tên hạng mục:</label>
+                                <input type="text" ng-model="Name" style="width:500px;margin-left:50px" class="form-control" placeholder="Tên hạng mục">
+                        <br />
+                                <label class="control-label col-sm-2" for="">Mô tả:</label>
+                                <input type="text" style="width:500px;margin-left:50px" class="form-control" ng-model="Description" placeholder="Mô tả">
+                        <br />
+                           
+                          
+                                <label class="control-label col-sm-2" for="">Giá:</label>
+                                    <input style="width:500px;margin-left:50px" type="text" class="form-control"  ng-model="Sum" placeholder="Mô tả">
+                            <br /><br />
+                            <div class="form-group">
+                                <div class="col-sm-offset-4 col-sm-4">
+                                    <button type="button" class="btn btn-block btn-primary btn-lg" id="btn_submit" ng-click="modify()">Lưu</button>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div id="myModal" class="modal font-arial">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <input type="hidden"  ng-model="MaHM"/>
+                <!--header-->
+                <div class="modal-header bg-danger">
+                    <!--title-->
+                    <div class="modal-title">
+                        <h4 class="text-danger">Chấp nhận xóa?</h4>
+                    </div>
+                </div>
+                <!--body-->
+                <div class="modal-body">
+                    <!--alert message research-->
+                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                        <h4>Lưu ý:</h4>
+                        <p>
+                            Xin vui lòng suy nghĩ kỹ trước khi xóa.
+                            Việc xóa bỏ sẽ không thể khôi phục bạn chắc chứ?
+                        </p>
+                    </div>
+                </div>
+                <!--footer-->
+                <div class="modal-footer">
+                    <a class="btn btn-danger" data-dismiss="modal" ng-click="xoa()">Đồng ý</a>
+                    <a class="btn btn-default" data-dismiss="modal">Hủy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="alert" class="modal font-arial">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <input type="hidden" ng-model="MaHM" />
+                <!--header-->
+                <div class="modal-header bg-danger">
+                    <!--title-->
+                    <div class="modal-title">
+                        <h4 class="text-danger">Thông báo</h4>
+                    </div>
+                </div>
+                <!--body-->
+                <div class="modal-body">
+                    <!--alert message research-->
+                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                        <p>
+                            Lưu thành công. Click "Đồng Ý" để tiếp tục
+                        </p>
+                    </div>
+                </div>
+                <!--footer-->
+                <div class="modal-footer">
+                    <a class="btn btn-danger" data-dismiss="modal" ng-click="return()">Đồng ý</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="alertxoa" class="modal font-arial">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <input type="hidden" ng-model="MaHM" />
+                <!--header-->
+                <div class="modal-header bg-danger">
+                    <!--title-->
+                    <div class="modal-title">
+                        <h4 class="text-danger">Thông báo</h4>
+                    </div>
+                </div>
+                <!--body-->
+                <div class="modal-body">
+                    <!--alert message research-->
+                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                        <p>
+                            Xóa thành công. Click "Đồng Ý" để tiếp tục
+                        </p>
+                    </div>
+                </div>
+                <!--footer-->
+                <div class="modal-footer">
+                    <a class="btn btn-danger" data-dismiss="modal" ng-click="return()">Đồng ý</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 

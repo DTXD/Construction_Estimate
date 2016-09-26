@@ -7,7 +7,15 @@ namespace Du_Toan_Xay_Dung.Models
 {
     public class DetailNormWork_PriceViewModel
     {
+        private NormDetail i;
+
         public DetailNormWork_PriceViewModel() {}
+
+        public DetailNormWork_PriceViewModel(NormDetail i)
+        {
+            // TODO: Complete member initialization
+            this.i = i;
+        }
         public string Key_NormWork { get; set; }
         public string Key_Material { get; set; }
         public decimal Number { get; set; }
