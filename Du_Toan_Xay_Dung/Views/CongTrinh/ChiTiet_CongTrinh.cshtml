@@ -1,8 +1,7 @@
 ﻿@using Du_Toan_Xay_Dung.Models
 @{
     var CongTrinhs = ViewData["List_CongTrinh"] as List<BuildingViewModel>;
-    var congtrinh = ViewData["CongTrinh_Detail"] as BuildingViewModel;
-    var HangMucs_IdCT = ViewData["List_HangMuc_IdCT"] as List<HangMucViewModel>;
+    var HangMucs_IdCT = ViewData["List_CongTrinh"] as List<HangMucViewModel>;
     ViewBag.Title = "ChiTiet_CongTrinh";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -31,15 +30,10 @@
 
          //delete hang muc
          $scope.itemList = [];
-         $scope.xoa = function () {
-             //var hoi = confirm("Bạn có chắc chắn muốn xóa hạng mục này");
-             //if (hoi == true) {
-                 var mahm = $scope.MaHM;
-                     //var mact = document.getElementById("mact").value;
-                     //console.log(mahm);
+         $scope.xoa = function () {         
+                 var mahm = $scope.MaHM;      
                      var postdata = {
                          ID: mahm,
-                         //Building_ID: mact
                      };
                      $http({
                          method: 'POST',
@@ -89,7 +83,7 @@
          };
          $scope.return = function ()
          {
-             window.location.href = "/CongTrinh/ChiTiet_CongTrinh/@congtrinh.ID";
+             window.location.href = "/CongTrinh/ChiTiet_CongTrinh";
 
          };
      
@@ -110,7 +104,7 @@
         $scope.Sum = $scope.chitiet[0].Sum;
     };
          // lấy dữ liệu phục vụ cho việc xóa
-    $scope.laydulieu = function (data) {
+        $scope.laydulieu = function (data) {
         $scope.chitiet = $filter('filter')($scope.list_thongtin, data.ID);
         $scope.MaHM = $scope.chitiet[0].ID;
     };
@@ -147,23 +141,15 @@
 <section class="content" ng-app="postApp" ng-controller="postController">
     <div class="row">
         <div class="col-xs-12 col-sm-10">
-            <h3>Hạng mục <small class="label label-info">List</small></h3>
+            <h3>Hạng mục <small class="label label-info">Danh sách</small></h3>
             <div style="float:right">
                 <h4>Chọn công trình</h4>
                 <select ng-model="hangmucfilter" ng-change="change_select(hangmucfilter)" class="selectpicker" data-width="200px">
-                    @if (CongTrinhs != null && HangMucs_IdCT.Count != 0)
-                    {
-                        foreach (var item in CongTrinhs)
+                    
+                        @foreach (var item in CongTrinhs)
                         {
-                            if (item.ID.Equals(HangMucs_IdCT.First().Building_ID))
-                            {
+                           
                                 <option value="@item.ID" selected>@item.Name</option>
-                            }
-                            else
-                            {
-                                <option value="@item.ID">@item.Name</option>
-                            }
-                        }
                     }
                 </select>
                 </div>
@@ -351,16 +337,16 @@
             <div class="modal-content">
                 <input type="hidden" ng-model="MaHM" />
                 <!--header-->
-                <div class="modal-header bg-danger">
+                <div class="modal-header bg-aqua" style="background-color:green;">
                     <!--title-->
                     <div class="modal-title">
-                        <h4 class="text-danger">Thông báo</h4>
+                        <h4 class="text-info">Thông báo</h4>
                     </div>
                 </div>
                 <!--body-->
-                <div class="modal-body">
+                <div class="modal-body" style="background-color:aliceblue">
                     <!--alert message research-->
-                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <div class="alert alert-success alert-dismissible fade in" role="alert">
                         <p>
                             Lưu thành công. Click "Đồng Ý" để tiếp tục
                         </p>
@@ -368,7 +354,7 @@
                 </div>
                 <!--footer-->
                 <div class="modal-footer">
-                    <a class="btn btn-danger" data-dismiss="modal" ng-click="return()">Đồng ý</a>
+                    <a class="btn btn-info" data-dismiss="modal" ng-click="return()">Đồng ý</a>
                 </div>
             </div>
         </div>
@@ -378,16 +364,16 @@
             <div class="modal-content">
                 <input type="hidden" ng-model="MaHM" />
                 <!--header-->
-                <div class="modal-header bg-danger">
+                <div class="modal-header bg-aqua">
                     <!--title-->
                     <div class="modal-title">
                         <h4 class="text-danger">Thông báo</h4>
                     </div>
                 </div>
                 <!--body-->
-                <div class="modal-body">
+                <div class="modal-body" style="background-color:blue">
                     <!--alert message research-->
-                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <div class="alert alert-success alert-dismissible fade in" role="alert">
                         <p>
                             Xóa thành công. Click "Đồng Ý" để tiếp tục
                         </p>
@@ -395,7 +381,7 @@
                 </div>
                 <!--footer-->
                 <div class="modal-footer">
-                    <a class="btn btn-danger" data-dismiss="modal" ng-click="return()">Đồng ý</a>
+                    <a class="btn btn-info" data-dismiss="modal" ng-click="return()">Đồng ý</a>
                 </div>
             </div>
         </div>

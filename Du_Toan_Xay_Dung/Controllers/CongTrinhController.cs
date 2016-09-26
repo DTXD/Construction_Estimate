@@ -49,11 +49,10 @@ namespace Du_Toan_Xay_Dung.Controllers
         }
         */
         [PageLogin]
-        public ActionResult ChiTiet_CongTrinh(string Id)
+        public ActionResult ChiTiet_CongTrinh()
         {
             ViewData["List_CongTrinh"] = _db.Buildings.Where(i => i.Email.Equals(SessionHandler.User.Email)).Select(i => new BuildingViewModel(i)).ToList();
-            ViewData["CongTrinh_Detail"] = _db.Buildings.Where(i => i.ID.Equals(Id)).Select(i => new BuildingViewModel(i)).FirstOrDefault();
-            ViewData["List_HangMuc_IdCT"] = _db.BuildingItems.Where(i => i.Building_ID.Equals(Id)).Select(i => new HangMucViewModel(i)).ToList();
+            ViewData["List_HangMuc"] = _db.BuildingItems.Select(i => new HangMucViewModel(i)).ToList();
 
             return View();
         }

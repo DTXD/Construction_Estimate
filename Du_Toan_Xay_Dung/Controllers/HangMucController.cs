@@ -57,12 +57,15 @@ namespace Du_Toan_Xay_Dung.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getAllSheet(string buildingitem_id) { }
+        public JsonResult getAllSheet(string buildingitem_id)
+        {
+            return Json("gddg");
+        }
         public JsonResult post_updatework(CongViec_User_ViewModel obj)
         {
-            if (buildingitem_id != null)
+            if (obj.BuildingItem_ID != null)
             {
-                var sheet = _db.UserWorks.Where(i => i.BuildingItem_ID.Equals(buildingitem_id)).Select(i => new UserWorkViewModel(i)).ToList();
+                var sheet = _db.UserWorks.Where(i => i.BuildingItem_ID.Equals(obj.BuildingItem_ID)).Select(i => new UserWorkViewModel(i)).ToList();
                 return Json(sheet, JsonRequestBehavior.AllowGet);
             }
             else

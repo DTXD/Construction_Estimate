@@ -14,7 +14,7 @@ namespace Du_Toan_Xay_Dung.Models
         {
             
             BuildingItem_ID = obj.BuildingItem_ID;
-            ID = obj.ID;
+            ID = Convert.ToInt64(obj.ID);
             NormWork_ID = obj.NormWork_ID;
             Name = obj.Name;
             Unit = obj.Unit;
