@@ -8,7 +8,7 @@ namespace Du_Toan_Xay_Dung.Models
     public class AreaViewModel
     {
         public AreaViewModel() { }
-        public AreaViewModel(AreaViewModel obj)
+        public AreaViewModel(Area obj)
         {
             ID = obj.ID;
             Name = obj.Name;

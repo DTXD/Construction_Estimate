@@ -30,7 +30,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetDetailNormWork_Price()
+        public JsonResult GetDetailNormWork_Price(string area_id)
         {
             var list = _db.NormDetails.Join(_db.UnitPrices, nd => nd.UnitPrice_ID, up => up.ID, (nd, up) => new
             {
@@ -41,7 +41,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 {
                     UnitPrices = up,
                     UnitPrice_Areas = upa
-                })
+                }).Where(i=>i.UnitPrice_Areas.Area_ID.Equals(area_id))
                     .Select(s => new
                     {
                         Key_NormWork = s.UnitPrices.NormDetails.NormWork_ID,
@@ -51,22 +51,15 @@ namespace Du_Toan_Xay_Dung.Controllers
                         Name_Material = s.UnitPrices.UnitPrices.Name,
                         Price = s.UnitPrice_Areas.Price
                     });
-
-
-
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-<<<<<<< HEAD
-        public JsonResult getAllSheet(string buildingitem_id)
-=======
-        public JsonResult post_updatework(CongViec_User_ViewModel obj)
->>>>>>> origin/Version_1
+        public JsonResult getAllSheets(string buildingitem_id)
         {
             if (buildingitem_id != null)
             {
-                var sheet = _db.UserWorks.Where(i => i.BuildingItem_ID.Equals(buildingitem_id)).Select(i => new UserWorkViewModel(i)).ToList();
-                return Json(sheet, JsonRequestBehavior.AllowGet);
+                var sheets = _db.UserWorks.Where(i => i.BuildingItem_ID.Equals(buildingitem_id)).Select(i => new UserWorkViewModel(i)).ToList();
+                return Json(sheets, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -74,11 +67,50 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
         }
 
+        public JsonResult getAllResources(string buildingitem_id)
+        {
+            if (buildingitem_id != null)
+            {
+                var resources = _db.UserWork_Resources.Where(i => i.BuildingItem_ID.Equals(buildingitem_id)).Select(i => new UserWorkResourceViewModel(i)).ToList();
+                return Json(resources, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("error", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult getGroupbyResource(string buildingitem_id)
+        {
+            if (buildingitem_id != null)
+            {
+                var resources = _db.UserWork_Resources.GroupBy(i => i.UnitPrice_ID).Select(i => new UserWorkResourceViewModel
+                {
+                    UnitPrice_ID = i.First().UnitPrice_ID,
+                    Name = i.First().Name,
+                    Unit = i.First().Unit,
+                    Number_Norm = i.Sum(c => c.Number_Norm),
+                    Price = i.First().Price,
+                });
+                return Json(resources, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("error", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetArea_Price()
+        {
+            var list = _db.Areas.Select(i => new AreaViewModel(i)).ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult post_updatework(UserWorkViewModel model)
         {
             try
             {
-                if (model.BuildingItem_ID != null)
+                if (model.BuildingItem_ID != 0)
                 {
                     var work = _db.UserWorks.FirstOrDefault(i => i.IndexSheet.Equals(model.IndexSheet));
                     if (work != null)
@@ -133,7 +165,7 @@ namespace Du_Toan_Xay_Dung.Controllers
         {
             try
             {
-                if (list[0].BuildingItem_ID != null)
+                if (list[0].BuildingItem_ID != 0)
                 {
                     foreach (var item in list)
                     {
@@ -143,7 +175,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                         ewr.UnitPrice_ID = item.UnitPrice_ID;
                         ewr.Name = item.Name;
                         ewr.Unit = item.Unit;
-                        ewr.Numbers = item.Number;
+                        ewr.Number_Norm = item.Number_Norm;
                         ewr.Price = item.Price;
                         _db.UserWork_Resources.InsertOnSubmit(ewr);
                     }

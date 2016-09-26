@@ -7,17 +7,13 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
     getNormWorks();
 
     //
+    $scope.checked = [];
+    //
     $scope.listResource = [];
     /*
     $scope.list_AllPrice = [];
     getListPrice();
     */
-
-    $scope.ListDetailNormWork_Price = [];
-    GetDetailNormWork_Price();
-
-
-
 
     //data searched
     $scope.list_searched = [];
@@ -47,20 +43,13 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
         });
     };
 
-    function GetDetailNormWork_Price() {
-        dataService.GetDetailNormWork_Price().then(function (data) {
-            $scope.ListDetailNormWork_Price = data;
-        });
-    };
+    
 
-
-
-
-    //create list works
+    //check session and building id
     var buildingItem_id = angular.element("#txt_building_item").val();
     var session_user = angular.element("#txt_session_user").val();
 
-
+    //create list works
     for (var i = 0; i < 10; i++) {
         var item = {
             IndexSheet: i,
@@ -92,6 +81,7 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
                 $rootScope.works[value.IndexSheet].ID = value.ID;
                 $rootScope.works[value.IndexSheet].NormWork_ID = value.NormWork_ID;
                 $rootScope.works[value.IndexSheet].Name = value.Name;
+                $rootScope.works[value.IndexSheet].Unit = value.Unit;
                 $rootScope.works[value.IndexSheet].Number = value.Number;
                 $rootScope.works[value.IndexSheet].Horizontal = value.Horizontal;
                 $rootScope.works[value.IndexSheet].Vertical = value.Vertical;
@@ -105,6 +95,11 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
                 $rootScope.works[value.IndexSheet].SumMachine = value.SumMachine;
                 $rootScope.works[value.IndexSheet].BuildingItem_ID = value.BuildingItem_ID;
                 $rootScope.works[value.IndexSheet].Sub_BuildingItem_ID = value.Sub_BuildingItem_ID;
+
+                var regular_expression = /^\d+$/;
+                if (regular_expression.test(value.ID)) {
+                    index_work = parseInt(index_work) + 1;
+                }
             });
         });
     }
@@ -142,49 +137,38 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
     $scope.No = -1;
     $scope.subcategory;
     $scope.focus = function (value_focus, $event) {
-        //focus and get id sheet
-        var div = angular.element($event.currentTarget).parent().parent();
-        var id = div.find(".column_header input").val();
-        //check if No get input changed and No != id
-        if ($scope.No != -1 && $scope.No != id) {
+        if (typeof (buildingItem_id) != "undefined" && typeof (session_user) != "undefined") {
+            //focus and get id sheet
+            var div = angular.element($event.currentTarget).parent().parent();
+            var id = div.find(".column_header input").val();
+            //check if No get input changed and No != id
+            if ($scope.No != -1 && $scope.No != id) {
 
-            //save to db
-            //check if ID ==null vaf Area ==null ==> Subcategory
-            if ($rootScope.works[$scope.No].ID == "" && $rootScope.works[$scope.No].Area == "" && $rootScope.works[$scope.No].Name != "") {
-                $scope.subcategory = $scope.No;
-                SaveWorktoDatabase($rootScope.works[$scope.No]);
+                //save to db
+                //check if ID ==null vaf Area ==null ==> Subcategory
+                if ($rootScope.works[$scope.No].ID == "" && $rootScope.works[$scope.No].Area == "" && $rootScope.works[$scope.No].Name != "") {
+                    $scope.subcategory = $scope.No;
+                    SaveWorktoDatabase($rootScope.works[$scope.No]);
+                }
+                if ($rootScope.works[$scope.No].ID != "") {
+                    $rootScope.works[$scope.No].Sub_BuildingItem_ID = $scope.subcategory;
+                    SaveWorktoDatabase($rootScope.works[$scope.No]);
+                }
+                //....
+                $scope.No = -1;
             }
-            if ($rootScope.works[$scope.No].ID != "") {
-                $rootScope.works[$scope.No].Sub_BuildingItem_ID = $scope.subcategory;
-                SaveWorktoDatabase($rootScope.works[$scope.No]);
-            }
-            //....
-            $scope.No = -1;
+            $scope.blur = function (value_blur) {
+                //check input changed
+                if (value_focus != value_blur) {
+                    //changed put indexsheet to $scope.No
+                    $scope.No = id;
+                }
+            };
         }
-        $scope.blur = function (value_blur) {
-            //check input changed
-            if (value_focus != value_blur) {
-                //changed put indexsheet to $scope.No
-                $scope.No = id;
-            }
-        };
-    };
-
-    /*
-    $scope.save_work = function () {
-        var item = {
-            "ID": "2",
-            "NormWork_ID": "AA.000",
-            "Name": "name",
-            "Unit": "unit"
-        };
-        var d=3;
-        $rootScope.works.splice(d, 0, item);
-        for (var i = d; i < $rootScope.works.length; i++) {
-            $rootScope.works[i].IndexSheet = i;
+        else {
+            angular.element("#Message_saved").text("Bạn chưa đăng nhập...!!!");
         }
     };
-    */
 
     //hide div popup
     $scope.popupsearch = false;
@@ -202,6 +186,7 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
         };
         $scope.popupsearchclass = 'popupsearch';
 
+
         //change content button when list == null
         var btn_save = angular.element(document.querySelector("#btn_search_normwork"));
         if ($scope.list_searched.length == 0) {
@@ -214,7 +199,8 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
     };
 
     //Amazing code: checked and copy list data to listsearch and calculate price
-    $scope.checkbox_search = function (x) {
+    $scope.checkbox_search = function (x, $index) {
+
         var btn_save = angular.element(document.querySelector("#btn_search_normwork"));
         var d = $scope.list_searched.indexOf(x);
 
@@ -230,6 +216,9 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
                     i--;
                 }
             };
+
+            $scope.checked.splice($scope.checked.indexOf($index), 1);
+
         }
         else {
 
@@ -239,7 +228,7 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
             var pricemachine = 0;
 
             //should use filter array..................
-            angular.forEach($scope.ListDetailNormWork_Price, function (value, key) {
+            angular.forEach($rootScope.ListDetailNormWork_Price, function (value, key) {
                 if (x.ID == value.Key_NormWork) {
                     if (value.Key_Material.substring(0, 1) == "N") {
                         pricematerial = parseFloat(pricematerial + (value.Number * value.Price));
@@ -259,7 +248,7 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
                         UnitPrice_ID: value.Key_Material,
                         Name: value.Name_Material,
                         Unit: value.Unit,
-                        Number: value.Number,
+                        Number_Norm: value.Number,
                         Price: value.Price,
                     };
                     $scope.listResource.push(item_resource);
@@ -269,6 +258,10 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
             x.pricelabor = pricelabol.toFixed(3);
             x.pricemachine = pricemachine.toFixed(3);
             $scope.list_searched.push(x);
+
+            //push index to list checked
+
+            $scope.checked.push($index);
         }
 
         //change content button when list != null
@@ -279,10 +272,14 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
             btn_save.text("Thoát");
         }
 
-        console.log($scope.listResource);
+        //console.log($scope.checked);
     };
 
     $scope.save_search = function () {
+
+        //check ID work and add new ID
+        //...
+
         if ($scope.popupsearch == true && $scope.list_searched != 0) {
             var div = angular.element($scope.current_doubleclick.parent().parent());
             var id = div.find(".column_header input").val();
@@ -303,11 +300,11 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
 
 
 
-                //save work
-                $rootScope.works[index].Sub_BuildingItem_ID = $scope.subcategory;
-                SaveWorktoDatabase($rootScope.works[index]);
+                //save work and check log in
+                //$rootScope.works[index].Sub_BuildingItem_ID = $scope.subcategory;
+                //SaveWorktoDatabase($rootScope.works[index]);
 
-                //save resource
+                //save resource and check log in
                 var temp_list = [];
                 angular.forEach($scope.listResource, function (value, key) {
                     if (value.NormWork_ID == $rootScope.works[index].NormWork_ID) {
@@ -315,7 +312,7 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
                         temp_list.push(value);
                     }
                 });
-                SaveResourcetoDatabase(temp_list);
+                //SaveResourcetoDatabase(temp_list);
 
 
                 //must fix index work when show work
@@ -330,6 +327,12 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
         };
         $scope.popupsearchclass = '';
         $scope.popupsearch = !($scope.popupsearch);
+
+        angular.forEach($scope.checked, function (value, key) {
+            $scope.list_Normwork[value].checked = false;
+        });
+        $scope.list_searched = [];
+
     };
 
 
@@ -373,8 +376,8 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
             $rootScope.works[id_work].SumMachine = (parseFloat($rootScope.works[id_work].PriceMachine) * parseFloat($rootScope.works[id_work].Area)).toFixed(3);
 
 
-            //Save work
-            SaveWorktoDatabase($rootScope.works[id_work]);
+            //save work and check log in
+            //SaveWorktoDatabase($rootScope.works[id_work]);
         }
 
 
@@ -421,11 +424,11 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
                 $rootScope.works[id_meanwork].SumLabor = (parseFloat($rootScope.works[id_meanwork].PriceLabor) * parseFloat($rootScope.works[id_meanwork].Area)).toFixed(3);
                 $rootScope.works[id_meanwork].SumMachine = (parseFloat($rootScope.works[id_meanwork].PriceMachine) * parseFloat($rootScope.works[id_meanwork].Area)).toFixed(3);
 
-                //save work
-                SaveWorktoDatabase($rootScope.works[id_meanwork]);
+                //save work and check log in
+                //SaveWorktoDatabase($rootScope.works[id_meanwork]);
             }
 
-            
+
         }
 
     };

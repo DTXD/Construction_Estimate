@@ -4,7 +4,34 @@ angular.module('app_work').factory('dataService', ['$http', function ($http) {
     var getAllSheet = function (buildingitem_id) {
         return $http({
             method: "GET",
-            url: "/HangMuc/getAllSheet",
+            url: "/HangMuc/getAllSheets",
+            params: { buildingitem_id: buildingitem_id }
+        })
+            .then(function (response) {
+                return response.data;
+            }, function (response) {
+                //showing errors
+            });
+    };
+
+    var getAllResource = function (buildingitem_id) {
+        return $http({
+            method: "GET",
+            url: "/HangMuc/getAllResources",
+            params: { buildingitem_id: buildingitem_id }
+        })
+            .then(function (response) {
+                return response.data;
+            }, function (response) {
+                //showing errors
+            });
+    };
+
+
+    var getGroupbyResource = function (buildingitem_id) {
+        return $http({
+            method: "GET",
+            url: "/HangMuc/getGroupbyResource",
             params: { buildingitem_id: buildingitem_id }
         })
             .then(function (response) {
@@ -22,7 +49,7 @@ angular.module('app_work').factory('dataService', ['$http', function ($http) {
         });
     };
 
-    
+
 
     var getListPrice = function () {
         return $http.get('/HangMuc/GetDSDonGia').then(function (response) {
@@ -32,35 +59,37 @@ angular.module('app_work').factory('dataService', ['$http', function ($http) {
         });
     };
 
-    
 
-    var GetDetailNormWork_Price = function () {
-        return $http.get('/HangMuc/GetDetailNormWork_Price').then(function (response) {
+
+    var GetDetailNormWork_Price = function (area_id) {
+        return $http({
+            method: "GET",
+            url: "/HangMuc/GetDetailNormWork_Price",
+            params: { area_id: area_id }
+        })
+            .then(function (response) {
+                return response.data;
+            }, function (response) {
+                //showing errors
+            });
+    };
+
+    var GetArea_Price = function () {
+        return $http.get('/HangMuc/GetArea_Price').then(function (response) {
             return response.data
         }, function (response) {
             //Showing errors
         });
     };
 
-
-
-    var property = [];
-
-    var getProperty = function () {
-        return property;
-    };
-
-    var setProperty = function (value) {
-        property = value;
-    };
-
     return {
-        getAllSheet : getAllSheet,
+        GetArea_Price: GetArea_Price,
+        getAllResource: getAllResource,
+        getAllSheet: getAllSheet,
+        getGroupbyResource: getGroupbyResource,
         getNormworks: getNormworks,
         getListPrice: getListPrice,
         GetDetailNormWork_Price: GetDetailNormWork_Price,
-        getProperty: getProperty,
-        setProperty: setProperty,
     };
 
 }]);

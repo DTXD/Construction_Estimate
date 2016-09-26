@@ -145,7 +145,7 @@
                                 <textarea ng-model="work.Name" ng-dblclick="search_work($event);" ng-focus="focus(work.Name,$event)" ng-blur="blur(work.Name)" class="input_sheet" style="font-size:13px;overflow:hidden"></textarea>
                             </div>
                             <div style="left:44%;width:8%;" class="cell">
-                                <input type="text" ng-model="work.Unit" ng-focus="focus(work.Unit, $event)" ng-blur="blur(work.Unit)" class="input_sheet" />
+                                <input type="text" ng-model="work.Unit" readonly ng-focus="focus(work.Unit, $event)" ng-blur="blur(work.Unit)" class="input_sheet" />
                             </div>
                             <div style="left:52%;width:5%;" class="cell">
                                 <input type="text" ng-model="work.Number" ng-focus="focus(work.Number , $event)" class="input_sheet" ng-blur="change($event); blur(work.Number)" />
@@ -195,7 +195,9 @@
                                 <th>Đơn Vị</th>
                             </tr>
                             <tr ng-repeat="x in list_Normwork | filter: {ID:keysearch} | limitTo:100">
-                                <td><input type="checkbox" value="{{x}}" ng-click="checkbox_search(x)" /></td>
+                                <td>
+                                    <input type="checkbox" value="{{x}}" ng-model="x.checked" ng-click="checkbox_search(x,$index)" />
+                                </td>
                                 <td>{{x.ID}}</td>
                                 <td>{{x.Name}}</td>
                                 <td>{{x.Unit}}</td>
