@@ -18,13 +18,6 @@ namespace Du_Toan_Xay_Dung.Controllers
     {
         DataDTXDDataContext _db = new DataDTXDDataContext();
 
-        [HttpPost]
-        public JsonResult listhangmuc()
-        {
-            var list_normwork = _db.BuildingItems.Select(i => new HangMucViewModel(i)).ToList();
-
-            return Json(list_normwork);
-        }
         [PageLogin]
         public ActionResult Index()
         {
@@ -173,6 +166,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             try
             {
                 var hangmuc = _db.BuildingItems.Where(i => i.ID.Equals(obj.ID)).FirstOrDefault();
+                hangmuc.Building_ID = obj.Building_ID;
                 hangmuc.ID = obj.ID;
                 hangmuc.Description = obj.Description;
                 hangmuc.Name = obj.Name;
@@ -216,8 +210,9 @@ namespace Du_Toan_Xay_Dung.Controllers
             try
             {
                 var index = _db.Buildings.OrderByDescending(i => i.ID).Select(i => i.ID).FirstOrDefault();
+                index = index + 1;
                 var index1 = _db.Images_Urls.OrderByDescending(i => i.ID).Select(i => i.ID).FirstOrDefault();
-                //index = index + 1;
+                index1 = index1 + 1;
                 if (obj.img_congtrinh != null)
                 {
                     if (obj.img_congtrinh.Count() > 0)
@@ -238,15 +233,14 @@ namespace Du_Toan_Xay_Dung.Controllers
                 }
                 
                 var congtrinh = new Building();
+                congtrinh.ID = index;
                 congtrinh.Email = SessionHandler.User.Email;
                 congtrinh.Name = obj.Name;
                 congtrinh.Description = obj.Description;
                 congtrinh.Address = obj.Address;
                 congtrinh.Sum = 0;
-
                 _db.Buildings.InsertOnSubmit(congtrinh);
-
-
+                _db.SubmitChanges();
                 if (obj.img_congtrinh != null)
                 {
                     foreach (var file in obj.img_congtrinh)
@@ -255,8 +249,8 @@ namespace Du_Toan_Xay_Dung.Controllers
                         {
                             //them image vao database
                             var image = new Images_Url();
-                            image.ID = index1 + 1;
-                            image.Building_ID = index+1;
+                            image.ID = index1;
+                            image.Building_ID = index;
                             image.Url = "~/Images/CongTrinh/" + file.FileName;
                             _db.Images_Urls.InsertOnSubmit(image);
                         }
@@ -269,7 +263,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 catch (Exception)
             {
                return Json("error");
-            }
+    }
         }
         /*[PageLogin]
         public ActionResult ThemHangMuc(long id)

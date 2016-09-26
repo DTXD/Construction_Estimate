@@ -72,14 +72,11 @@
    .controller('postController', ['$scope', '$http','$filter', function ($scope, $http,$filter) {
        // xóa công trình
        $scope.submitForm = function () {
-           var hoi = confirm("Bạn có chắc chắn muốn xóa công trình này??");
-           if (hoi == true) {
-               if ($scope.formAdd.$valid) {
-                   var mact = document.getElementById("mact").value;
-                   console.log(mact);
-                   var postdata = {
-                      ID: mact
-                   };
+           var mact = $scope.MaCT;
+            console.log(mact);
+            var postdata = {
+            ID: mact
+            };
                    $http({
                        method: 'POST',
                        url: '/CongTrinh/Delete_CongTrinh',
@@ -88,8 +85,9 @@
                    })
                        .success(function (result) {
                            if (result == "ok") {
-                               alert("Xóa thành công");
-                               window.location.href = "/CongTrinh/Index";
+                               //alert("Xóa thành công");
+                               var x = document.getElementById("alertxoa");
+                               x.style.display = "block";
                            }
                            else {
                                alert("Xảy ra lỗi");
@@ -97,10 +95,14 @@
 
                            }
                        });
-               }
-           }
-
-       };
+       }
+       $scope.return=function()
+       {
+           window.location.href = "/CongTrinh/Index";
+       }
+       $scope.xoa = function (ID) {
+           $scope.MaCT = ID
+       }
        // upload hình ảnh
        $scope.stepsModel = [];
        $scope.listdropbox = [];
@@ -160,9 +162,9 @@
                          alert("Xảy ra lỗi");
                          return;
                      } else {
-                         alert("Lưu thành công");
-                         window.location.href = "/CongTrinh/Index";
-
+                        
+                         var x = document.getElementById("alert");
+                         x.style.display = "block";
                      }
                  });
            }
@@ -198,15 +200,11 @@
        };
        // xóa hình đã thêm
        $scope.deleteTempImage = function (idx, x) {
-           var hoi = confirm("Bạn có chắc chắn muốn xóa hình ảnh này");
-           if (hoi == true) {
                debugger;
                var myEl = angular.element(document.querySelector('#img_box'));
                myEl.remove();
                $scope.listfile.splice(idx, 1);
-               fd.delete(idx, x);
-               alert("Đã xóa");
-           }
+               fd.delete(idx, x);   
        }
        //load list  chi tiết công trình
        $scope.list_thongtin = [];
@@ -224,7 +222,6 @@
 
    }]);
 </script>
-
 <style>
     .description_project {
         height: 51px;
@@ -232,13 +229,12 @@
     }
 </style>
 
-
 <section class="content" ng-app="postApp" ng-controller="postController">
     @if (SessionHandler.User != null)
     {
         <div class="row">
             <div class="col-xs-12 col-sm-10">
-                <h3>Công trình <small class="label label-info">List</small></h3>
+                <h3>Công trình <small class="label label-info">Danh sách</small></h3>
             </div>
             <div class="col-xs-12 col-sm-2">
                 <p style="padding:5px"></p>
@@ -315,7 +311,7 @@
                                             <input type="hidden" value="@item.ID" id="mact" />
                                             <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/UpdateCongTrinh/@item.ID" target="_blank"><i class="fa fa-fw fa-edit" style="font-size:large"></i></a>
                                             <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ExportToExcel/@item.ID"><i class="fa fa-fw fa-file-excel-o" style="font-size: initial"></i></a>
-                                            <button type="submit" class="btn btn-danger btn_deleteproject" style="float:left;margin-left:20px"><i class="fa fa-fw fa-trash-o" style="font-size: initial"></i></button>
+                                            <button type="button" data-toggle="modal" data-target="#myModal" ng-click="xoa(@item.ID)" class="btn btn-danger btn_deleteproject" style="float:left;margin-left:20px"><i class="fa fa-fw fa-trash-o" style="font-size: initial"></i></button>
                                         </form>
                                     </div>
                                 </div>
@@ -345,7 +341,7 @@
                     <p>Giá:{{data.Sum}}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
 
@@ -421,13 +417,96 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                 </div>
 
             </div>
 
         </div>
     </div>
-            
-      }   
+    <div id="myModal" class="modal font-arial">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <input type="hidden" ng-model="MaCT" />
+                <!--header-->
+                <div class="modal-header bg-danger">
+                    <!--title-->
+                    <div class="modal-title">
+                        <h4 class="text-danger">Chấp nhận xóa?</h4>
+                    </div>
+                </div>
+                <!--body-->
+                <div class="modal-body">
+                    <!--alert message research-->
+                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                        <h4>Lưu ý:</h4>
+                        <p>
+                            Xin vui lòng suy nghĩ kỹ trước khi xóa.
+                            Việc xóa bỏ sẽ không thể khôi phục bạn chắc chứ?
+                        </p>
+                    </div>
+                </div>
+                <!--footer-->
+                <div class="modal-footer">
+                    <a class="btn btn-danger" data-dismiss="modal" ng-click="submitForm()">Đồng ý</a>
+                    <a class="btn btn-default" data-dismiss="modal">Hủy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="alert" class="modal font-arial">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <input type="hidden" ng-model="MaHM" />
+                <!--header-->
+                <div class="modal-header bg-aqua" style="background-color:green;">
+                    <!--title-->
+                    <div class="modal-title">
+                        <h4 class="text-info">Thông báo</h4>
+                    </div>
+                </div>
+                <!--body-->
+                <div class="modal-body" style="background-color:aliceblue">
+                    <!--alert message research-->
+                    <div class="alert alert-success alert-dismissible fade in" role="alert">
+                        <p>
+                            Lưu thành công. Click "Đồng Ý" để tiếp tục
+                        </p>
+                    </div>
+                </div>
+                <!--footer-->
+                <div class="modal-footer">
+                    <a class="btn btn-info" data-dismiss="modal" ng-click="return()">Đồng ý</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="alertxoa" class="modal font-arial">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <input type="hidden" ng-model="MaHM" />
+                <!--header-->
+                <div class="modal-header bg-aqua">
+                    <!--title-->
+                    <div class="modal-title">
+                        <h4 class="text-danger">Thông báo</h4>
+                    </div>
+                </div>
+                <!--body-->
+                <div class="modal-body" style="background-color:blue">
+                    <!--alert message research-->
+                    <div class="alert alert-success alert-dismissible fade in" role="alert">
+                        <p>
+                            Xóa thành công. Click "Đồng Ý" để tiếp tục
+                        </p>
+                    </div>
+                </div>
+                <!--footer-->
+                <div class="modal-footer">
+                    <a class="btn btn-info" data-dismiss="modal" ng-click="return()">Đồng ý</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    }   
 </section>

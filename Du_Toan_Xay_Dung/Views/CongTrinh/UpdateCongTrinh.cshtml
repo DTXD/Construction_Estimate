@@ -79,12 +79,15 @@
                          return;
                      } else {
                          //$scope.message = data.message;
-                         alert("Lưu thành công");
-                         window.location.href = "/CongTrinh/Index";
+                         var x = document.getElementById("alert");
+                         x.style.display = "block";
 
                      }
                  });
        };
+       $scope.return = function () {
+           window.location.href = "/CongTrinh/Index";
+       }
        $scope.savetodropbox = function () {
            var options = {
                files: $scope.listdropbox,
@@ -114,16 +117,14 @@
            Dropbox.save(options);
        };
        $scope.deleteTempImage = function (idx, x) {
-           var hoi = confirm("Bạn có chắc chắn muốn xóa hình ảnh này");
-           if (hoi == true) {
                debugger;
                var myEl = angular.element(document.querySelector('#img_box'));
                myEl.remove();
                $scope.listfile.splice(idx, 1);
                fd.delete(idx, x);
-               alert("Đã xóa");
-           }
+               //alert("Đã xóa");
        }
+      
    }]);
 </script>
 
@@ -285,6 +286,33 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+        <div id="alert" class="modal font-arial">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <input type="hidden" ng-model="MaHM" />
+                    <!--header-->
+                    <div class="modal-header bg-aqua" style="background-color:green;">
+                        <!--title-->
+                        <div class="modal-title">
+                            <h4 class="text-info">Thông báo</h4>
+                        </div>
+                    </div>
+                    <!--body-->
+                    <div class="modal-body" style="background-color:aliceblue">
+                        <!--alert message research-->
+                        <div class="alert alert-success alert-dismissible fade in" role="alert">
+                            <p>
+                                Lưu thành công. Click "Đồng Ý" để tiếp tục
+                            </p>
+                        </div>
+                    </div>
+                    <!--footer-->
+                    <div class="modal-footer">
+                        <a class="btn btn-info" data-dismiss="modal" ng-click="return()">Đồng ý</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

@@ -143,7 +143,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                         ewr.UnitPrice_ID = item.UnitPrice_ID;
                         ewr.Name = item.Name;
                         ewr.Unit = item.Unit;
-                        ewr.Numbers = item.Number;
+                        ewr.Number_Norm = item.Number_Norm;
                         ewr.Price = item.Price;
                         _db.UserWork_Resources.InsertOnSubmit(ewr);
                     }

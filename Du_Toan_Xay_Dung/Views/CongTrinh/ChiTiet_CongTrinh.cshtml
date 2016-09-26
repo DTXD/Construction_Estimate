@@ -8,7 +8,7 @@
 <script>
     angular.module('postApp', [])
      .controller('postController', ['$scope', '$http','$filter', function ($scope, $http, $filter) {
-         $scope.alert = false;
+         //$scope.alert = false;
          //load list hangmuc
          $scope.list_hangmuc = [];
          $http.get('/CongTrinh/Get_AllHangMuc').then(function (response) {
@@ -16,13 +16,13 @@
          }, function (response) {
              //Showing errors
          });
-
+         // lọc dữ liệu sau khi chọn công trình.
          //array did filter
          $scope.items = [];
          $scope.change_select = function (value) {
              $scope.items = $filter('filter')($scope.list_hangmuc, value);
          };
-
+         // tìm kiếm hạng mục theo tên.
          // array after search
          $scope.search = function (value) {
              $scope.items = $filter('filter')($scope.items, value);
@@ -58,8 +58,10 @@
          // thêm hạng mục
          $scope.submit = function () {
              var fd = new FormData();
+             var mact = $scope.MaCT;
              if ($scope.add.$valid) {
-                 var mact = document.getElementById("MaCT").value;
+                 // mact = document.getElementById("MaCT").value;
+                 //console.log(mact);
                  var tenhm = document.getElementById("TenHM").value;
                  var mota = document.getElementById("MoTa").value;
                  fd.append("Building_ID", mact);
@@ -86,35 +88,58 @@
              window.location.href = "/CongTrinh/ChiTiet_CongTrinh";
 
          };
-     
+        // lấy dữ liệu cho việc sửa
        //load list  chi tiết hạng mục
-       $scope.list_thongtin = [];
-    $http.get('/CongTrinh/Get_Allinf1').then(function (response) {
+        $scope.list_thongtin = [];
+        $http.get('/CongTrinh/Get_Allinf1').then(function (response) {
         $scope.list_thongtin = response.data;
     }, function (response) {
         //Showing errors
-    });
-    //array did filter
-    $scope.chitiet = [];
-    $scope.changeclick = function (data) {
-        $scope.chitiet = $filter('filter')($scope.list_thongtin, data.ID);
-        $scope.MaHM = $scope.chitiet[0].ID;
-        $scope.Description = $scope.chitiet[0].Description;
-        $scope.Name = $scope.chitiet[0].Name;
-        $scope.Sum = $scope.chitiet[0].Sum;
+        });
+            //array did filter
+            $scope.chitiet = [];
+            $scope.changeclick = function (data) {
+            $scope.chitiet = $filter('filter')($scope.list_thongtin, data.ID);
+            $scope.Building_ID = $scope.chitiet[0].Building_ID;
+            $scope.ID = $scope.chitiet[0].ID;
+            $scope.Description = $scope.chitiet[0].Description;
+            $scope.Name = $scope.chitiet[0].Name;
+            $scope.Sum = $scope.chitiet[0].Sum;
+            };
+
+            // lấy dữ liệu cho việc thêm
+            //load list  chi tiết công trình
+            $scope.list_thongtin1 = [];
+            $http.get('/CongTrinh/Get_Allinf').then(function (response) {
+            $scope.list_thongtin1 = response.data;
+            }, function (response) {
+            //Showing errors
+            });
+            //array did filter
+        $scope.chitiet1 = [];
+        $scope.laydulieu1 = function (value) {
+        $scope.chitiet1 = $filter('filter')($scope.list_thongtin1, value);
+        $scope.MaCT = $scope.chitiet1[0].ID;
+        //console.log($scope.MaCT);
+        
     };
+
+
          // lấy dữ liệu phục vụ cho việc xóa
         $scope.laydulieu = function (data) {
         $scope.chitiet = $filter('filter')($scope.list_thongtin, data.ID);
         $scope.MaHM = $scope.chitiet[0].ID;
     };
          // sửa hạng mục
-    $scope.modify = function () {
-        var fd1 = new FormData();
-            var mahm =$scope.MaHM;
+        $scope.modify = function () {
+            var fd1 = new FormData();
+            var mact1 = $scope.Building_ID;
+            console.log(mact1);
+            var mahm = $scope.ID;
             var tenhm = $scope.Name;
             var mota = $scope.Description;
             var gia = $scope.Sum;
+            fd1.append("Building_ID", mact1);
             fd1.append("ID", mahm);
             fd1.append("Name", tenhm);
             fd1.append("Description", mota);
@@ -134,8 +159,7 @@
                   }
               });
         
-    };
-       
+    };  
      }]);
 </script>
 <section class="content" ng-app="postApp" ng-controller="postController">
@@ -149,8 +173,8 @@
                         @foreach (var item in CongTrinhs)
                         {
                            
-                                <option value="@item.ID" selected>@item.Name</option>
-                    }
+                                <option value="@item.ID">@item.Name</option>
+                        }
                 </select>
                 </div>
         </div>
@@ -214,8 +238,8 @@
             </form>
             <!--                    finish form-->
         </div>
-        <!--                scroll here-->
-        <div id="myscroll" class="col-xs-12 col-sm-2" data-toggle="modal" data-target="#modal_add_buildingitem">
+        <!--                scroll here--> 
+        <div id="myscroll" class="col-xs-12 col-sm-2" data-toggle="modal" data-target="#modal_add_buildingitem" ng-click="laydulieu1(hangmucfilter)">
             <ul class="nav nav-pills nav-stacked affix">
                 <li class="active">
                     <a href="#"><i class="fa fa-plus"></i>Thêm</a>
@@ -236,7 +260,7 @@
                     <div class="row">
                         <form id="add" name="add" class="form-horizontal" role="form" method="post">
                             <div class="form-group" style="margin-right:20px">
-                                <input type="hidden" id="MaCT" value="@congtrinh.ID" />
+                                <input type="hidden" ng-model="MaCT" name="MaCT" id="MaCT" />
                                 <label class="control-label col-sm-2" for="">Tên hạng mục:</label>
                                 <div class="col-sm-10">
                                     <input type="text" ng-model="hangmuc.Name" class="form-control" id="TenHM" name="TenHM" placeholder="Tên hạng mục">
@@ -257,11 +281,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                 </div>
 
             </div>
-
         </div>
     </div>
     <div class="modal fade" id="modal_modify_buildingitem" role="dialog">
@@ -273,15 +296,15 @@
                     <h4 class="modal-title">SỬA HẠNG MỤC</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row" ng-repeat="data in chitiet">
-                                <input type="hidden" ng-model="MaHM" id="MaHM" name="MaHM" />
-
+                    <div class="row" ng-repeat="data in chitiet">    
+                                <input type="hidden" ng-model="ID" />
+                                <input type="hidden" ng-model="Building_ID"      />
                                 <label class="control-label col-sm-2" for="" style="width:200px">Tên hạng mục:</label>
                                 <input type="text" ng-model="Name" style="width:500px;margin-left:50px" class="form-control" placeholder="Tên hạng mục">
-                        <br />
+                            <br />
                                 <label class="control-label col-sm-2" for="">Mô tả:</label>
                                 <input type="text" style="width:500px;margin-left:50px" class="form-control" ng-model="Description" placeholder="Mô tả">
-                        <br />
+                            <br />
                            
                           
                                 <label class="control-label col-sm-2" for="">Giá:</label>
@@ -295,7 +318,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                 </div>
 
             </div>
