@@ -296,7 +296,7 @@ namespace Du_Toan_Xay_Dung.Controllers
 
         public ActionResult ExportToExcel(string ID)
         {
-            
+            /*
             if (ID != null)
             {
                 var congtrinh = _db.Buildings.Where(i => i.ID.Equals(ID)).Select(i => new BuildingViewModel(i)).FirstOrDefault();
@@ -515,6 +515,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 return RedirectToAction("Index");
 
             }
+             */
             return View();
         }
     }
