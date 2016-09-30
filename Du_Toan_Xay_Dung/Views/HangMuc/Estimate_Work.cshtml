@@ -33,10 +33,13 @@
     <script src="~/Scripts/DuToan/Estimate_Work/Controllers/MaterialCtrl.js"></script>
 
     <script src="~/Scripts/DuToan/Estimate_Work/Controllers/SpecificationCtrl.js"></script>
+
+    <script src="~/Scripts/DuToan/Bootstrap_UploadFile.js"></script>
 }
 
 @section CSS{
     <link href="~/Content/dutoan/estimate_work.css" rel="stylesheet" />
+    <link href="~/Content/dutoan/Bootstrap_UploadFile.css" rel="stylesheet" />
 }
 <section class="content-header"></section>
 
@@ -90,6 +93,12 @@
                                 ng-change="change_price(unitprice.selectedOption.ID)"></select>
                     </div>
                 </div>
+                <div class="col-sm-12 treeview-menu" style="display:none">
+                    <div>
+                        <h4>Tạo Đơn Giá:</h4>
+                        <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#myModal">Open Modal</button>
+                    </div>
+                </div>
             </div>
             <br />
         </div>
@@ -104,7 +113,7 @@
                         <input type="hidden" value="1" id="txt_building_item" />
                         @if (SessionHandler.User != null)
                         {
-                            <input type="hidden" value="@SessionHandler.User.Email" id="txt_session_user" />
+                        <input type="hidden" value="@SessionHandler.User.Email" id="txt_session_user" />
                         }
                     </div>
                     <div class="col-sm-12" style="margin-top:20px">
@@ -127,4 +136,42 @@
         </div>
 
     </div>
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <span class="btn btn-default btn-file">
+                                    <span class="fileupload-new">Select file</span>
+                                    <span class="fileupload-exists">Change</span>         <input type="file" onchange="angular.element(this).scope().uploadedFile(event)" />
+                                </span>
+                                <span class="fileupload-preview"></span>
+                                <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4">
+                            <button class="btn btn-block btn-success btn-lg" ng-click="submit_unitprice()">Lưu</button>
+                        </div>
+                        <div class="col-sm-4"></div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </section>

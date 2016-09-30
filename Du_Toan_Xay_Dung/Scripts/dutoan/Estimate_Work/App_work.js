@@ -72,9 +72,6 @@ app.controller("mainController", ['$scope', '$rootScope', 'dataService', '$http'
         });
     };
 
-        
-    
-    
     function GetDetailNormWork_Price(area_id) {
         dataService.GetDetailNormWork_Price(area_id).then(function (data) {
             $rootScope.ListDetailNormWork_Price = data;
@@ -86,4 +83,47 @@ app.controller("mainController", ['$scope', '$rootScope', 'dataService', '$http'
         GetDetailNormWork_Price(selection);
     };
 
+    
+    //intialize object file excel
+    $scope.stepsModel = null;
+
+    $scope.uploadedFile = function (event) {
+        $scope.$apply(function ($scope) {
+            $scope.files = event.files;
+        });
+        var files = event.target.files; //FileList object
+        var file = files[0];
+        if (typeof (file) != 'undefined') {
+            var filename = file.name;
+            var allowedFiles = [".xls", ".xlsx"];
+            var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+            if (regex.test(filename.toLowerCase())) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                $scope.stepsModel = file;
+            }
+        }
+    }
+
+    $scope.submit_unitprice = function () {
+        if ($scope.stepsModel != null) {
+
+            $http.post('/CongTrinh/Post_ThemCongTrinh', fd, {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            })
+             .success(function (result) {
+                 if (result == "error") {
+                     return;
+                 } else {
+                     window.location.href = "/CongTrinh/Index";
+
+                 }
+             });
+
+        }
+        else {
+
+        }
+    }
 }]);

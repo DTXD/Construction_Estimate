@@ -237,9 +237,9 @@
     <Compile Include="Models\UnitPrice_AreaViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\UserWorkViewModel.cs" />
-    <Compile Include="Models\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="Models\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="Models\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -270,6 +270,7 @@
     <Content Include="Content\CongTrinh_css\dataTables.bootstrap4.min.css" />
     <Content Include="Content\CongTrinh_css\font-awesome.min.css" />
     <Content Include="Content\custom.min.css" />
+    <Content Include="Content\dutoan\Bootstrap_UploadFile.css" />
     <Content Include="Content\dutoan\estimate_work.css" />
     <Content Include="Content\fileinput.min.css" />
     <Content Include="Content\font-awesome\css\font-awesome.css" />
@@ -329,6 +330,9 @@
     <Content Include="Images\CongTrinh\image_2_2.png" />
     <Content Include="Images\CongTrinh\importdongia.png" />
     <Content Include="Images\CongTrinh\tkb.png" />
+    <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.dll" />
+    <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.pdb" />
+    <Content Include="obj\x86\Debug\TempPE\Models.DataDTXD.designer.cs.dll" />
     <Content Include="Scripts\Admin\bootstraps\autosize.min.js" />
     <Content Include="Scripts\Admin\bootstraps\bootstrap-progressbar.min.js" />
     <Content Include="Scripts\Admin\bootstraps\bootstrap-wysiwyg.min.js" />
@@ -430,6 +434,7 @@
     <Content Include="Content\font-awesome\scss\_spinning.scss" />
     <Content Include="Content\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\font-awesome\scss\_variables.scss" />
+    <Content Include="obj\x86\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="Models\DataDTXD.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>DataDTXD.designer.cs</LastGenOutput>
@@ -437,6 +442,7 @@
     </Content>
     <None Include="Scripts\Difference\_references.js" />
     <Content Include="Scripts\Dropbox_API\dropins.js" />
+    <Content Include="Scripts\DuToan\Bootstrap_UploadFile.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\App_work.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\Controllers\EstimateCtrl.js" />
     <Content Include="Scripts\DuToan\Estimate_Work\Controllers\MaterialCtrl.js" />
