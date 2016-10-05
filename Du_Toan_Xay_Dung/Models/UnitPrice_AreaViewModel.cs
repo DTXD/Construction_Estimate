@@ -16,7 +16,7 @@ namespace Du_Toan_Xay_Dung.Models
         }
         public string UnitPrice_ID { get; set; }
         public long Area_ID { get; set; }
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
 
     }
 }

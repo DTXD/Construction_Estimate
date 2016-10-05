@@ -41,19 +41,12 @@
         </div>
         <div id="menu-wrapper">
             <div id="menu" class="container">
-                @if (SessionHandler.User != null)
-                {
-                    <input type="hidden" id="txt_user" value="@SessionHandler.User.Email" />
-                }
-                else
-                {
-                    <input type="hidden" id="txt_user" value="" />
-                }
                 <ul>
                     <li><a href="/Home/Index">Trang Chủ</a></li>
                     @if (SessionHandler.User != null)
                     {
                         <li><a href="/CongTrinh/Index">Công Trình</a></li>
+                        <li><a href="/HangMuc/Unit_Price">Đơn Giá</a></li>
                     }
                     <li><a id="btn_href_dutoan" href="/HangMuc/Estimate_Work">Dự Toán</a></li>
                     <li><a>Photos</a></li>
@@ -72,25 +65,6 @@
                 </ul>
             </div>
         </div>
-        <!-- script link hang muc -->
-        <script>
-
-            $(document).ready(function () {
-                $('#btn_href_dutoan').click(function () {
-                    var s = $('#txt_user').val();
-                    if (s == '') {
-                        var con_hm = confirm("Bạn vẫn chưa đăng nhập, Hệ thống sẽ không thể lưu dữ liệu của bạn, Bạn có muốn tiếp tục...!!!");
-                        if (con_hm == true) {
-                            $(this).attr('href', '/HangMuc/Estimate_Work');
-                        }
-                    }
-                    else {
-                        $(this).attr('href', "/HangMuc/Estimate_Work");
-                    }
-                });
-            });
-
-        </script>
         <!-- end #page cho nay la nhung cai thay doi ben trong, thay k?  -->
         <div class="container body-content" id="body_content">
             @RenderBody()

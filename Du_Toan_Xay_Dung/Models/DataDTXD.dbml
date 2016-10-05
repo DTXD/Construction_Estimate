@@ -5,7 +5,9 @@
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="Address" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Association Name="Area_UnitPrice_Area" Member="UnitPrice_Areas" ThisKey="ID" OtherKey="Area_ID" Type="UnitPrice_Area" />
+      <Association Name="User_Area" Member="User" ThisKey="Email" OtherKey="Email" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.UserWorks" Member="UserWorks">
@@ -94,9 +96,10 @@
   </Table>
   <Table Name="dbo.UnitPrice_Area" Member="UnitPrice_Areas">
     <Type Name="UnitPrice_Area">
-      <Column Name="UnitPrice_ID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Area_ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="UnitPrice_ID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,3) NOT NULL" CanBeNull="false" />
       <Association Name="Area_UnitPrice_Area" Member="Area" ThisKey="Area_ID" OtherKey="ID" Type="Area" IsForeignKey="true" />
       <Association Name="UnitPrice_UnitPrice_Area" Member="UnitPrice" ThisKey="UnitPrice_ID" OtherKey="ID" Type="UnitPrice" IsForeignKey="true" />
     </Type>
@@ -112,6 +115,7 @@
       <Column Name="City" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Url_Image" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="Role" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="User_Area" Member="Areas" ThisKey="Email" OtherKey="Email" Type="Area" />
       <Association Name="User_Building" Member="Buildings" ThisKey="Email" OtherKey="Email" Type="Building" />
     </Type>
   </Table>

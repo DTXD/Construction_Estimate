@@ -54,6 +54,9 @@ namespace Du_Toan_Xay_Dung.Models
     partial void InsertUnitPrice(UnitPrice instance);
     partial void UpdateUnitPrice(UnitPrice instance);
     partial void DeleteUnitPrice(UnitPrice instance);
+    partial void InsertUnitPrice_Area(UnitPrice_Area instance);
+    partial void UpdateUnitPrice_Area(UnitPrice_Area instance);
+    partial void DeleteUnitPrice_Area(UnitPrice_Area instance);
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
@@ -193,6 +196,12 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		private string _Address;
 		
+		private string _Email;
+		
+		private EntitySet<UnitPrice_Area> _UnitPrice_Areas;
+		
+		private EntityRef<User> _User;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -203,10 +212,14 @@ namespace Du_Toan_Xay_Dung.Models
     partial void OnNameChanged();
     partial void OnAddressChanging(string value);
     partial void OnAddressChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
     #endregion
 		
 		public Area()
 		{
+			this._UnitPrice_Areas = new EntitySet<UnitPrice_Area>(new Action<UnitPrice_Area>(this.attach_UnitPrice_Areas), new Action<UnitPrice_Area>(this.detach_UnitPrice_Areas));
+			this._User = default(EntityRef<User>);
 			OnCreated();
 		}
 		
@@ -270,6 +283,77 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="NVarChar(200)")]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_UnitPrice_Area", Storage="_UnitPrice_Areas", ThisKey="ID", OtherKey="Area_ID")]
+		public EntitySet<UnitPrice_Area> UnitPrice_Areas
+		{
+			get
+			{
+				return this._UnitPrice_Areas;
+			}
+			set
+			{
+				this._UnitPrice_Areas.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Area", Storage="_User", ThisKey="Email", OtherKey="Email", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Areas.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Areas.Add(this);
+						this._Email = value.Email;
+					}
+					else
+					{
+						this._Email = default(string);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -288,6 +372,18 @@ namespace Du_Toan_Xay_Dung.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_UnitPrice_Areas(UnitPrice_Area entity)
+		{
+			this.SendPropertyChanging();
+			entity.Area = this;
+		}
+		
+		private void detach_UnitPrice_Areas(UnitPrice_Area entity)
+		{
+			this.SendPropertyChanging();
+			entity.Area = null;
 		}
 	}
 	
@@ -1879,6 +1975,8 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		private EntitySet<NormDetail> _NormDetails;
 		
+		private EntitySet<UnitPrice_Area> _UnitPrice_Areas;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1894,6 +1992,7 @@ namespace Du_Toan_Xay_Dung.Models
 		public UnitPrice()
 		{
 			this._NormDetails = new EntitySet<NormDetail>(new Action<NormDetail>(this.attach_NormDetails), new Action<NormDetail>(this.detach_NormDetails));
+			this._UnitPrice_Areas = new EntitySet<UnitPrice_Area>(new Action<UnitPrice_Area>(this.attach_UnitPrice_Areas), new Action<UnitPrice_Area>(this.detach_UnitPrice_Areas));
 			OnCreated();
 		}
 		
@@ -1970,6 +2069,19 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UnitPrice_UnitPrice_Area", Storage="_UnitPrice_Areas", ThisKey="ID", OtherKey="UnitPrice_ID")]
+		public EntitySet<UnitPrice_Area> UnitPrice_Areas
+		{
+			get
+			{
+				return this._UnitPrice_Areas;
+			}
+			set
+			{
+				this._UnitPrice_Areas.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2001,34 +2113,75 @@ namespace Du_Toan_Xay_Dung.Models
 			this.SendPropertyChanging();
 			entity.UnitPrice = null;
 		}
+		
+		private void attach_UnitPrice_Areas(UnitPrice_Area entity)
+		{
+			this.SendPropertyChanging();
+			entity.UnitPrice = this;
+		}
+		
+		private void detach_UnitPrice_Areas(UnitPrice_Area entity)
+		{
+			this.SendPropertyChanging();
+			entity.UnitPrice = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UnitPrice_Area")]
-	public partial class UnitPrice_Area
+	public partial class UnitPrice_Area : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
-		private string _UnitPrice_ID;
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
 		
 		private long _Area_ID;
 		
-		private System.Nullable<decimal> _Price;
+		private string _UnitPrice_ID;
+		
+		private decimal _Price;
+		
+		private EntityRef<Area> _Area;
+		
+		private EntityRef<UnitPrice> _UnitPrice;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnArea_IDChanging(long value);
+    partial void OnArea_IDChanged();
+    partial void OnUnitPrice_IDChanging(string value);
+    partial void OnUnitPrice_IDChanged();
+    partial void OnPriceChanging(decimal value);
+    partial void OnPriceChanged();
+    #endregion
 		
 		public UnitPrice_Area()
 		{
+			this._Area = default(EntityRef<Area>);
+			this._UnitPrice = default(EntityRef<UnitPrice>);
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitPrice_ID", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string UnitPrice_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
 		{
 			get
 			{
-				return this._UnitPrice_ID;
+				return this._ID;
 			}
 			set
 			{
-				if ((this._UnitPrice_ID != value))
+				if ((this._ID != value))
 				{
-					this._UnitPrice_ID = value;
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
 				}
 			}
 		}
@@ -2044,13 +2197,45 @@ namespace Du_Toan_Xay_Dung.Models
 			{
 				if ((this._Area_ID != value))
 				{
+					if (this._Area.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnArea_IDChanging(value);
+					this.SendPropertyChanging();
 					this._Area_ID = value;
+					this.SendPropertyChanged("Area_ID");
+					this.OnArea_IDChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Decimal(18,3)")]
-		public System.Nullable<decimal> Price
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitPrice_ID", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string UnitPrice_ID
+		{
+			get
+			{
+				return this._UnitPrice_ID;
+			}
+			set
+			{
+				if ((this._UnitPrice_ID != value))
+				{
+					if (this._UnitPrice.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUnitPrice_IDChanging(value);
+					this.SendPropertyChanging();
+					this._UnitPrice_ID = value;
+					this.SendPropertyChanged("UnitPrice_ID");
+					this.OnUnitPrice_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Decimal(18,3) NOT NULL")]
+		public decimal Price
 		{
 			get
 			{
@@ -2060,8 +2245,100 @@ namespace Du_Toan_Xay_Dung.Models
 			{
 				if ((this._Price != value))
 				{
+					this.OnPriceChanging(value);
+					this.SendPropertyChanging();
 					this._Price = value;
+					this.SendPropertyChanged("Price");
+					this.OnPriceChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_UnitPrice_Area", Storage="_Area", ThisKey="Area_ID", OtherKey="ID", IsForeignKey=true)]
+		public Area Area
+		{
+			get
+			{
+				return this._Area.Entity;
+			}
+			set
+			{
+				Area previousValue = this._Area.Entity;
+				if (((previousValue != value) 
+							|| (this._Area.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Area.Entity = null;
+						previousValue.UnitPrice_Areas.Remove(this);
+					}
+					this._Area.Entity = value;
+					if ((value != null))
+					{
+						value.UnitPrice_Areas.Add(this);
+						this._Area_ID = value.ID;
+					}
+					else
+					{
+						this._Area_ID = default(long);
+					}
+					this.SendPropertyChanged("Area");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UnitPrice_UnitPrice_Area", Storage="_UnitPrice", ThisKey="UnitPrice_ID", OtherKey="ID", IsForeignKey=true)]
+		public UnitPrice UnitPrice
+		{
+			get
+			{
+				return this._UnitPrice.Entity;
+			}
+			set
+			{
+				UnitPrice previousValue = this._UnitPrice.Entity;
+				if (((previousValue != value) 
+							|| (this._UnitPrice.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UnitPrice.Entity = null;
+						previousValue.UnitPrice_Areas.Remove(this);
+					}
+					this._UnitPrice.Entity = value;
+					if ((value != null))
+					{
+						value.UnitPrice_Areas.Add(this);
+						this._UnitPrice_ID = value.ID;
+					}
+					else
+					{
+						this._UnitPrice_ID = default(string);
+					}
+					this.SendPropertyChanged("UnitPrice");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -2089,6 +2366,8 @@ namespace Du_Toan_Xay_Dung.Models
 		private string _Url_Image;
 		
 		private string _Role;
+		
+		private EntitySet<Area> _Areas;
 		
 		private EntitySet<Building> _Buildings;
 		
@@ -2118,6 +2397,7 @@ namespace Du_Toan_Xay_Dung.Models
 		
 		public User()
 		{
+			this._Areas = new EntitySet<Area>(new Action<Area>(this.attach_Areas), new Action<Area>(this.detach_Areas));
 			this._Buildings = new EntitySet<Building>(new Action<Building>(this.attach_Buildings), new Action<Building>(this.detach_Buildings));
 			OnCreated();
 		}
@@ -2302,6 +2582,19 @@ namespace Du_Toan_Xay_Dung.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Area", Storage="_Areas", ThisKey="Email", OtherKey="Email")]
+		public EntitySet<Area> Areas
+		{
+			get
+			{
+				return this._Areas;
+			}
+			set
+			{
+				this._Areas.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Building", Storage="_Buildings", ThisKey="Email", OtherKey="Email")]
 		public EntitySet<Building> Buildings
 		{
@@ -2333,6 +2626,18 @@ namespace Du_Toan_Xay_Dung.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Areas(Area entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Areas(Area entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
 		}
 		
 		private void attach_Buildings(Building entity)

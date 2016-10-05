@@ -84,6 +84,12 @@ app.controller("mainController", ['$scope', '$rootScope', 'dataService', '$http'
     };
 
     
+
+    $scope.get_UnitPrice = function () {
+        
+    };
+
+    /*
     //intialize object file excel
     $scope.stepsModel = null;
 
@@ -108,16 +114,18 @@ app.controller("mainController", ['$scope', '$rootScope', 'dataService', '$http'
     $scope.submit_unitprice = function () {
         if ($scope.stepsModel != null) {
 
-            $http.post('/CongTrinh/Post_ThemCongTrinh', fd, {
+            var fd = new FormData();
+            fd.append("file", $scope.stepsModel);
+
+            $http.post('/HangMuc/upload_file_unitprice', fd, {
                 transformRequest: angular.identity,
                 headers: { 'Content-Type': undefined }
             })
              .success(function (result) {
-                 if (result == "error") {
-                     return;
+                 if (result == "ok") {
+                     //...
                  } else {
-                     window.location.href = "/CongTrinh/Index";
-
+                     //....
                  }
              });
 
@@ -126,4 +134,5 @@ app.controller("mainController", ['$scope', '$rootScope', 'dataService', '$http'
 
         }
     }
+    */
 }]);
