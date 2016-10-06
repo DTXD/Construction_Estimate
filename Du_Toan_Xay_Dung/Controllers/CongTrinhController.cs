@@ -296,14 +296,14 @@ namespace Du_Toan_Xay_Dung.Controllers
 
         public ActionResult ExportToExcel(string ID)
         {
-            /*
+            
             if (ID != null)
             {
                 var congtrinh = _db.Buildings.Where(i => i.ID.Equals(ID)).Select(i => new BuildingViewModel(i)).FirstOrDefault();
                 var hangmuc = _db.BuildingItems.Where(i => i.Building_ID.Equals(ID)).Select(i => new HangMucViewModel(i)).ToList();
                 var mahangmucs = _db.BuildingItems.Where(i => i.Building_ID.Equals(ID)).Select(i => i.ID).ToList();
                 List<long> mahangmucs1 = _db.BuildingItems.Where(i => i.Building_ID.Equals(ID)).Select(i => i.ID).ToList();
-                var congviec = _db.UserWorks.Where(i => mahangmucs1.Contains(i.BuildingItem_ID)).Select(i => new CongViec_User_ViewModel(i)).ToList();
+                var congviec = _db.UserWorks.Where(i => mahangmucs1.Contains(i.BuildingItem_ID)).Select(i => new UserWorkViewModel(i)).ToList();
                 List<string> macongviecs = _db.UserWorks.Where(i => mahangmucs.Contains(i.BuildingItem_ID)).Select(i => i.NormWork_ID).ToList();
                 var haophi = _db.NormDetails.Where(i => macongviecs.Contains(i.NormWork_ID)).Select(i => new DetailNormWork_PriceViewModel(i)).ToList();
                 //var congtrinh = _db.CongTrinhs.Where(i => i.MaCT.Equals(ID)).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
@@ -448,7 +448,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                         ws1.Cells[F].Value = row.NormWork_ID;
                         ws1.Cells[I].Value = row.Name;
                         ws1.Cells[K].Value = row.Unit;
-                        ws1.Cells[M].Value = row.Numbers;
+                        ws1.Cells[M].Value = row.Number;
                         // chỉnh lại công thức excel
                         ws1.Cells[O].Value = row.SumMaterial;
                         ws1.Cells[Q].Value = row.SumLabor;
@@ -515,7 +515,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 return RedirectToAction("Index");
 
             }
-             */
+             
             return View();
         }
     }

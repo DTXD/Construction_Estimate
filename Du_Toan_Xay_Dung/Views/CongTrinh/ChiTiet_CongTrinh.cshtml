@@ -8,7 +8,6 @@
 <script>
     angular.module('postApp', [])
      .controller('postController', ['$scope', '$http','$filter', function ($scope, $http, $filter) {
-         //$scope.alert = false;
          //load list hangmuc
          $scope.list_hangmuc = [];
          $http.get('/CongTrinh/Get_AllHangMuc').then(function (response) {
@@ -164,9 +163,9 @@
 </script>
 <section class="content" ng-app="postApp" ng-controller="postController">
     <div class="row">
-        <div class="col-xs-12 col-sm-10">
-            <h3>Hạng mục <small class="label label-info">Danh sách</small></h3>
-            <div style="float:right">
+        <div class="col-xs-11 col-sm-10">
+            <h3>Hạng mục <small class="label label-info">Danh sách</small></h3><br />
+            <div>
                 <h4>Chọn công trình</h4>
                 <select ng-model="hangmucfilter" ng-change="change_select(hangmucfilter)" class="selectpicker" data-width="200px">
                     
@@ -177,7 +176,13 @@
                         }
                 </select>
                 </div>
+            <div class="col-md-6" style="margin-left:730px">                          
+                <div class="dataTables_length" id="myTable_length">
+                    <label>Tìm kiếm:<input type="search" ng-model="data" ng-change="search(data)" class="form-control input-sm" placeholder="" aria-controls="myTable"></label>
+                </div>
+            </div>
         </div>
+        
         </div> 
     <div class="row">
         <div class="col-xs-12 col-sm-10">
@@ -185,10 +190,6 @@
                 <div class="row font-orbitron">
                     <div id="myTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap4">
                         <div class="row">
-                        <div class="col-md-6">
-                            <div class="dataTables_length" id="myTable_length">
-                            <label>Tìm kiếm:<input type="search" ng-model="data" ng-change="search(data)" class="form-control input-sm" placeholder="" aria-controls="myTable"></label></div>
-                        </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -196,12 +197,8 @@
                                     <thead>
                                         <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 8px;">#</th><th class="sorting" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" aria-label="Danh mục: activate to sort column ascending" style="width: 790px;">Danh mục</th><th class="sorting" tabindex="0" aria-controls="myTable" rowspan="1" colspan="1" aria-label="Controls: activate to sort column ascending" style="width: 59px;">Điều khiễn</th></tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr><th rowspan="1" colspan="1">#</th><th rowspan="1" colspan="1">Danh mục</th><th rowspan="1" colspan="1">Điều khiển</th></tr>
-                                    </tfoot>
+                                   
                                     <tbody>
-
-
                                         <!--                                    ket thuc vong lap-->
                                         <tr role="row" class="odd" ng-repeat="data in items">
                                             <td></td>
@@ -220,10 +217,10 @@
                                                     <i class="fa fa-edit"></i>Sửa
                                                 </a><br /><br />
                                                 <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/HangMuc/Index/?ID={{data.MaHM}}" target="_blank">
-                                                    <i class="fa fa-edit"></i>Dự Toán
+                                                    <i class="fa fa-calculator"></i>Dự Toán
                                                 </a><br /><br />
                                                 <button data-toggle="modal" ng-click="laydulieu(data)" data-target="#myModal" class="btn btn-danger btn-flat btn-xs">
-                                                    <i class="fa fa-edit">
+                                                    <i class="fa fa-remove">
                                                         Xóa
                                                     </i>
                                                 </button>
