@@ -204,6 +204,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\UnitPriceController.cs" />
     <Compile Include="Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
@@ -463,7 +464,7 @@
     <Content Include="Scripts\DuToan\jquery.editable-select.js" />
     <Content Include="Scripts\DuToan\jquery.editable-select.min.js" />
     <None Include="Scripts\jquery\jquery-3.0.0.intellisense.js" />
-    <Content Include="Scripts\DuToan\Location_Mainmenu_CSS.js" />
+    <Content Include="Scripts\DuToan\Layout_Ctrl.js" />
     <Content Include="Scripts\jquery\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery\jquery-3.0.0.min.js" />
     <Content Include="Scripts\jquery\jquery-3.0.0.slim.js" />
@@ -510,7 +511,6 @@
     <Content Include="Views\CongTrinh\ChiTiet_CongTrinh.cshtml" />
     <Content Include="Views\HangMuc\Index.cshtml" />
     <Content Include="Views\HangMuc\ChiTiet_VL_NC_MTC.cshtml" />
-    <Content Include="Views\HangMuc\Unit_Price.cshtml" />
     <Content Include="Views\CongTrinh\UpdateHangMuc.cshtml" />
     <Content Include="Views\CongTrinh\ThemHangMuc.cshtml" />
     <Content Include="Views\CongTrinh\HinhAnhCT.cshtml" />
@@ -529,6 +529,7 @@
     <Content Include="Views\Admin\suadongia.cshtml" />
     <Content Include="Views\HangMuc\Estimate_Work.cshtml" />
     <Content Include="Scripts\Upload\don_gia.xlsx" />
+    <Content Include="Views\UnitPrice\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

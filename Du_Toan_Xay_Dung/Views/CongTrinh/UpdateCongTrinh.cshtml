@@ -72,15 +72,10 @@
                headers: { 'Content-Type': undefined }
            })
                  .success(function (result) {
-                     if (result == "error") {
-                         // Showing errors.
-                         //$scope.errorEmail = data.errors.email;
-                         var y = document.getElementById("tbloi");
-                         x.style.display = "block";
+                     if (result == "ok") {
+                         open_alert("success");
                      } else {
-                         //$scope.message = data.message;
-                         var x = document.getElementById("alert");
-                         x.style.display = "block";
+                         open_alert("fail");
 
                      }
                  });

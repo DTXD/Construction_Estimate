@@ -55,13 +55,10 @@
                headers: { 'Content-Type': undefined }
            })
              .success(function (result) {
-                 if (result == "error") {
-                     alert("Xảy ra lỗi");
-                     return;
+                 if (result == "ok") {
+                     open_alert("success");
                  } else {
-                     alert("Lưu thành công");
-                     window.location.href = "/CongTrinh/Index";
-
+                     open_alert("fail");
                  }
              });
        };

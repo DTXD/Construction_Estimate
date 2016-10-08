@@ -4,170 +4,173 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <script>
     angular.module('unitprice', [])
-   .controller('UnitPrice_Controller', ['$scope', '$http', function ($scope, $http) {
+    .controller('UnitPrice_Controller', ['$scope', '$http', function ($scope, $http) {
 
-       $scope.list_all_Price = null;
-       $scope.list_temp_Price_Add = [];
-       $scope.list_temp_Price_Edit = [];
-       $scope.show_default_Price = true;
-       $scope.list_area = [];
-       var area_id_now = null;
-       getArea();
-       function getArea() {
-           $http.get('/HangMuc/GetArea_PriceUser').then(function (response) {
-               $scope.list_area = response.data;
-               //console.log($scope.list_area);
-           }, function (response) {
-               //Showing errors
-           });
-       };
-
-       $scope.list_ResourceUser = [];
-       $scope.list_ResourceUser_length = 0;
-
-       function getListPrice_User(id) {
-           return $http({
-               method: "GET",
-               url: "/HangMuc/GetResource_User",
-               params: { id: id }
-           })
-               .then(function (response) {
-                   $scope.list_ResourceUser = response.data;
-                   $scope.list_ResourceUser_length = response.data.length;
-               }, function (response) {
-                   //showing errors
-               });
-       };
-
-       $scope.submit_unitprice = function () {
-
-           var obj = {
-               Name: $scope.Name,
-               Address: $scope.Address
-           };
-           $http({
-               method: "post",
-               url: "/HangMuc/post_createUnitPrice",
-               data: JSON.stringify(obj),
-               dataType: "json",
-           })
-            .success(function (result) {
-                location.reload();
+        $scope.list_all_Price = null;
+        $scope.list_temp_Price_Add = [];
+        $scope.list_temp_Price_Edit = [];
+        $scope.show_default_Price = true;
+        $scope.list_area = [];
+        var area_id_now = null;
+        getArea();
+        function getArea() {
+            $http.get('/UnitPrice/GetArea_PriceUser').then(function (response) {
+                $scope.list_area = response.data;
+                //console.log($scope.list_area);
+            }, function (response) {
+                //Showing errors
             });
-       };
+        };
 
-       $scope.show_Resource = function (id) {
-           getListPrice_User(id);
-           $scope.table_Resource = true;
+        $scope.list_ResourceUser = [];
+        $scope.list_ResourceUser_length = 0;
 
-           //put area_id to add resourse
-           area_id_now = id;
-       };
+        function getListPrice_User(id) {
+            return $http({
+                method: "GET",
+                url: "/UnitPrice/GetResource_User",
+                params: { id: id }
+            })
+                .then(function (response) {
+                    $scope.list_ResourceUser = response.data;
+                    $scope.list_ResourceUser_length = response.data.length;
+                }, function (response) {
+                    //showing errors
+                });
+        };
 
-       $scope.btn_editPrice = function ($event) {
+        $scope.submit_unitprice = function () {
 
-           var td = angular.element($event.currentTarget).parent();
-           var input = td.find("input");
-           input.css("display", "");
+            var obj = {
+                Name: $scope.Name,
+                Address: $scope.Address
+            };
+            $http({
+                method: "post",
+                url: "/UnitPrice/post_createUnitPrice",
+                data: JSON.stringify(obj),
+                dataType: "json",
+            })
+             .success(function (result) {
+                 open_alert("success");
+                 location.reload();
+             });
+        };
 
-       };
+        $scope.show_Resource = function (id) {
+            getListPrice_User(id);
+            $scope.table_Resource = true;
 
-       //change resource price in unitprice
-       $scope.blur = function (x) {
-           var d = $scope.list_temp_Price_Edit.indexOf(x);
-           //checked and then unchecked
-           if (d > -1) {
-               //delete work when uncheck
-               $scope.list_temp_Price_Edit.splice(d, 1);
-           }
-           else {
-               $scope.list_temp_Price_Edit.push(x);
-           }
-       };
+            //put area_id to add resourse
+            area_id_now = id;
+        };
 
-       $scope.btn_addResource = function () {
-           $scope.list_temp_Price_Add = [];
-           if ($scope.list_all_Price == null) {
-               $http.get('/HangMuc/GetDSDonGia').then(function (response) {
-                   $scope.list_all_Price = response.data;
-               }, function (response) {
-                   //Showing errors
-               });
+        $scope.btn_editPrice = function ($event) {
 
-           }
-       };
+            var td = angular.element($event.currentTarget).parent();
+            var input = td.find("input");
+            input.css("display", "");
 
-       $scope.checkbox_search = function (x) {
-           var d = $scope.list_temp_Price_Add.indexOf(x);
-           //checked and then unchecked
-           if (d > -1) {
-               //delete work when uncheck
-               $scope.list_temp_Price_Add.splice(d, 1);
-           }
-           else {
-               $scope.list_temp_Price_Add.push(x);
-           }
-       };
+        };
 
-       //save resource when user search and save with element
-       $scope.btn_display_Resource = function () {
+        //change resource price in unitprice
+        $scope.blur = function (x) {
+            var d = $scope.list_temp_Price_Edit.indexOf(x);
+            //checked and then unchecked
+            if (d > -1) {
+                //delete work when uncheck
+                $scope.list_temp_Price_Edit.splice(d, 1);
+            }
+            else {
+                $scope.list_temp_Price_Edit.push(x);
+            }
+        };
 
-           var list_temp = [];
-           angular.forEach($scope.list_temp_Price_Add, function (value, key) {
-               var obj = {
-                   Area_ID: area_id_now,
-                   UnitPrice_ID: value.ID,
-                   Price: value.Price
-               };
-               list_temp.push(obj);
-           });
+        $scope.btn_addResource = function () {
+            $scope.list_temp_Price_Add = [];
+            if ($scope.list_all_Price == null) {
+                $http.get('/UnitPrice/GetDSDonGia').then(function (response) {
+                    $scope.list_all_Price = response.data;
+                }, function (response) {
+                    //Showing errors
+                });
 
-           $http({
-               method: "post",
-               url: "/HangMuc/Save_Resource",
-               data: JSON.stringify(list_temp),
-               dataType: "json",
-           })
-            .then(function (result) {
-                if (result.data == "ok") {
-                    angular.forEach(list_temp_Price_Add, function (value, key) {
-                        $scope.list_ResourceUser.unshift(value);
-                        //add value into top table.
-                        //$scope.list_ResourceUser.push(value);
-                    });
-                }
+            }
+        };
+
+        $scope.checkbox_search = function (x) {
+            var d = $scope.list_temp_Price_Add.indexOf(x);
+            //checked and then unchecked
+            if (d > -1) {
+                //delete work when uncheck
+                $scope.list_temp_Price_Add.splice(d, 1);
+            }
+            else {
+                $scope.list_temp_Price_Add.push(x);
+            }
+        };
+
+        //save resource when user search and save with element
+        $scope.btn_display_Resource = function () {
+
+            var list_temp = [];
+            angular.forEach($scope.list_temp_Price_Add, function (value, key) {
+                var obj = {
+                    Area_ID: area_id_now,
+                    UnitPrice_ID: value.UnitPrice_ID,
+                    Price: value.Price
+                };
+                list_temp.push(obj);
             });
-       };
 
-       //save resource when user edit price
-       $scope.btn_SavePrice = function () {
-           
-           var list_temp = [];
-           angular.forEach($scope.list_temp_Price_Edit, function (value, key) {
-               var obj = {
-                   Area_ID: area_id_now,
-                   UnitPrice_ID: value.ID,
-                   Price: value.Price
-               };
-               list_temp.push(obj);
-           });
+            $http({
+                method: "post",
+                url: "/UnitPrice/Save_Resource",
+                data: JSON.stringify(list_temp),
+                dataType: "json",
+            })
+             .then(function (result) {
+                 if (result.data == "ok") {
+                     //console.log($scope.list_temp_Price_Add);
+                     angular.forEach($scope.list_temp_Price_Add, function (value, key) {
+                         $scope.list_ResourceUser.unshift(value);
+                         //add value into top table.
+                         //$scope.list_ResourceUser.push(value);
+                         open_alert("success");
+                     });
+                 }
+             });
+        };
 
-           $http({
-               method: "post",
-               url: "/HangMuc/Save_Resource",
-               data: JSON.stringify(list_temp),
-               dataType: "json",
-           })
-            .then(function (result) {
-                if (result.data == "ok") {
-                    alert("thanh cong...!!!");
-                }
+        //save resource when user edit price
+        $scope.btn_SavePrice = function () {
+            var list_temp = [];
+            angular.forEach($scope.list_temp_Price_Edit, function (value, key) {
+                var obj = {
+                    Area_ID: area_id_now,
+                    UnitPrice_ID: value.UnitPrice_ID,
+                    Price: value.Price
+                };
+                list_temp.push(obj);
             });
-       };
 
-   }]);
+            $http({
+                method: "post",
+                url: "/UnitPrice/Save_Resource",
+                data: JSON.stringify(list_temp),
+                dataType: "json",
+            })
+             .then(function (result) {
+                 if (result.data == "ok") {
+                     open_alert("success");
+                 }
+             });
+        };
+
+    }]);
 </script>
 
 <style>
@@ -211,7 +214,7 @@
                             </h3>
                             <div class="box-tools">
                                 <div class="input-group" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search" ng-model="search_unitprice">
+                                    <input type="text" name="txt_search_UnitPriceUser" class="form-control input-sm pull-right" placeholder="Search">
                                     <div class="input-group-btn">
                                         <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                                     </div>
@@ -257,7 +260,7 @@
                         </h3>
                         <div class="box-tools">
                             <div class="input-group" style="width: 300px;">
-                                <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search" ng-model="search_unitprice">
+                                <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search" id="txt_search_ResourceUser" ng-model="search_unitprice">
                                 <div class="input-group-btn">
                                     <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                                 </div>
@@ -361,7 +364,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group" style="margin-top:10px">
                                     <div class="col-sm-12">
-                                        <input class="form-control" id="txt_search" ng-model="keysearch" autofocus placeholder="Nhập công việc cần tìm kiếm..." />
+                                        <input class="form-control" id="txt_search_resource" ng-model="keysearch" autofocus placeholder="Nhập thành phần hao phí cần tìm kiếm..." />
                                     </div>
                                     <div class="col-sm-12" style="margin-top:10px;">
                                         <div class="box-body table-responsive no-padding" style="height:220px; overflow-y:auto">
@@ -377,7 +380,7 @@
                                                         <td>
                                                             <input type="checkbox" value="{{x}}" ng-model="x.checked" ng-click="checkbox_search(x)" />
                                                         </td>
-                                                        <td>{{x.ID}}</td>
+                                                        <td>{{x.UnitPrice_ID}}</td>
                                                         <td>{{x.Name}}</td>
                                                         <td>{{x.Unit}}</td>
                                                     </tr>
@@ -399,7 +402,7 @@
                                                     </tr>
                                                     <tr ng-repeat="x in list_temp_Price_Add">
                                                         <td></td>
-                                                        <td>{{x.ID}}</td>
+                                                        <td>{{x.UnitPrice_ID}}</td>
                                                         <td>{{x.Name}}</td>
                                                         <td>{{x.Unit}}</td>
                                                         <td>

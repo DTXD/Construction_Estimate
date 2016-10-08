@@ -85,13 +85,11 @@
                    })
                        .success(function (result) {
                            if (result == "ok") {
-                               //alert("Xóa thành công");
-                               var x = document.getElementById("alertxoa");
-                               x.style.display = "block";
+                               open_alert("success");
+                               location.reload();
                            }
                            else {
-                               var y = document.getElementById("tbloi");
-                               x.style.display = "block";
+                               open_alert("fail");
 
                            }
                        });
@@ -159,13 +157,11 @@
                    headers: { 'Content-Type': undefined }
                })
                  .success(function (result) {
-                     if (result == "error") {
-                         var x = document.getElementById("tbloi");
-                         x.style.display = "block";
+                     if (result == "ok") {
+                         open_alert("success");
+                         location.reload();
                      } else {
-                        
-                         var x = document.getElementById("alert");
-                         x.style.display = "block";
+                         open_alert("fail");
                      }
                  });
            }
@@ -239,7 +235,7 @@
             </div>
             <div class="col-xs-12 col-sm-2">
                 <p style="padding:5px"></p>
-                <button style="margin-right:100px" class="btn btn-primary form-control" data-toggle="modal" data-target="#modal_add_building"><b><span class="glyphicon glyphicon-plus"></span>&nbsp;</b>THÊM</button>
+                <button style="margin-right:100px" class="btn btn-primary form-control" data-toggle="modal" data-target="#modal_add_building"><strong>Thêm Công Trình</strong></button>
             </div>
         </div><br /><hr />    
         <!--list cong trinh, copy ra 1 file rieng de de~
@@ -411,7 +407,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-4">
-                                    <button type="button" class="btn btn-block btn-primary btn-lg" id="btn_submit" ng-click="submit()">Lưu</button>
+                                    <button type="button" class="btn btn-block btn-primary btn-lg" id="btn_submit" ng-click="submit()" data-dismiss="modal">Lưu</button>
                                 </div>
                             </div>
                         </form>
@@ -451,86 +447,6 @@
                 <div class="modal-footer">
                     <a class="btn btn-danger" data-dismiss="modal" ng-click="submitForm()">Đồng ý</a>
                     <a class="btn btn-default" data-dismiss="modal">Hủy</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="alert" class="modal font-arial">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <input type="hidden" ng-model="MaHM" />
-                <!--header-->
-                <div class="modal-header bg-aqua">
-                    <!--title-->
-                    <div class="modal-title">
-                        <h4 class="text-info">Thông báo</h4>
-                    </div>
-                </div>
-                <!--body-->
-                <div class="modal-body">
-                    <!--alert message research-->
-                    <div class="alert alert-success alert-dismissible fade in" role="alert">
-                        <p>
-                            Lưu thành công. Click "Đồng Ý" để tiếp tục
-                        </p>
-                    </div>
-                </div>
-                <!--footer-->
-                <div class="modal-footer">
-                    <a class="btn btn-info" data-dismiss="modal" ng-click="return()">Đồng ý</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="alertxoa" class="modal font-arial">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <input type="hidden" ng-model="MaHM" />
-                <!--header-->
-                <div class="modal-header bg-aqua">
-                    <!--title-->
-                    <div class="modal-title">
-                        <h4 class="text-danger">Thông báo</h4>
-                    </div>
-                </div>
-                <!--body-->
-                <div class="modal-body">
-                    <!--alert message research-->
-                    <div class="alert alert-success alert-dismissible fade in" role="alert">
-                        <p>
-                            Xóa thành công. Click "Đồng Ý" để tiếp tục
-                        </p>
-                    </div>
-                </div>
-                <!--footer-->
-                <div class="modal-footer">
-                    <a class="btn btn-info" data-dismiss="modal" ng-click="return()">Đồng ý</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="tbloi" class="modal font-arial">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <!--header-->
-                <div class="modal-header bg-danger">
-                    <!--title-->
-                    <div class="modal-title">
-                        <h4 class="text-danger">Thông báo lỗi</h4>
-                    </div>
-                </div>
-                <!--body-->
-                <div class="modal-body">
-                    <!--alert message research-->
-                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                        <p>
-                            Xảy ra lỗi. Click trở về để quay lại.
-                        </p>
-                    </div>
-                </div>
-                <!--footer-->
-                <div class="modal-footer">
-                    <a class="btn btn-info" data-dismiss="modal" ng-click="return()">Trở về</a>
                 </div>
             </div>
         </div>

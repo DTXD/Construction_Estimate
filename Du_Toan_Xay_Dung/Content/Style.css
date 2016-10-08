@@ -186,12 +186,12 @@ a {
     background: #3C342E;
 }
 
-#menu {
+.main_menu {
     overflow: hidden;
     height: 52px;
 }
 
-    #menu ul {
+    .main_menu ul {
         margin: 0;
         padding: 0px 0px 0px 0px;
         list-style: none;
@@ -199,11 +199,11 @@ a {
         text-align: center;
     }
 
-    #menu li {
+    .main_menu li {
         display: inline-block;
     }
 
-    #menu a {
+    .main_menu a {
         display: block;
         padding: 0px 30px;
         line-height: 52px;
@@ -218,13 +218,13 @@ a {
         color: #FFFFFF;
     }
 
-        #menu a:hover, #menu .current_page_item a {
+        .main_menu a:hover, .main_menu .current_page_item a {
             background: #DE5635;
             text-decoration: none;
             color: #FFFFFF;
         }
 
-    #menu .current_page_item a {
+    .main_menu .current_page_item a {
     }
 
 /* Page */

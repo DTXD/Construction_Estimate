@@ -16,11 +16,9 @@
                  headers: { 'Content-Type': 'application/json' }
              })
                  .success(function (result) {
-                     if (result == "error") {
-                         // Showing errors.
-                         //$scope.errorEmail = data.errors.email;
-                         alert("Xảy ra lỗi");
-                         return;
+                     if (result == "ok") {
+                         open_alert("success");
+
                      } else {
                          //$scope.message = data.message;
                          alert("Lưu thành công");

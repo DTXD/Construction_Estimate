@@ -29,7 +29,12 @@ namespace Du_Toan_Xay_Dung.Controllers
 
         public JsonResult GetDSDonGia()
         {
-            var list = _db.UnitPrices.Select(i => new DonGiaViewModel(i)).ToList();
+            var list = _db.UnitPrices.Select(i => new
+            {
+                UnitPrice_ID = i.ID,
+                Name = i.Name,
+                Unit = i.Unit
+            }).ToList();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
@@ -123,10 +128,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
         }
 
-        public ActionResult Unit_Price()
-        {
-            return View();
-        }
+        
 
         [HttpPost]
         public JsonResult Save_Resource(List<UnitPrice_AreaViewModel> list)
@@ -135,7 +137,7 @@ namespace Du_Toan_Xay_Dung.Controllers
             {
                 foreach (var item in list)
                 {
-                    var upa = _db.UnitPrice_Areas.FirstOrDefault(i => i.Area_ID.Equals(item.Area_ID) && i.UnitPrice_ID.Equals(item.UnitPrice_ID));
+                    var upa = _db.UnitPrice_Areas.Where(i => i.Area_ID.Equals(item.Area_ID) && i.UnitPrice_ID.Equals(item.UnitPrice_ID)).FirstOrDefault();
                     if (upa != null)
                     {
                         upa.Price = item.Price;

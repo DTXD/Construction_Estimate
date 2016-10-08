@@ -19,11 +19,19 @@
     <script src="~/Scripts/jquery/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery/jquery-ui-1.8.24.min.js"></script>
 
+
+
+    <!--bootstrap-->
     <script src="~/Scripts/Bootstrap/bootstrap.min.js"></script>
     <script src="~/Scripts/Bootstrap/bootstrap-select.js"></script>
     <script src="~/Scripts/Difference/respond.min.js"></script>
+
+    <!--angular-->
     <script src="~/Scripts/Angular/angular.min.js"></script>
     <script src="~/Scripts/Angular/angular-ui-router.min.js"></script>
+
+    <!--layout-->
+    <script src="~/Scripts/DuToan/Layout_Ctrl.js"></script>
 
     <script type="text/javascript" src="~/Scripts/Dropbox_API/dropins.js" id="dropboxjs" data-app-key="bvkiw5hqpxclgwz"></script>
     <!--upload_file
@@ -40,19 +48,20 @@
             <p>Vươn lên tầm cao mới</p>
         </div>
         <div id="menu-wrapper">
-            <div id="menu" class="container">
+            <div id="main_menu" class="container main_menu">
                 <ul>
                     <li><a href="/Home/Index">Trang Chủ</a></li>
                     @if (SessionHandler.User != null)
                     {
                         <li><a href="/CongTrinh/Index">Công Trình</a></li>
-                        <li><a href="/HangMuc/Unit_Price">Đơn Giá</a></li>
                     }
                     <li><a id="btn_href_dutoan" href="/HangMuc/Estimate_Work">Dự Toán</a></li>
-                    <li><a>Photos</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Links</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    @if (SessionHandler.User != null)
+                    {
+                        <li><a href="/UnitPrice/Index">Đơn Giá</a></li>
+                    }
+                    <li><a>Tin Tức</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
                     @if (SessionHandler.User == null)
                     {
                         <li><a href="/Account/Login">Đăng Nhập</a></li>
@@ -65,6 +74,13 @@
                 </ul>
             </div>
         </div>
+        <!--
+        <div>
+            <div id="alert_success" style="color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; position: fixed; right: 46%; opacity: 1; padding: 10px; border-radius: 4px; ">
+            <strong>Success!</strong>
+            </div>
+        </div>
+            -->
         <!-- end #page cho nay la nhung cai thay doi ben trong, thay k?  -->
         <div class="container body-content" id="body_content">
             @RenderBody()
@@ -80,13 +96,11 @@
         <p>© 2013 Untitled Inc. All rights reserved. Lorem ipsum dolor sit amet nullam blandit consequat phasellus etiam lorem. Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.  Photos by <a href="http://fotogrph.com/">Fotogrph</a>.</p>
     </div>
     <!-- end #footer -->
-    <!-- day la js cua MVC no nam trong bundles -->
-    <script src="~/Scripts/DuToan/Location_Mainmenu_CSS.js"></script>
-
-
     @*@Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("Scripts", required: false)
     @RenderSection("CSS", required: false)
+
+
 </body>
 </html>

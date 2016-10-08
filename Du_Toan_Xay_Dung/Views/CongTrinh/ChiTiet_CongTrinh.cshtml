@@ -42,12 +42,10 @@
                      })
                          .success(function (result) {
                              if (result == "ok") {
-                                 var x = document.getElementById("alertxoa");
-                                 x.style.display = "block";
+                                 open_alert("success");
                              }
                              else {
-                                 var y = document.getElementById("tbloi");
-                                 x.style.display = "block";
+                                 open_alert("fail");
                              }
 
 
@@ -72,12 +70,10 @@
                      headers: { 'Content-Type': undefined }
                  })
                    .success(function (result) {
-                       if (result == "error") {
-                           var y = document.getElementById("tbloi");
-                           x.style.display = "block";
+                       if (result == "ok") {
+                           open_alert("success");
                        } else {
-                           var x = document.getElementById("alert");
-                           x.style.display = "block";
+                           open_alert("fail");
 
                        }
                    });
@@ -148,12 +144,10 @@
                 headers: { 'Content-Type': undefined }
             })
               .success(function (result) {
-                  if (result == "error") {
-                      var y = document.getElementById("tbloi");
-                      x.style.display = "block";
+                  if (result == "ok") {
+                      open_alert("success");
                   } else {
-                      var x = document.getElementById("alert");
-                      x.style.display = "block";
+                      open_alert("fail");
 
                   }
               });
@@ -348,86 +342,6 @@
                 <div class="modal-footer">
                     <a class="btn btn-danger" data-dismiss="modal" ng-click="xoa()">Đồng ý</a>
                     <a class="btn btn-default" data-dismiss="modal">Hủy</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="alert" class="modal font-arial">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <input type="hidden" ng-model="MaHM" />
-                <!--header-->
-                <div class="modal-header bg-aqua">
-                    <!--title-->
-                    <div class="modal-title">
-                        <h4 class="text-info">Thông báo</h4>
-                    </div>
-                </div>
-                <!--body-->
-                <div class="modal-body">
-                    <!--alert message research-->
-                    <div class="alert alert-success alert-dismissible fade in" role="alert">
-                        <p>
-                            Lưu thành công. Click "Đồng Ý" để tiếp tục
-                        </p>
-                    </div>
-                </div>
-                <!--footer-->
-                <div class="modal-footer">
-                    <a class="btn btn-info" data-dismiss="modal" ng-click="return()">Đồng ý</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="alertxoa" class="modal font-arial">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <input type="hidden" ng-model="MaHM" />
-                <!--header-->
-                <div class="modal-header bg-aqua">
-                    <!--title-->
-                    <div class="modal-title">
-                        <h4 class="text-aqua">Thông báo</h4>
-                    </div>
-                </div>
-                <!--body-->
-                <div class="modal-body">
-                    <!--alert message research-->
-                    <div class="alert alert-success alert-dismissible fade in" role="alert">
-                        <p>
-                            Xóa thành công. Click "Đồng Ý" để tiếp tục
-                        </p>
-                    </div>
-                </div>
-                <!--footer-->
-                <div class="modal-footer">
-                    <a class="btn btn-info" data-dismiss="modal" ng-click="return()">Đồng ý</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="tbloi" class="modal font-arial">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <!--header-->
-                <div class="modal-header bg-danger">
-                    <!--title-->
-                    <div class="modal-title">
-                        <h4 class="text-danger">Thông báo lỗi</h4>
-                    </div>
-                </div>
-                <!--body-->
-                <div class="modal-body">
-                    <!--alert message research-->
-                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                        <p>
-                            Xảy ra lỗi. Click trở về để quay lại.
-                        </p>
-                    </div>
-                </div>
-                <!--footer-->
-                <div class="modal-footer">
-                    <a class="btn btn-info" data-dismiss="modal" ng-click="return()">Trở về</a>
                 </div>
             </div>
         </div>
