@@ -183,20 +183,20 @@ namespace Du_Toan_Xay_Dung.Controllers
         [PageLogin]
         public JsonResult Delete_HangMuc(HangMucViewModel obj)
         {
-            try
-            {
-                var hangmuc = _db.BuildingItems.Single(i => i.ID.Equals(obj.ID));
+            //try
+            //{
+            var hangmuc = _db.BuildingItems.Single(i => i.ID.Equals(obj.ID));
                 if (hangmuc != null)
                 {
                     _db.BuildingItems.DeleteOnSubmit(hangmuc);
                 }
                 _db.SubmitChanges();
                 return Json("ok");
-            }
-            catch (Exception)
-            {
-                return Json("error");
-            }
+            //}
+            //catch (Exception)
+            //{
+               // return Json("error");
+            //}
         }
         /*[PageLogin]
         public ActionResult ThemCongTrinh()

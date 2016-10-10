@@ -213,6 +213,7 @@
        //array did filter
        $scope.chitiet = [];
        $scope.changeclick = function (value) {
+           console.log(value);
            $scope.chitiet = $filter('filter')($scope.list_thongtin, value);
        };
 
