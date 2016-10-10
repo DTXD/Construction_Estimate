@@ -104,8 +104,8 @@ namespace Du_Toan_Xay_Dung.Controllers
         [HttpPost]
         public JsonResult post_updatecongtrinh(BuildingViewModel obj)
         {
-            try
-            {
+            //try
+            //{
                 var congtrinh = _db.Buildings.First(m => m.ID == obj.ID);
                 var index1 = _db.Images_Urls.OrderByDescending(i => i.ID).Select(i => i.ID).FirstOrDefault();
                 if (obj.img_congtrinh != null)
@@ -149,11 +149,11 @@ namespace Du_Toan_Xay_Dung.Controllers
                 }
                 _db.SubmitChanges();
                 return Json("ok");
-            }
-            catch (Exception)
-            {
-                return Json("error");
-            }
+            //}
+            //catch (Exception)
+            //{
+                //return Json("error");
+            //}
         }
         public JsonResult Get_Allinf1()
         {
@@ -261,7 +261,7 @@ namespace Du_Toan_Xay_Dung.Controllers
 
                 return Json("ok");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return Json("error");
             }
@@ -302,11 +302,11 @@ namespace Du_Toan_Xay_Dung.Controllers
             {
                 var congtrinh = _db.Buildings.Where(i => i.ID.Equals(ID)).Select(i => new BuildingViewModel(i)).FirstOrDefault();
                 var hangmuc = _db.BuildingItems.Where(i => i.Building_ID.Equals(ID)).Select(i => new HangMucViewModel(i)).ToList();
-                var mahangmucs = _db.BuildingItems.Where(i => i.Building_ID.Equals(ID)).Select(i => i.ID).ToList();
+                //var mahangmucs = _db.BuildingItems.Where(i => i.Building_ID.Equals(ID)).Select(i => i.ID).ToList();
                 List<long> mahangmucs1 = _db.BuildingItems.Where(i => i.Building_ID.Equals(ID)).Select(i => i.ID).ToList();
                 var congviec = _db.UserWorks.Where(i => mahangmucs1.Contains(i.BuildingItem_ID)).Select(i => new UserWorkViewModel(i)).ToList();
-                List<string> macongviecs = _db.UserWorks.Where(i => mahangmucs.Contains(i.BuildingItem_ID)).Select(i => i.NormWork_ID).ToList();
-                var haophi = _db.NormDetails.Where(i => macongviecs.Contains(i.NormWork_ID)).Select(i => new DetailNormWork_PriceViewModel(i)).ToList();
+                List<string> macongviecs = _db.UserWorks.Where(i => mahangmucs1.Contains(i.BuildingItem_ID)).Select(i => i.NormWork_ID).ToList();
+                var haophi = _db.NormDetails.Where(i => macongviecs.Contains(i.NormWork_ID)).Select(i => new DonGiaChiTiet_DM_ViewModel(i)).ToList();
                 //var congtrinh = _db.CongTrinhs.Where(i => i.MaCT.Equals(ID)).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
 
                 //var hangmuc = _db.HangMucs.Where(i => i.MaCT.Equals(ID)).Select(i => new HangMucViewModel(i)).ToList();
@@ -460,16 +460,14 @@ namespace Du_Toan_Xay_Dung.Controllers
                     //add dữ liệu cho sheet thành phần hao phí
                     // table 
                     ws2.Cells["I5"].Value = "DANH MỤC THÀNH PHẦN HAO PHÍ";
-                    ws2.Cells["B8"].Value = "Mã hạng mục";
-                    ws2.Cells["B8:D8"].Merge = true;
-
+                    
                     ws2.Cells["E8"].Value = "Mã hiệu công việc- user";
                     ws2.Cells["E8:G8"].Merge = true;
 
-                    ws2.Cells["H8"].Value = "Tên thành phần";
+                    ws2.Cells["H8"].Value = "Mã thành phần";
                     ws2.Cells["H8:M8"].Merge = true;
 
-                    ws2.Cells["N8"].Value = "Đơn vị";
+                    ws2.Cells["N8"].Value = "Số lượng";
                     ws2.Cells["N8:Q8"].Merge = true;
 
                     ws2.Cells["R8"].Value = "Đơn giá";
@@ -493,11 +491,11 @@ namespace Du_Toan_Xay_Dung.Controllers
 
                         //  content
 
-                        ws2.Cells[B].Value = row.Key_Material;
-                        ws2.Cells[E].Value = row.Key_NormWork;
-                        ws2.Cells[H].Value = row.Name_Material;
-                        ws2.Cells[N].Value = row.Unit;
-                        ws2.Cells[R].Value = row.Price_Material;
+                       
+                        ws2.Cells[E].Value = row.NormWork_ID;
+                        ws2.Cells[H].Value = row.ID;
+                        ws2.Cells[N].Value = row.Numbers;
+                        ws2.Cells[R].Value = row.UnitPrice_ID;
                         r2++;
                     }
 
