@@ -89,7 +89,6 @@
     <div class="col-sm-12">
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <button ng-click="save_work()">save</button>
             </div>
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
@@ -108,10 +107,10 @@
                         <div style="left:50%;width:10%;top:0px;" class="row_header">Đơn Vị</div>
                         <div style="left:60%;width:6%;top:0px;" class="row_header">Khối Lượng</div>
                         <div style="left:66%;width:6%;top:0px;" class="row_header">Định Mức</div>
-                        <div style="left:72%;width:10%;top:0px;" class="row_header">Giá Hao Phí</div>
-                        <div style="left:82%;width:6%;top:0px;" class="row_header">Khối Lượng Hao Phí</div>
-                        <div style="left:88%;width:5%;top:0px;" class="row_header">Loại</div>
-                        <div style="left:93%;width:7%;top:0px;" class="row_header">Thành Tiền</div>
+                        <div style="left:72%;width:8%;top:0px;" class="row_header">Giá Hao Phí</div>
+                        <div style="left:80%;width:6%;top:0px;" class="row_header">KLHP</div>
+                        <div style="left:86%;width:4%;top:0px;" class="row_header">Loại</div>
+                        <div style="left:90%;width:10%;top:0px;" class="row_header">Thành Tiền</div>
                         
                     </div>
                 </div>
@@ -142,16 +141,16 @@
                             <div style="left: 66%; width: 6%;" class="cell">
                                 <input type="text" ng-model="specification.Norm" class="input_sheet" />
                             </div>
-                            <div style="left: 72%; width: 10%;" class="cell">
+                            <div style="left: 72%; width: 8%;" class="cell">
                                 <input type="text" ng-model="specification.Price" class="input_sheet" />
                             </div>
-                            <div style="left: 82%; width: 6%;" class="cell">
+                            <div style="left: 80%; width: 6%;" class="cell">
                                 <input type="text" ng-model="specification.Number_Resource" class="input_sheet"/>
                             </div>
-                            <div style="left: 88%; width: 5%;" class="cell">
+                            <div style="left: 86%; width: 4%;" class="cell">
                                 <input type="text" ng-model="specification.Category" class="input_sheet" />
                             </div>
-                            <div style="left: 93%; width: 7%;" class="cell">
+                            <div style="left: 90%; width: 10%;" class="cell">
                                 <input type="text" ng-model="specification.Sum" class="input_sheet" />
                             </div>
                             <input type="hidden" ng-model="specification.BuildingItem_ID" />

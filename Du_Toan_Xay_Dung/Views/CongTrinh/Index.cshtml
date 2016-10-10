@@ -279,31 +279,7 @@
                                 </div>
                                 <div class="panel-footer">
                                     <div class="row">
-                                        @if (congtrinhs_null != null)
-                                        {
-                                            foreach (var k in congtrinhs_null)
-                                            {
-                                                if (k.Equals(item.ID))
-                                                {
-                                                    d = 1;
-                                                    break;
-                                                }
-                                            }
-                                            //if d=0 ==> khong tim thay cong trinh null trong toan bo cong trinh user
-                                            if (d == 0)
-                                            {
-                                                <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ChiTiet_CongTrinh" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
-                                            }
-                                            else
-                                            {
-                                                <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ChiTiet_CongTrinh" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
-                                            }
-                                        }
-                                        else
-                                        {
-
-                                            <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ChiTiet_CongTrinh" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
-                                        }
+                                        <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/ChiTiet_CongTrinh/@item.ID" target="_blank"><i class="fa fa-fw fa-list" style="font-size: initial"></i></a>
                                         <form method="post" name="formAdd" id="formAdd" ng-submit="submitForm()">
                                             <input type="hidden" value="@item.ID" id="mact" />
                                             <a class="btn btn-default" style="float:left;margin-left:20px" href="/CongTrinh/UpdateCongTrinh/@item.ID" target="_blank"><i class="fa fa-fw fa-edit" style="font-size:large"></i></a>

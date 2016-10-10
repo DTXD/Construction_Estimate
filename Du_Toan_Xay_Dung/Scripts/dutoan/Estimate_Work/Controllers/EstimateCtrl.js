@@ -17,8 +17,6 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
 
     //data searched
     $scope.list_searched = [];
-    var index_work = 1;                     //id work in sheet
-
 
     function getNormWorks() {
         dataService.getNormworks().then(function (data) {
@@ -43,93 +41,68 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
         });
     };
 
-    
-
-    //check session and building id
     var buildingItem_id = angular.element("#txt_building_item").val();
     var session_user = angular.element("#txt_session_user").val();
 
-    //create list works
-    for (var i = 0; i < 10; i++) {
-        var item = {
-            IndexSheet: i,
-            ID: "",
-            NormWork_ID: "",
-            Name: "",
-            Unit: "",
-            Number: "",
-            Horizontal: "",
-            Vertical: "",
-            Height: "",
-            Area: "",
-            PriceMaterial: "",
-            PriceLabor: "",
-            PriceMachine: "",
-            SumMaterial: "",
-            SumLabor: "",
-            SumMachine: "",
-            BuildingItem_ID: buildingItem_id,
-            Sub_BuildingItem_ID: ""
-        };
-        $rootScope.works.push(item);
-    }
-
-
-    if (typeof (buildingItem_id) != "undefined" && typeof (session_user) != "undefined") {
-        dataService.getAllSheet(buildingItem_id).then(function (data) {
-            angular.forEach(data, function (value, key) {
-                $rootScope.works[value.IndexSheet].ID = value.ID;
-                $rootScope.works[value.IndexSheet].NormWork_ID = value.NormWork_ID;
-                $rootScope.works[value.IndexSheet].Name = value.Name;
-                $rootScope.works[value.IndexSheet].Unit = value.Unit;
-                $rootScope.works[value.IndexSheet].Number = value.Number;
-                $rootScope.works[value.IndexSheet].Horizontal = value.Horizontal;
-                $rootScope.works[value.IndexSheet].Vertical = value.Vertical;
-                $rootScope.works[value.IndexSheet].Height = value.Height;
-                $rootScope.works[value.IndexSheet].Area = value.Area;
-                $rootScope.works[value.IndexSheet].PriceMaterial = value.PriceMaterial;
-                $rootScope.works[value.IndexSheet].PriceLabor = value.PriceLabor;
-                $rootScope.works[value.IndexSheet].PriceMachine = value.PriceMachine;
-                $rootScope.works[value.IndexSheet].SumMaterial = value.SumMaterial;
-                $rootScope.works[value.IndexSheet].SumLabor = value.SumLabor;
-                $rootScope.works[value.IndexSheet].SumMachine = value.SumMachine;
-                $rootScope.works[value.IndexSheet].BuildingItem_ID = value.BuildingItem_ID;
-                $rootScope.works[value.IndexSheet].Sub_BuildingItem_ID = value.Sub_BuildingItem_ID;
-
-                var regular_expression = /^\d+$/;
-                if (regular_expression.test(value.ID)) {
-                    index_work = parseInt(index_work) + 1;
-                }
-            });
-        });
-    }
-
     function SaveWorktoDatabase(items) {
+        if (typeof (buildingItem_id) != "undefined" && typeof (session_user) != "undefined") {
+            $scope.message_save = true;
+            $http({
+                method: "post",
+                url: "/HangMuc/post_savework",
+                data: JSON.stringify(items),
+                dataType: "json",
+            })
+                .success(function (result) {
+                    //display message
+                    window.setTimeout(function () { $scope.message_save = false; }, 100);
+                });
+        }
+        else {
+            $scope.message_save = true;
+            angular.element("#Message_saved").text("Bạn chưa đăng nhập...!!!");
+        }
+        
+    };
 
-        $http({
-            method: "post",
-            url: "/HangMuc/post_updatework",
-            data: JSON.stringify(items),
-            dataType: "json",
-        })
-            .success(function (result) {
-                //display message
-                angular.element("#Message_saved").text(result);
-            });
+    function UpdateWorktoDatabase(items) {
+        if (typeof (buildingItem_id) != "undefined" && typeof (session_user) != "undefined") {
+            $scope.message_save = true;
+            $http({
+                method: "post",
+                url: "/HangMuc/post_updatework",
+                data: JSON.stringify(items),
+                dataType: "json",
+            })
+                .success(function (result) {
+                    //display message
+                    window.setTimeout(function () { $scope.message_save = false; }, 100);
+                });
+        }
+        else {
+            $scope.message_save = true;
+            angular.element("#Message_saved").text("Bạn chưa đăng nhập...!!!");
+        }
+        
     };
 
     function SaveResourcetoDatabase(items) {
-
-        $http({
-            method: "post",
-            url: "/HangMuc/post_updateresource",
-            data: JSON.stringify(items),
-            dataType: "json",
-        })
-            .success(function (result) {
-                //display message
-                //angular.element("#Message_saved").text(result);
-            });
+        if (typeof (buildingItem_id) != "undefined" && typeof (session_user) != "undefined") {
+            $scope.message_save = true;
+            $http({
+                method: "post",
+                url: "/HangMuc/post_updateresource",
+                data: JSON.stringify(items),
+                dataType: "json",
+            })
+                .success(function (result) {
+                    window.setTimeout(function () { $scope.message_save = false; }, 100);
+                });
+        }
+        else {
+            $scope.message_save = true;
+            angular.element("#Message_saved").text("Bạn chưa đăng nhập...!!!");
+        }
     };
 
 
@@ -166,6 +139,7 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
             };
         }
         else {
+            $scope.message_save = true;
             angular.element("#Message_saved").text("Bạn chưa đăng nhập...!!!");
         }
     };
@@ -199,7 +173,7 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
     };
 
     //Amazing code: checked and copy list data to listsearch and calculate price
-    $scope.checkbox_search = function (x, $index) {
+    $scope.checkbox_search = function (x) {
 
         var btn_save = angular.element(document.querySelector("#btn_search_normwork"));
         var d = $scope.list_searched.indexOf(x);
@@ -217,7 +191,7 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
                 }
             };
 
-            $scope.checked.splice($scope.checked.indexOf($index), 1);
+            $scope.checked.splice(d, 1);
 
         }
         else {
@@ -261,7 +235,7 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
 
             //push index to list checked
 
-            $scope.checked.push($index);
+            $scope.checked.push(x.$$hashKey);
         }
 
         //change content button when list != null
@@ -286,7 +260,7 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
             var index = parseInt(id);
 
             angular.forEach($scope.list_searched, function (value, key) {
-                $rootScope.works[index].ID = index_work;
+                $rootScope.works[index].ID = $rootScope.index_work;
                 $rootScope.works[index].NormWork_ID = value.ID;
                 $rootScope.works[index].Name = value.Name;
                 $rootScope.works[index].Unit = value.Unit;
@@ -301,23 +275,23 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
 
 
                 //save work and check log in
-                //$rootScope.works[index].Sub_BuildingItem_ID = $scope.subcategory;
-                //SaveWorktoDatabase($rootScope.works[index]);
+                $rootScope.works[index].Sub_BuildingItem_ID = $scope.subcategory;
+                SaveWorktoDatabase($rootScope.works[index]);
 
                 //save resource and check log in
                 var temp_list = [];
                 angular.forEach($scope.listResource, function (value, key) {
                     if (value.NormWork_ID == $rootScope.works[index].NormWork_ID) {
-                        value.UserWork_ID = index_work;
+                        value.UserWork_ID = $rootScope.index_work;
                         temp_list.push(value);
                     }
                 });
-                //SaveResourcetoDatabase(temp_list);
+                SaveResourcetoDatabase(temp_list);
 
 
                 //must fix index work when show work
                 index = index + 1;
-                index_work = parseInt(index_work) + 1;
+                $rootScope.index_work = parseInt($rootScope.index_work) + 1;
 
 
             });
@@ -328,11 +302,17 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
         $scope.popupsearchclass = '';
         $scope.popupsearch = !($scope.popupsearch);
 
-        angular.forEach($scope.checked, function (value, key) {
-            $scope.list_Normwork[value].checked = false;
-        });
-        $scope.list_searched = [];
+        //console.log($scope.checked);
 
+        //angular.forEach($scope.checked, function (value, key) {
+        //    var arr_t = value.split(':');
+        //    console.log($scope.list_Normwork[196]);
+        //    //$scope.list_Normwork[arr_t[1]].checked = false;
+
+        //});
+        
+        $scope.checked = [];
+        $scope.list_searched = [];
     };
 
 
@@ -377,7 +357,7 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
 
 
             //save work and check log in
-            //SaveWorktoDatabase($rootScope.works[id_work]);
+            UpdateWorktoDatabase($rootScope.works[id_work]);
         }
 
 
@@ -425,7 +405,7 @@ angular.module('app_work').controller('EstimateCtrl', ['$scope', '$http', '$root
                 $rootScope.works[id_meanwork].SumMachine = (parseFloat($rootScope.works[id_meanwork].PriceMachine) * parseFloat($rootScope.works[id_meanwork].Area)).toFixed(3);
 
                 //save work and check log in
-                //SaveWorktoDatabase($rootScope.works[id_meanwork]);
+                UpdateWorktoDatabase($rootScope.works[id_meanwork]);
             }
 
 

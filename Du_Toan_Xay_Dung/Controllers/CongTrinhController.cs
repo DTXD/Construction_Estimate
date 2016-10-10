@@ -21,7 +21,7 @@ namespace Du_Toan_Xay_Dung.Controllers
         [PageLogin]
         public ActionResult Index()
         {
-          
+
             ViewData["List_CongTrinh"] = _db.Buildings.Where(i => i.Email.Equals(SessionHandler.User.Email)).Select(i => new BuildingViewModel(i)).ToList();
             ViewData["List_CongTrinh_Null"] = _db.Buildings.Where(i => i.Email.Equals(SessionHandler.User.Email) && !i.BuildingItems.Any(o => o.ID.Equals(i.ID))).Select(i => i.ID).ToList();
             ViewData["list_hinhanh"] = _db.Images_Urls.Select(i => new Images_CongTrinhViewModel(i)).ToList();
@@ -83,8 +83,9 @@ namespace Du_Toan_Xay_Dung.Controllers
                 _db.SubmitChanges();
                 return Json("ok");
             }
-            catch (Exception e){
-            
+            catch (Exception e)
+            {
+
                 return Json("error");
             }
         }
@@ -139,7 +140,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                         {
                             //them image vao database
                             var image = new Images_Url();
-                            image.ID = index1+1;
+                            image.ID = index1 + 1;
                             image.Building_ID = obj.ID;
                             image.Url = "~/Images/CongTrinh/" + file.FileName;
                             _db.Images_Urls.InsertOnSubmit(image);
@@ -175,7 +176,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 return Json("ok");
             }
             catch (Exception)
-           {
+            {
                 return Json("error");
             }
         }
@@ -231,7 +232,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                         }
                     }
                 }
-                
+
                 var congtrinh = new Building();
                 congtrinh.ID = index;
                 congtrinh.Email = SessionHandler.User.Email;
@@ -260,10 +261,10 @@ namespace Du_Toan_Xay_Dung.Controllers
 
                 return Json("ok");
             }
-                catch (Exception)
+            catch (Exception)
             {
-               return Json("error");
-    }
+                return Json("error");
+            }
         }
         /*[PageLogin]
         public ActionResult ThemHangMuc(long id)
@@ -296,7 +297,7 @@ namespace Du_Toan_Xay_Dung.Controllers
 
         public ActionResult ExportToExcel(string ID)
         {
-            
+
             if (ID != null)
             {
                 var congtrinh = _db.Buildings.Where(i => i.ID.Equals(ID)).Select(i => new BuildingViewModel(i)).FirstOrDefault();
@@ -515,7 +516,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 return RedirectToAction("Index");
 
             }
-             
+
             return View();
         }
     }

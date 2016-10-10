@@ -97,13 +97,16 @@
             </div>
         </div>
             -->
-        <div class="col-sm-12">
+        <div class="col-sm-12" style="height:30px">
             <div class="col-sm-4">
-                <button ng-click="save_work()">save</button>
+                
             </div>
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
-                <span id="Message_saved"></span>
+                <span id="Message_saved" style="color:green" ng-show="message_save">
+                    <i class="fa fa-circle-o-notch fa-spin" style="font-size:18px"></i>
+                    Đang lưu vào hệ thống
+                </span>
             </div>
         </div>
         <div class="col-sm-12" style="height:400px;">
@@ -196,7 +199,7 @@
                             </tr>
                             <tr ng-repeat="x in list_Normwork | filter: {ID:keysearch} | limitTo:100">
                                 <td>
-                                    <input type="checkbox" value="{{x}}" ng-model="x.checked" ng-click="checkbox_search(x,$index)" />
+                                    <input type="checkbox" value="{{x}}" ng-model="x.checked" ng-click="checkbox_search(x)" />
                                 </td>
                                 <td>{{x.ID}}</td>
                                 <td>{{x.Name}}</td>

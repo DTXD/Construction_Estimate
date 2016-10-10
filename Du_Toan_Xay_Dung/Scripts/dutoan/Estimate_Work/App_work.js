@@ -89,50 +89,65 @@ app.controller("mainController", ['$scope', '$rootScope', 'dataService', '$http'
         
     };
 
-    /*
-    //intialize object file excel
-    $scope.stepsModel = null;
+    $rootScope.index_work = 1;
 
-    $scope.uploadedFile = function (event) {
-        $scope.$apply(function ($scope) {
-            $scope.files = event.files;
+    //check session and building id
+    var buildingItem_id = angular.element("#txt_building_item").val();
+    var session_user = angular.element("#txt_session_user").val();
+
+    //create list works
+    for (var i = 0; i < 10; i++) {
+        var item = {
+            IndexSheet: i,
+            ID: "",
+            NormWork_ID: "",
+            Name: "",
+            Unit: "",
+            Number: "",
+            Horizontal: "",
+            Vertical: "",
+            Height: "",
+            Area: "",
+            PriceMaterial: "",
+            PriceLabor: "",
+            PriceMachine: "",
+            SumMaterial: "",
+            SumLabor: "",
+            SumMachine: "",
+            BuildingItem_ID: buildingItem_id,
+            Sub_BuildingItem_ID: ""
+        };
+        $rootScope.works.push(item);
+    }
+
+
+    if (typeof (buildingItem_id) != "undefined" && typeof (session_user) != "undefined") {
+        dataService.getAllSheet(buildingItem_id).then(function (data) {
+            angular.forEach(data, function (value, key) {
+                $rootScope.works[value.IndexSheet].ID = value.ID;
+                $rootScope.works[value.IndexSheet].NormWork_ID = value.NormWork_ID;
+                $rootScope.works[value.IndexSheet].Name = value.Name;
+                $rootScope.works[value.IndexSheet].Unit = value.Unit;
+                $rootScope.works[value.IndexSheet].Number = value.Number;
+                $rootScope.works[value.IndexSheet].Horizontal = value.Horizontal;
+                $rootScope.works[value.IndexSheet].Vertical = value.Vertical;
+                $rootScope.works[value.IndexSheet].Height = value.Height;
+                $rootScope.works[value.IndexSheet].Area = value.Area;
+                $rootScope.works[value.IndexSheet].PriceMaterial = value.PriceMaterial;
+                $rootScope.works[value.IndexSheet].PriceLabor = value.PriceLabor;
+                $rootScope.works[value.IndexSheet].PriceMachine = value.PriceMachine;
+                $rootScope.works[value.IndexSheet].SumMaterial = value.SumMaterial;
+                $rootScope.works[value.IndexSheet].SumLabor = value.SumLabor;
+                $rootScope.works[value.IndexSheet].SumMachine = value.SumMachine;
+                $rootScope.works[value.IndexSheet].BuildingItem_ID = value.BuildingItem_ID;
+                $rootScope.works[value.IndexSheet].Sub_BuildingItem_ID = value.Sub_BuildingItem_ID;
+
+                var regular_expression = /^\d+$/;
+                if (regular_expression.test(value.ID)) {
+                    $rootScope.index_work = parseInt($rootScope.index_work) + 1;
+                }
+            });
         });
-        var files = event.target.files; //FileList object
-        var file = files[0];
-        if (typeof (file) != 'undefined') {
-            var filename = file.name;
-            var allowedFiles = [".xls", ".xlsx"];
-            var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
-            if (regex.test(filename.toLowerCase())) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                $scope.stepsModel = file;
-            }
-        }
     }
 
-    $scope.submit_unitprice = function () {
-        if ($scope.stepsModel != null) {
-
-            var fd = new FormData();
-            fd.append("file", $scope.stepsModel);
-
-            $http.post('/HangMuc/upload_file_unitprice', fd, {
-                transformRequest: angular.identity,
-                headers: { 'Content-Type': undefined }
-            })
-             .success(function (result) {
-                 if (result == "ok") {
-                     //...
-                 } else {
-                     //....
-                 }
-             });
-
-        }
-        else {
-
-        }
-    }
-    */
 }]);

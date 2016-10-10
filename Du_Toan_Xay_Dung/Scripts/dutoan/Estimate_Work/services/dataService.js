@@ -28,10 +28,10 @@ angular.module('app_work').factory('dataService', ['$http', function ($http) {
     };
 
 
-    var getGroupbyResource = function (buildingitem_id) {
+    var getGroupbyResources = function (buildingitem_id) {
         return $http({
             method: "GET",
-            url: "/HangMuc/getGroupbyResource",
+            url: "/HangMuc/getGroupbyResources",
             params: { buildingitem_id: buildingitem_id }
         })
             .then(function (response) {
@@ -86,7 +86,7 @@ angular.module('app_work').factory('dataService', ['$http', function ($http) {
         GetArea_Price: GetArea_Price,
         getAllResource: getAllResource,
         getAllSheet: getAllSheet,
-        getGroupbyResource: getGroupbyResource,
+        getGroupbyResources: getGroupbyResources,
         getNormworks: getNormworks,
         getListPrice: getListPrice,
         GetDetailNormWork_Price: GetDetailNormWork_Price,

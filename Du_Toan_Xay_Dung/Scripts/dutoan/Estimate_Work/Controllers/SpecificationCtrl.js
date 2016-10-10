@@ -56,11 +56,11 @@ angular.module('app_work').controller('SpecificationCtrl', ['$scope', '$http', '
                         Name: v.Name,
                         Unit: v.Unit,
                         Number_Work: "",
-                        Norm: v.Number,
-                        Number_Resource: parseFloat(value.Area) * parseFloat(v.Number),
+                        Norm: v.Number_Norm,
+                        Number_Resource: parseFloat(value.Area) * parseFloat(v.Number_Norm),
                         Price: v.Price,
                         Category: v.UnitPrice_ID.substring(0, 1),
-                        Sum: parseFloat(value.Area) * parseFloat(v.Number) * parseFloat(v.Price),
+                        Sum: parseFloat(value.Area) * parseFloat(v.Number_Norm) * parseFloat(v.Price),
                         BuildingItem_ID: ""
                     };
                     $scope.specifications.push(obj_resource);

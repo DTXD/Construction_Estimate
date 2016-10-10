@@ -9,7 +9,7 @@ angular.module('app_work').controller('MaterialCtrl', ['$scope', '$http', 'dataS
 
 
     if (typeof (buildingItem_id) != "undefined" && typeof (session_user) != "undefined") {
-        dataService.getGroupbyResource(buildingItem_id).then(function (data) {
+        dataService.getGroupbyResources(buildingItem_id).then(function (data) {
 
             var d = 0;
             //load data saved of user
@@ -17,12 +17,12 @@ angular.module('app_work').controller('MaterialCtrl', ['$scope', '$http', 'dataS
 
                 var obj = {
                     IndexSheet: d,
-                    Category: value.Category,
+                    Category: value.UnitPrice_ID.substring(0,1),
                     Name: value.Name,
                     Unit: value.Unit,
                     Number: value.Number_Norm,
                     Price: value.Price,
-                    Sum: parseFloat(value.Number) * parseFloat(value.Price),
+                    Sum: parseFloat(value.Number_Norm) * parseFloat(value.Price),
                     UnitPrice_ID: value.UnitPrice_ID,
                     BuildingItem_ID: ""
                 };
