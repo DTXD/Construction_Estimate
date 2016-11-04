@@ -292,9 +292,9 @@ namespace Du_Toan_Xay_Dung.Controllers
         [PageLogin]
         public JsonResult Delete_HangMuc(HangMucViewModel obj)
         {
-            try
-            {
-                var hangmuc = _db.BuildingItems.Single(i => i.ID.Equals(obj.ID));
+            //try
+            //{
+            var hangmuc = _db.BuildingItems.Single(i => i.ID.Equals(obj.ID));
                 if (hangmuc != null)
                 {
                     var userwork_resources = _db.UserWork_Resources.Where(i => i.BuildingItem_ID.Equals(obj.ID));
@@ -307,11 +307,11 @@ namespace Du_Toan_Xay_Dung.Controllers
                 }
                 _db.SubmitChanges();
                 return Json("ok");
-            }
-            catch (Exception)
-            {
-                return Json("error");
-            }
+            //}
+            //catch (Exception)
+            //{
+               // return Json("error");
+            //}
         }
 
         [PageLogin]
