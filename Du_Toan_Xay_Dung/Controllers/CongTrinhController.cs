@@ -60,22 +60,7 @@ namespace Du_Toan_Xay_Dung.Controllers
         }
         public JsonResult Get_Allinf()
         {
-            var list = _db.Buildings.Join(_db.BuildingItems, bid => bid.ID, biid => biid.Building_ID, (bid, biid) => new
-            {
-                Building = bid,
-                BuildingItem = biid
-            }).Where(i => i.Building.Email.Equals(SessionHandler.User.Email))
-            .GroupBy(i => new { i.Building.ID, i.Building.Email, i.Building.Name, i.Building.Description, i.Building.Address, i.Building.Sum })
-            .Select(i => new BuildingViewModel
-            {
-                ID = i.First().Building.ID,
-                Email = i.First().Building.Email,
-                Name = i.First().Building.Name,
-                Description = i.First().Building.Description,
-                Address = i.First().Building.Address,
-                Sum = i.First().Building.Sum,
-                Count_BuildingItem = i.Count(),
-            }).ToList();
+            var list = _db.Buildings.Where(i => i.Email.Equals(SessionHandler.User.Email)).Select(i => new BuildingViewModel(i)).ToList();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
