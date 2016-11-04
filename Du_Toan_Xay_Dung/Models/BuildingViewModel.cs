@@ -24,8 +24,9 @@ namespace Du_Toan_Xay_Dung.Models
         public string Description { get; set; }
         public string Address { get; set; }
         public decimal Sum { get; set; }
+        public int Count_BuildingItem { get; set; }
         public List<HttpPostedFileBase> img_congtrinh { get; set; }
-        public List<HttpPostedFileBase> img_old { get; set; }
+        public List<string> img_old { get; set; }
     }
 
     /*

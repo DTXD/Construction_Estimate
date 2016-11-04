@@ -1,0 +1,101 @@
+﻿@model PagedList.IPagedList<Du_Toan_Xay_Dung.Models.User>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "suaxoanguoidung";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Bảng danh sách người dùng</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <form action="/Admin/timkiemnguoidung" method="post">
+                        <div class="input-group">
+                            <input type="text" name="txttimkiem" class="form-control" placeholder="Tìm kiếm..." required>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">Thực hiện!</button>
+                            </span>
+                        </div>
+                    </form>
+                    <script>
+                         $("#input_form").kiemtra();
+                    </script>
+
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <p class="text-muted font-13 m-b-30">
+                        </p>
+                        <table id="datatable" class="table table-striped table-bordered">
+                            <thead>                     
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Họ tên lót</th>
+                                    <th>Tên</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Nơi làm việc</th>
+                                    <th>Thành phố</th>
+                                    <th>Mật khẩu</th>
+                                    <th>Quyền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for(int i=0;i<Model.Count;i++)
+                                { 
+                                <tr>
+                                    <td>@Model[i].Email</td>
+                                    <td>@Model[i].First_Name</td>
+                                    <td>@Model[i].Last_Name</td>
+                                    <td>@Model[i].Phone</td>
+                                    <td>@Model[i].Workplace</td>
+                                    <td>@Model[i].City</td>
+                                    <td>@Model[i].Password</td>
+                                    <td>@Model[i].</td>
+                                    <td><a href="/Admin/suanguoidung?Email=@Model[i].Email">Sửa</a></td>
+                                    <td>@Html.ActionLink("Xóa", "Delete","Admin", new { @Email = Model[i].Email }, new { @onclick = "return deleteconfirm()" })                                        
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @Html.PagedListPager(Model, page => Url.Action("suaxoanguoidung", new { page }))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        function deleteconfirm() {
+            if (confirm("Khi bạn xóa, các công trình người dùng này đã tạo cũng sẽ xóa!!!!!"))
+                return true;
+            else
+                return false;
+        }
+        FocusEvent = false;
+        checked = false;
+    });
+</script>
+

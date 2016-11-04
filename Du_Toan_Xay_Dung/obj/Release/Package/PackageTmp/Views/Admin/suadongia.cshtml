@@ -1,0 +1,88 @@
+﻿@using Du_Toan_Xay_Dung.Models
+@using Du_Toan_Xay_Dung.Handlers
+@{
+    ViewBag.Title = "suadongia";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    var dongia=ViewData["dongia"] as DonGiaViewModel;
+    var dongia_khuvuc = ViewData["dongia_khuvuc"] as UnitPrice_AreaViewModel;
+ }
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Sửa đơn giá</h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Thông tin đơn giá</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form method="post" data-parsley-validate class="form-horizontal form-label-left">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                                    Mã khu vực
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" disabled required="required" value="@dongia_khuvuc.Area_ID" class="form-control col-md-7 col-xs-12">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                                    Mã thành phần
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" disabled value="@dongia.ID" name="mathanhphan" id="mathanhphan" required="required" class="form-control col-md-7 col-xs-12">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Tên thành phần</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="ten" disabled value="@dongia.Name" class="form-control col-md-7 col-xs-12" type="text" name="ten">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Đơn vị
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="donvi" disabled value="@dongia.Unit" name="donvi" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Giá
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="dongia" value="@dongia_khuvuc.Price" name="dongia" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <button type="reset" class="btn btn-primary">Hủy</button>
+                                    <button type="submit" class="btn btn-success" name="suadongia">Lưu</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

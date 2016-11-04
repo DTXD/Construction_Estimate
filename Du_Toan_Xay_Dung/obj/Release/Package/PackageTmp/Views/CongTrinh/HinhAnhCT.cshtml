@@ -1,0 +1,21 @@
+﻿@using Du_Toan_Xay_Dung.Models;
+@{
+    ViewBag.Title = "HinhAnhCT";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var congtrinh = ViewData["image_congtrinh"] as Images_CongTrinhViewModel;
+    var congtrinh1 = ViewData["congtrinh"] as BuildingViewModel;
+    var images = Directory.EnumerateFiles(Server.MapPath(congtrinh.Url)).Select(i => congtrinh.Url +"/"+ Path.GetFileName(i));
+}
+
+<h2>@congtrinh1.Name</h2>
+
+<span>Hinh Anh</span>
+@foreach (var i in images)
+{
+    var temp = i.Substring(1,i.Length-1);
+    <img src="@temp" />
+}
+
+
+

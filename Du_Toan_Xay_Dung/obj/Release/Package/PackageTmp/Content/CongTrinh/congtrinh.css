@@ -1,0 +1,23 @@
+﻿ .custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    }
+
+.img_box {
+    list-style: none;
+    position: relative;
+    display: table;
+    margin: 8px;
+    height: 160px;
+    border: 1px solid #ddd;
+    box-shadow: 1px 1px 5px 0 #a2958a;
+    padding: 6px;
+    float: left;
+}
+
+.icon-delete {
+    display: inherit;
+margin: 20px 0px 0px 0px;
+}

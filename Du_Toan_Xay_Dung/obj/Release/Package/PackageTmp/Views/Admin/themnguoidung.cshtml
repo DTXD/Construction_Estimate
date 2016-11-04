@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "themnguoidung";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>Thêm người dùng</h3>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Thông tin người dùng</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li>
+                                    <a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+                            <form id="demo-form2" action="/Admin/Post_themnguoidung" method="post" data-parsley-validate class="form-horizontal form-label-left">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                                        Email <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                                        Mật khẩu <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" id="password" name="password" required="required" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Họ tên lót</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Tên <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="name" name="name" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Quyền <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="security" name="security" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Số điện thoại <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="phone" name="phone" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Nơi làm việc <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="placework" name="placework" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                        Thành phố <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="city" name="city" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                    </div>
+                                </div>
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                        <button type="reset" class="btn btn-primary">Hủy</button>
+                                        <button type="submit" class="btn btn-success" name="Themnguoidung" id="themnguoidung">Lưu</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   

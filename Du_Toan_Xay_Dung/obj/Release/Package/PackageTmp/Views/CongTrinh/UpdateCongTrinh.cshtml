@@ -1,0 +1,340 @@
+﻿@using Du_Toan_Xay_Dung.Models
+@{
+    ViewBag.Title = "suacongtrinh";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var congtrinh = (dynamic)null;
+    var hinhanh = (dynamic)null;
+    if (ViewData["CongTrinh_Update"] != null && ViewData["image_congtrinh"] != null)
+    {
+        congtrinh = ViewData["CongTrinh_Update"] as BuildingViewModel;
+        hinhanh = ViewData["image_congtrinh"] as List<Images_CongTrinhViewModel>;
+    }
+}
+<script>
+    angular.module('postApp', [])
+   .controller('postController', ['$scope', '$http', function ($scope, $http) {
+       $scope.stepsModel = [];
+       $scope.listfile = [];  //list file
+       $scope.listdropbox = [];
+       var fd = new FormData();
+
+       $scope.uploadedFile = function (event) {
+           $scope.$apply(function ($scope) {
+               $scope.files = event.files;
+           });
+           $scope.stepsModel = [];
+           var files = event.target.files; //FileList object
+           for (var i = 0; i < files.length; i++) {
+               var file = files[i];
+               var reader = new FileReader();
+               reader.onload = $scope.imageIsLoaded;
+               reader.readAsDataURL(file);
+               $scope.listfile.push(file);
+           }
+
+           //console.log($scope.listfile);
+       }
+       $scope.imageIsLoaded = function (e) {
+           $scope.$apply(function () {
+               var image = {};
+               image.Name = e.target.fileName;
+               image.Size = (e.total / 1024).toFixed(2);
+               image.Src = e.target.result;
+               $scope.stepsModel.push(image);
+               var specify_image = {
+                   url: image.Src,
+                   filename: image.Name
+               };
+               $scope.listdropbox.push(specify_image);
+           });
+       }
+       $scope.submit = function (files) {
+           fd.append("ID", $scope.congtrinh.ID);
+           fd.append("Name", $scope.congtrinh.Name);
+           fd.append("Description", $scope.congtrinh.Description);
+           fd.append("Address", $scope.congtrinh.Address);
+           if ($scope.listfile) {
+               for (var i = 0; i < $scope.listfile.length; i++) {
+
+                   fd.append("img_congtrinh", $scope.listfile[i]);
+               }
+           }
+           console.log($scope.oldlist);
+           if ($scope.oldlist) {
+               for (var i = 0; i < $scope.listfile.length; i++) {
+
+                   fd.append("img_old", $scope.oldlist[i]);
+               }
+           }
+           $http.post('/CongTrinh/post_updatecongtrinh', fd, {
+               transformRequest: angular.identity,
+               headers: { 'Content-Type': undefined }
+           })
+                 .success(function (result) {
+                     if (result == "ok") {
+                         open_alert("success");
+                         window.location.href = "/CongTrinh/Index";
+                     } else {
+                         open_alert("fail");
+
+                     }
+                 });
+       };
+       $scope.return = function () {
+           window.location.href = "/CongTrinh/Index";
+       }
+       $scope.savetodropbox = function () {
+           var options = {
+               files: $scope.listdropbox,
+
+               // Success is called once all files have been successfully added to the user's
+               // Dropbox, although they may not have synced to the user's devices yet.
+               success: function () {
+                   // Indicate to the user that the files have been saved.
+                   alert("Success! Files saved to your Dropbox.");
+               },
+
+               // Progress is called periodically to update the application on the progress
+               // of the user's downloads. The value passed to this callback is a float
+               // between 0 and 1. The progress callback is guaranteed to be called at least
+               // once with the value 1.
+               progress: function (progress) { },
+
+               // Cancel is called if the user presses the Cancel button or closes the Saver.
+               cancel: function () { },
+
+               // Error is called in the event of an unexpected response from the server
+               // hosting the files, such as not being able to find a file. This callback is
+               // also called if there is an error on Dropbox or if the user is over quota.
+               error: function (errorMessage) {
+               }
+           };
+           Dropbox.save(options);
+       };
+       $scope.deleteTempImage = function (idx, x) {
+               debugger;
+               var myEl = angular.element(document.querySelector('#img_box'));
+               myEl.remove();
+               $scope.listfile.splice(idx, 1);
+               fd.delete(idx, x);
+               //alert("Đã xóa");
+       }
+      
+   }]);
+</script>
+
+<style>
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+
+    .img_box {
+        list-style: none;
+        position: relative;
+        display: table;
+        margin: 8px;
+        height: 160px;
+        border: 1px solid #ddd;
+        box-shadow: 1px 1px 5px 0 #a2958a;
+        padding: 6px;
+        float: left;
+    }
+
+    .icon-delete {
+        display: inherit;
+        margin: 20px 0px 0px 0px;
+    }
+
+    .img_box .image_name {
+        text-align: center;
+        display: block;
+        margin-top: 10px;
+    }
+
+    .listImage {
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        margin-bottom: 20px;
+        padding-right: 5px;
+    }
+
+    .closeall_images {
+        float: right;
+        font-size: 21px;
+        font-weight: 700;
+        line-height: 1;
+        color: #000;
+        text-shadow: 0 1px 0 #fff;
+        filter: alpha(opacity=20);
+        opacity: .2;
+    }
+
+        .closeall_images:hover {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+            filter: alpha(opacity=50);
+            opacity: .5;
+        }
+
+    .button_choosefile {
+        padding-left: 0px;
+    }
+</style>
+
+<section class="content-header">
+    <h1>Sửa Công Trình</h1>
+    <ol class="breadcrumb">
+        <li><a href="/CongTrinh/Index"><i class="fa fa-dashboard"></i>Công Trình</a></li>
+        <li class="active">Sửa Công Trình</li>
+    </ol>
+</section>
+
+@if (congtrinh != null && hinhanh != null)
+{
+    <section class="content row" style="margin-top:50px" ng-app="postApp" ng-controller="postController"
+             ng-init="congtrinh.ID='@congtrinh.ID';congtrinh.Name='@congtrinh.Name'; congtrinh.Description='@congtrinh.Description';congtrinh.Address='@congtrinh.Address'">
+        <div class=" container body-content">
+            <div class="col-sm-12">
+                <form class="form-horizontal" method="post" data-ng-submit="addFile(congtrinh)">
+                    <input type="text" style="display:none" ng-model="congtrinh.ID" />
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="">Tên công trình:</label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="congtrinh.Name" class="form-control" placeholder="Tên công trình">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="">Mô tả:</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="3" ng-model="congtrinh.Description" placeholder="Công trình nhu th? nào ..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="">Ðịa chỉ:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="congtrinh.Address" placeholder="Ð?a ch?">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="Url_HinhAnh">Hình ảnh:</label>
+                        <br />
+                        <div class="col-sm-10">
+                            <div style="padding-left:30px">
+                                <h4>Hình đã có</h4>
+                            </div>
+                            <div id="listImage" class="listImage_old col-sm-12">
+                                <span class="closeall_images" id="closeall_images"><i class="fa fa-fw fa-remove"></i></span>
+                                @foreach (var k in hinhanh)
+                                {
+                                    <div class="img_box">
+                                        <img title="@k.Url.Substring(19, @k.Url.Length-19)" src="~/Images/CongTrinh/@k.Url.Substring(19, @k.Url.Length-19)" style="width:200px;height:200px">
+                                        <span class="image_name">@k.Url.Substring(19, @k.Url.Length - 19)</span>                           
+                                    </div>
+                                }
+                                <br /><br />
+                                <hr />
+                                <br /><br /><br /><br />
+                                <!--choose image and show-->
+                                <div id="Images_new" class="col-sm-11" style="border-top:1px solid">
+                                    <div>
+                                        <h4>Hình thêm mới</h4>
+                                    </div>
+                                    <span class="closeall_images" id="closeall_images"><i class="fa fa-fw fa-remove"></i></span>
+                                    <div id="img_box" class="img_box" ng-repeat="x in stepsModel track by $index">
+                                        <div style="display:none">{{x.Name}}</div>
+                                        <div style="display:none">{{x.Size}}</div>
+                                        <img ng-src="{{x.Src}}" style="width:200px;height:200px">
+                                        <span class="image_name"></span>
+                                        <span class="icon-delete kv-file-zoom btn btn-xs btn-default" ng-click="deleteTempImage($index,x)">
+                                            <i class=" fa fa-fw fa-trash-o" aria-hidden="true">
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <label for="gallery_upload" class="custom-file-upload" id="gallery_upload_choose">
+                                <i class="fa fa-cloud-upload"></i> Chọn ảnh
+                            </label>
+                            <input id="gallery_upload" type="file" name="file" onchange="angular.element(this).scope().uploadedFile(event)" multiple accept="image/*" style="display:none" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="">Dropbox:</label>
+                        <div class="col-sm-10">
+                            <span class="btn btn-default dropbox-saver" id="btn_savetoDropbox" ng-click="savetodropbox()">
+                                <img style="width:25px;height:25px" src="~/Images/Bokehlicia-Alike-Dropbox.ico" />
+                                Save Images to Dropbox
+                            </span>
+                            <!--<a href="https://cf.dropboxstatic.com/static/images/developers/dropblox.png" id="btn_savetoDropbox" class="dropbox-saver dropbox-dropin-btn dropbox-dropin-default"><span class="dropin-btn-status"></span>Save Images to Dropbox</a>-->
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-4">
+                            <button type="submit" class="btn btn-block btn-primary btn-lg" id="btn_submit" ng-click="submit()">Lưu</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="alert" class="modal font-arial">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <input type="hidden" ng-model="MaHM" />
+                    <!--header-->
+                    <div class="modal-header bg-aqua" style="background-color:green;">
+                        <!--title-->
+                        <div class="modal-title">
+                            <h4 class="text-info">Thông báo</h4>
+                        </div>
+                    </div>
+                    <!--body-->
+                    <div class="modal-body" style="background-color:aliceblue">
+                        <!--alert message research-->
+                        <div class="alert alert-success alert-dismissible fade in" role="alert">
+                            <p>
+                                Lưu thành công. Click "Đồng Ý" để tiếp tục
+                            </p>
+                        </div>
+                    </div>
+                    <!--footer-->
+                    <div class="modal-footer">
+                        <a class="btn btn-info" data-dismiss="modal" ng-click="return()">Đồng ý</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tbloi" class="modal font-arial">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <!--header-->
+                    <div class="modal-header bg-danger">
+                        <!--title-->
+                        <div class="modal-title">
+                            <h4 class="text-danger">Thông báo lỗi</h4>
+                        </div>
+                    </div>
+                    <!--body-->
+                    <div class="modal-body">
+                        <!--alert message research-->
+                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                            <p>
+                                Xảy ra lỗi. Click trở về để quay lại.
+                            </p>
+                        </div>
+                    </div>
+                    <!--footer-->
+                    <div class="modal-footer">
+                        <a class="btn btn-info" data-dismiss="modal" ng-click="return()">Trở về</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

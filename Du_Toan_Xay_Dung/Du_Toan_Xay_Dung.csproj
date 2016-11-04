@@ -205,9 +205,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\UnitPriceController.cs" />
-    <Compile Include="Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CongTrinhController.cs" />
@@ -238,14 +235,10 @@
     <Compile Include="Models\UnitPrice_AreaViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\UserWorkViewModel.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\EPPlus.dll" />
     <Content Include="Content\AdminLTE.css" />
     <Content Include="Content\AdminLTE.min.css" />
     <Content Include="Content\admin\css\buttons.bootstrap.min.css" />
@@ -278,6 +271,9 @@
     <Content Include="Content\font-awesome-4.6.3\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome-4.6.3\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\font-awesome-4.6.3\HELP-US-OUT.txt" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\glyphicons-halflings-regular.svg" />
     <Content Include="Content\green.css" />
     <Content Include="Content\HangMuc\jquery.editable-select.css" />
     <Content Include="Content\HangMuc\jquery.editable-select.min.css" />
@@ -305,36 +301,18 @@
     <Content Include="Content\vendor\wijmo.min.css" />
     <Content Include="Content\vendor\wijmo.theme.office.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Global.asax" />
     <Content Include="Images\13434854_305599949784935_3434578791858611307_n.jpg" />
     <Content Include="Images\Awicons-Vista-Artistic-Office-building.ico" />
-    <Content Include="Images\CongTrinh\1.PNG" />
-    <Content Include="Images\CongTrinh\2.PNG" />
-    <Content Include="Images\CongTrinh\3.PNG" />
-    <Content Include="Images\CongTrinh\adduser.png" />
-    <Content Include="Images\CongTrinh\addwork.png" />
-    <Content Include="Images\CongTrinh\app.png" />
-    <Content Include="Images\CongTrinh\dkmh.png" />
-    <Content Include="Images\CongTrinh\dkmh_2.png" />
-    <Content Include="Images\CongTrinh\dkmh_2_2.png" />
-    <Content Include="Images\CongTrinh\doremon-de-thuong-12.jpg" />
-    <Content Include="Images\CongTrinh\dutoan.png" />
-    <Content Include="Images\CongTrinh\dutoan_2_2.png" />
-    <Content Include="Images\CongTrinh\hinh-nen-doraemon-de-thuong-12.jpg" />
-    <Content Include="Images\CongTrinh\hinh-nen-doraemon-de-thuong-3.jpg" />
-    <Content Include="Images\CongTrinh\hinh-nen-doraemon-de-thuong-4.jpg" />
-    <Content Include="Images\CongTrinh\hinh-nen-doraemon-de-thuong-5.jpg" />
-    <Content Include="Images\CongTrinh\hinh-nen-doraemon-de-thuong-7.jpg" />
-    <Content Include="Images\CongTrinh\hoc.png" />
-    <Content Include="Images\CongTrinh\image.png" />
-    <Content Include="Images\CongTrinh\image_2.png" />
-    <Content Include="Images\CongTrinh\image_2_2.png" />
-    <Content Include="Images\CongTrinh\importdongia.png" />
-    <Content Include="Images\CongTrinh\tkb.png" />
-    <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.dll" />
-    <Content Include="obj\x86\Debug\Du_Toan_Xay_Dung.pdb" />
-    <Content Include="obj\x86\Debug\TempPE\Models.DataDTXD.designer.cs.dll" />
+    <Content Include="Images\Bokehlicia-Alike-Dropbox.ico" />
+    <Content Include="Images\ec300.jpg" />
+    <Content Include="Images\engineer.jpg" />
+    <Content Include="Images\new-construction-300x300.jpg" />
     <Content Include="Scripts\Admin\bootstraps\autosize.min.js" />
     <Content Include="Scripts\Admin\bootstraps\bootstrap-progressbar.min.js" />
     <Content Include="Scripts\Admin\bootstraps\bootstrap-wysiwyg.min.js" />
@@ -406,7 +384,6 @@
     <Content Include="Scripts\Difference\sortable.min.js" />
     <Content Include="Scripts\Bootstrap\bootstrap-select.js.map" />
     <Content Include="Content\Bootstrap\bootstrap-select.css.map" />
-    <Content Include="obj\x86\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="Models\DataDTXD.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>DataDTXD.designer.cs</LastGenOutput>
@@ -445,6 +422,25 @@
     <Content Include="Content\font-awesome-4.6.3\scss\_screen-reader.scss" />
     <Content Include="Content\font-awesome-4.6.3\scss\_stacked.scss" />
     <Content Include="Content\font-awesome-4.6.3\scss\_variables.scss" />
+    <Content Include="Content\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Properties\PublishProfiles\DT.pubxml" />
     <None Include="Scripts\Difference\_references.js" />
     <Content Include="Scripts\Dropbox_API\dropins.js" />
     <Content Include="Scripts\DuToan\Bootstrap_UploadFile.js" />
@@ -512,7 +508,7 @@
     <Content Include="Views\CongTrinh\Index.cshtml" />
     <Content Include="Views\CongTrinh\ThemCongTrinh.cshtml" />
     <Content Include="Views\CongTrinh\UpdateCongTrinh.cshtml" />
-    <Content Include="Views\CongTrinh\ChiTiet_CongTrinh.cshtml" />
+    <Content Include="Views\CongTrinh\BuildingItem.cshtml" />
     <Content Include="Views\HangMuc\Index.cshtml" />
     <Content Include="Views\HangMuc\ChiTiet_VL_NC_MTC.cshtml" />
     <Content Include="Views\CongTrinh\UpdateHangMuc.cshtml" />
@@ -537,12 +533,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\CongTrinh\" />
     <Folder Include="Upload\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery\jquery-3.0.0.min.map" />

@@ -9,7 +9,7 @@ namespace Du_Toan_Xay_Dung
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -19,13 +19,22 @@ namespace Du_Toan_Xay_Dung
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                        "~/Scripts/Angular/angular.js",
+                        "~/Scripts/Angular/angular-ui-router.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/Bootstrap/bootstrap.js",
+                      "~/Scripts/Bootstrap/bootstrap-select.js",
+                      "~/Scripts/Difference/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/Style.css",
+                      "~/Content/AdminLTE.css",
+                      "~/Content/Bootstrap/bootstrap.css",
+                      "~/Content/Bootstrap/bootstrap-select.css",
+                      "~/Content/font-awesome-4.6.3/css/font-awesome.css"
+                      ));
         }
     }
 }

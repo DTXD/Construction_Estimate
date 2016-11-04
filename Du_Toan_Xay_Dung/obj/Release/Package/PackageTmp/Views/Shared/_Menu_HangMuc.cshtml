@@ -1,0 +1,50 @@
+﻿<div class="row">
+    <div class="col-xs-12">
+        <div id="menu_hangmuc" class="container">
+            <ul class="nav nav-tabs">
+                <li><a href="/HangMuc/Index">Hạng Mục</a></li>
+                <li><a id="btn_dongiact" href="#">Đơn giá chi tiết</a></li>
+                <li><a href="#">Tổng Hợp Dự Toán Hạng Mục</a></li>
+                <li><a href="#">Tổng Hợp Dự Toán Công Trình</a></li>
+                <li><a href="#">Đơn giá định mức</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        $('#btn_dongiact').click(function () {
+
+            var id = "";
+            var result = "";
+            $("#mytable input[name='txtmahieucv_dm[]']").each(function () {
+                id = id + $(this).val() + ",";
+            });
+
+            var Arr_id = id.split(",");
+
+            for (var i = 0; i < Arr_id.length; i++) {
+                var d = 0;
+                for (var j = i + 1; j < Arr_id.length; j++) {
+                    if (Arr_id[i] == Arr_id[j]) {
+                        d++;
+                        break;
+                    }
+                }
+                if (Arr_id[i] == '' || Arr_id[i] == '0') {
+                    d++;
+                }
+                if (d == 0) {
+                    result = result + Arr_id[i] + ',';
+                }
+            }
+
+            result = result.substr(0, result.length - 1);
+            $(this).attr("href", "/HangMuc/DonGiaChiTiet/?ID=" + result);
+
+            alert(result);
+        });
+    });
+
+</script>

@@ -1,0 +1,164 @@
+﻿
+<div class="row" ng-controller="SpecificationCtrl" ng-init="start=0;end=10;">
+    <div class="col-sm-12">
+        <h3>Hướng dẫn sử dụng</h3>
+        <p>
+            - Double click bất kì ô nào trong cột Tên Công Việc để search công việc.
+        </p>
+        <p>
+            - Nhập mã hiệu công việc để vào ô để tìm kiếm.
+        </p>
+        <p>
+            - Thực hiện miêu tả công việc, và nhập khối lượng bằng cách nhập vào ô STT với dữ liệu 1.1, 1.2, 1.3, 2.1 ,2.2, 2,3...
+            cho các công việc tương ứng là 1, 2,...
+        </p>
+    </div>
+    <style>
+        .input_zoomdata {
+            margin-bottom: 5px;
+            margin-right: 17px;
+            margin-left: 0px;
+            display: table;
+        }
+
+        .cell {
+            border-right: 1px solid #c6c6c6;
+            border-bottom: 1px solid #c6c6c6;
+            outline: none;
+            position: absolute;
+            height: 51px;
+        }
+
+        .row_sheet {
+            height: 51px;
+            width: 100%;
+        }
+
+        .row_header {
+            border-right: 1px solid #c6c6c6;
+            border-top: 1px solid #c6c6c6;
+            border-bottom: 1px solid #c6c6c6;
+            background: #eaeaea;
+            color: #222;
+            text-align: center;
+            font-weight: 700;
+            padding-top: 5px;
+            outline: none;
+            position: absolute;
+            height: 50px;
+        }
+
+        .column_header {
+            border-right: 1px solid #c6c6c6;
+            border-bottom: 1px solid #c6c6c6;
+            border-left: 1px solid #c6c6c6;
+            background: #eaeaea;
+            color: #222;
+            text-align: center;
+            font-weight: 700;
+            padding-top: 5px;
+            outline: none;
+            position: absolute;
+            height: 51px;
+        }
+
+        .sheet_cellheader {
+            position: relative;
+            width: 98.3%;
+            height: 50px;
+            max-height: inherit;
+        }
+
+        .popupsearch {
+            width: 700px;
+            height: 400px;
+            background-color: #F5F4EB;
+            -webkit-box-shadow: 1px 1px 3px 4px #E4DBBF; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+            -moz-box-shadow: 1px 1px 3px 4px #E4DBBF; /* Firefox 3.5 - 3.6 */
+            box-shadow: 1px 1px 3px 4px #E4DBBF; /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+        }
+
+        .input_sheet {
+            width: 100%;
+            border: 0px;
+            height: 50px;
+            padding-left: 4px;
+            resize: none;
+        }
+    </style>
+    <div class="col-sm-12">
+        <div class="col-sm-12">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <span id="Message_saved"></span>
+            </div>
+        </div>
+        <div class="col-sm-12" style="height:400px;">
+            <div style="width:100%; height:100%">
+                <!--row_header-->
+                <div class="sheet_cellheader" id="sheet_cellheader">
+                    <div style="position: absolute; top: 0px; width: 100%; background-color: #eaeaea;">
+                        <div style="left:0%;width:3%;top:0px;border-left: 1px solid #c6c6c6;" class="row_header"></div>
+                        <div style="left:3%;width:4%;top:0px;" class="row_header">STT</div>
+                        <div style="left:7%;width:8%;top:0px;" class="row_header">Mã Hiệu</div>
+                        <div style="left:15%;width:35%;top:0px;" class="row_header">Tên Công Việc</div>
+                        <div style="left:50%;width:10%;top:0px;" class="row_header">Đơn Vị</div>
+                        <div style="left:60%;width:6%;top:0px;" class="row_header">Khối Lượng</div>
+                        <div style="left:66%;width:6%;top:0px;" class="row_header">Định Mức</div>
+                        <div style="left:72%;width:8%;top:0px;" class="row_header">Giá Hao Phí</div>
+                        <div style="left:80%;width:6%;top:0px;" class="row_header">KLHP</div>
+                        <div style="left:86%;width:4%;top:0px;" class="row_header">Loại</div>
+                        <div style="left:90%;width:10%;top:0px;" class="row_header">Thành Tiền</div>
+                        
+                    </div>
+                </div>
+
+                <!--Center-->
+                <div style="position: relative; width: 100%; height: 100%; max-height: inherit;">
+                    <div style="position: absolute; top: 0px; width: 100%; height: 70%; background-color: white; overflow-y:auto" id="sheet_cellcenter">
+                        <!--sheet-->
+                        <div class="row_sheet" ng-repeat="specification in specifications">
+                            <div style="left:0%;width:3%;border-left: 1px solid #c6c6c6;" class="column_header">
+                                <input type="text" readonly ng-model="specification.IndexSheet" style=" background: #eaeaea; border: none; width: 100%; text-align: center;" />
+                            </div>
+                            <div style="left:3%;width:4%" class="cell">
+                                <input type="text" ng-model="specification.ID" class="input_sheet" />
+                            </div>
+                            <div style="left: 7%; width: 8%;" class="cell">
+                                <input type="text" ng-model="specification.NormWork_ID" class="input_sheet" />
+                            </div>
+                            <div style="left: 15%; width: 35%;" class="cell">
+                                <textarea ng-model="specification.Name" class="input_sheet" style="font-size:13px;overflow:hidden"></textarea>
+                            </div>
+                            <div style="left: 50%; width: 10%;" class="cell">
+                                <input type="text" ng-model="specification.Unit" class="input_sheet" />
+                            </div>
+                            <div style="left: 60%; width: 6%;" class="cell">
+                                <input type="text" ng-model="specification.Number_Work" class="input_sheet" />
+                            </div>
+                            <div style="left: 66%; width: 6%;" class="cell">
+                                <input type="text" ng-model="specification.Norm" class="input_sheet" />
+                            </div>
+                            <div style="left: 72%; width: 8%;" class="cell">
+                                <input type="text" ng-model="specification.Price" class="input_sheet" />
+                            </div>
+                            <div style="left: 80%; width: 6%;" class="cell">
+                                <input type="text" ng-model="specification.Number_Resource" class="input_sheet"/>
+                            </div>
+                            <div style="left: 86%; width: 4%;" class="cell">
+                                <input type="text" ng-model="specification.Category" class="input_sheet" />
+                            </div>
+                            <div style="left: 90%; width: 10%;" class="cell">
+                                <input type="text" ng-model="specification.Sum" class="input_sheet" />
+                            </div>
+                            <input type="hidden" ng-model="specification.BuildingItem_ID" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

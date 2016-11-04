@@ -1,0 +1,96 @@
+﻿@using Du_Toan_Xay_Dung.Handlers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <link href="http://fonts.googleapis.com/css?family=Oxygen:400,700,300" rel="stylesheet" type="text/css">
+    @*<link rel="stylesheet" href="~/Content/Style.css">
+    <link rel="stylesheet" href="~/Content/AdminLTE.css">
+    <link href="~/Content/Bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Bootstrap/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" />*@
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+
+    <!--bootstrap-->
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <!--angular-->
+    <script src="~/Scripts/Angular/angular.min.js"></script>
+    <script src="~/Scripts/Angular/angular-ui-router.min.js"></script>
+
+    <!--layout-->
+    <script src="~/Scripts/DuToan/Layout_Ctrl.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/Dropbox_API/dropins.js" id="dropboxjs" data-app-key="bvkiw5hqpxclgwz"></script>
+    <!--upload_file
+    <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
+    -->
+</head>
+<body>
+    <div id="wrapper">
+        <div id="logo" class="container">
+            <h1><a href="#">Dự Toán Xây Dựng</a></h1>
+            <div class="clear"></div>
+            <p>Vươn lên tầm cao mới</p>
+        </div>
+        <div id="menu-wrapper">
+            <div id="main_menu" class="container main_menu">
+                <ul>
+                    <li><a href="/Home/Index">Trang Chủ</a></li>
+                    @if (SessionHandler.User != null)
+                    {
+                        <li><a href="/CongTrinh/Index">Công Trình</a></li>
+                    }
+                    <li><a id="btn_href_dutoan" href="/HangMuc/Estimate_Work">Dự Toán</a></li>
+                    @if (SessionHandler.User != null)
+                    {
+                        <li><a href="/UnitPrice/Index">Đơn Giá</a></li>
+                    }
+                    <li><a>Tin Tức</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                    @if (SessionHandler.User == null)
+                    {
+                        <li><a href="/Account/Login">Đăng Nhập</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/Account/Logout">Đăng Xuất</a></li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+        <!--
+        <div>
+            <div id="alert_success" style="color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; position: fixed; right: 46%; opacity: 1; padding: 10px; border-radius: 4px; ">
+            <strong>Success!</strong>
+            </div>
+        </div>
+            -->
+        <!-- end #page cho nay la nhung cai thay doi ben trong, thay k?  -->
+        <div class="container body-content" id="body_content">
+            @RenderBody()
+        </div>
+    </div>
+    <!--footer
+    <div id="footer-bg">
+        <div id="footer-content" class="container">
+        </div>
+    </div>
+        -->
+    <div id="footer">
+        <p>© 2013 Untitled Inc. All rights reserved. Lorem ipsum dolor sit amet nullam blandit consequat phasellus etiam lorem. Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.  Photos by <a href="http://fotogrph.com/">Fotogrph</a>.</p>
+    </div>
+    <!-- end #footer -->
+    @RenderSection("Scripts", required: false)
+    @RenderSection("CSS", required: false)
+
+
+</body>
+</html>

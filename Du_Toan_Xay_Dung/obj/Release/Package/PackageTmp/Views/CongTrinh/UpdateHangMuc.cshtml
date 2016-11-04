@@ -1,0 +1,79 @@
+﻿@using Du_Toan_Xay_Dung.Models
+@using Du_Toan_Xay_Dung.Handlers
+@{
+    ViewBag.Title = "UpdateHangMuc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var hangmuc1 = ViewData["HangMuc_Update"] as HangMucViewModel;
+}
+<section class="content-header">
+    <h1>Sửa Hạng Mục</h1>
+    <ol class="breadcrumb">
+        <li><a href="/CongTrinh/Index"><i class="fa fa-dashboard"></i>Công Trình</a></li>
+        <li><a href="/CongTrinh/ChiTiet_CongTrinh/?ID=@hangmuc1.Building_ID"><i class="fa fa-dashboard"></i>Hạng Mục</a></li>
+        <li class="active">Sửa Hạng Mục</li>
+    </ol>
+</section>
+<script>
+    angular.module('postApp', [])
+     .controller('postController', ['$scope','$http', function ($scope,$http) {
+         $scope.master = {};
+         $scope.submitForm = function (hangmuc) {
+             $scope.master = angular.copy(hangmuc);
+             $http({
+                 method: 'POST',
+                 url: '/CongTrinh/updatehangmuc',
+                 data: JSON.stringify($scope.master),
+                 headers: { 'Content-Type': 'application/json' }
+             })
+                 .success(function (result) {
+                     if (result=="error") {
+                         // Showing errors.
+                         //$scope.errorEmail = data.errors.email;
+                         alert("Xảy ra lỗi");
+                         return;
+                     } else {
+                         //$scope.message = data.message;
+                         alert("Lưu thành công");
+                         window.location.href = "/CongTrinh/ChiTiet_CongTrinh/@hangmuc1.Building_ID";
+                     }
+                 });
+         };
+        
+     }]);
+</script>
+<section class="content" ng-app="postApp" ng-controller="postController"
+         ng-init="hangmuc.ID='@hangmuc1.ID';hangmuc.Building_ID='@hangmuc1.Building_ID';hangmuc.Name='@hangmuc1.Name';hangmuc.Description='@hangmuc1.Description';hangmuc.Sum='@hangmuc1.Sum'">
+    <div class="container body-content">
+        <div class="row">
+            <form class="form-horizontal" method="post">
+                <input type="hidden" id="txtma" name="txtma" ng-model="hangmuc.ID" />
+                <input type="hidden" id="txtmact" name="txtmact" ng-model="hangmuc.Building_ID" />
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="">Tên hạng mục:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txttenhm" name="txttenhm" ng-model="hangmuc.Name" placeholder="Tên công trình">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="">Mô tả:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-model="hangmuc.Description" id="txtmota" name="txtmota" placeholder="Mô tả" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="">Giá:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtgia" ng-model="hangmuc.Sum" name="txtgia" placeholder="Giá" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-4">
+                        <input type="submit" class="btn btn-block btn-primary btn-lg" ng-click="submitForm(hangmuc)" id="btn_submit" value="Lưu" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+

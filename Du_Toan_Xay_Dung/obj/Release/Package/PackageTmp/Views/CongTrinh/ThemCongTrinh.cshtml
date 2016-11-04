@@ -1,0 +1,229 @@
+﻿@{
+    ViewBag.Title = "Thêm công trình";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    angular.module('postApp', [])
+   .controller('postController', ['$scope', '$http', function ($scope, $http) {
+       $scope.stepsModel = [];
+       $scope.listdropbox = [];
+       $scope.listfile = [];//list file
+       var fd = new FormData();
+
+       $scope.uploadedFile = function (event) {
+           $scope.$apply(function ($scope) {
+               $scope.files = event.files;
+           });
+           $scope.stepsModel = [];
+           var files = event.target.files; //FileList object
+           for (var i = 0; i < files.length; i++) {
+               var file = files[i];
+               var reader = new FileReader();
+               reader.onload = $scope.imageIsLoaded;
+               reader.readAsDataURL(file);
+               $scope.listfile.push(file);
+           }
+       }
+
+       $scope.imageIsLoaded = function (e) {
+           $scope.$apply(function () {
+               var image = {};
+               image.Name = e.target.fileName;
+               image.Size = (e.total / 1024).toFixed(2);
+               image.Src = e.target.result;
+               $scope.stepsModel.push(image);
+                var specify_image = {
+                    url: image.Src,
+                    filename: image.Name
+                };
+                $scope.listdropbox.push(specify_image);
+           });
+       }
+       $scope.submit = function (files) {
+           fd.append("MaCT", $scope.congtrinh.MaCT);
+           fd.append("TenCT", $scope.congtrinh.TenCT);
+           fd.append("MoTa", $scope.congtrinh.MoTa);
+           fd.append("DiaChi", $scope.congtrinh.DiaChi);
+           if ($scope.listfile) {
+               for (var i = 0; i < $scope.listfile.length; i++) {
+
+                   fd.append("img_congtrinh", $scope.listfile[i]);
+               }
+           }
+           $http.post('/CongTrinh/Post_ThemCongTrinh', fd, {
+               transformRequest: angular.identity,
+               headers: { 'Content-Type': undefined }
+           })
+             .success(function (result) {
+                 if (result == "ok") {
+                     open_alert("success");
+                 } else {
+                     open_alert("fail");
+                 }
+             });
+       };
+       $scope.savetodropbox = function()
+       {
+           var options = {
+               files: $scope.listdropbox,
+
+               // Success is called once all files have been successfully added to the user's
+               // Dropbox, although they may not have synced to the user's devices yet.
+               success: function () {
+                   // Indicate to the user that the files have been saved.
+                   alert("Success! Files saved to your Dropbox.");
+               },
+
+               // Progress is called periodically to update the application on the progress
+               // of the user's downloads. The value passed to this callback is a float
+               // between 0 and 1. The progress callback is guaranteed to be called at least
+               // once with the value 1.
+               progress: function (progress) { },
+
+               // Cancel is called if the user presses the Cancel button or closes the Saver.
+               cancel: function () { },
+
+               // Error is called in the event of an unexpected response from the server
+               // hosting the files, such as not being able to find a file. This callback is
+               // also called if there is an error on Dropbox or if the user is over quota.
+               error: function (errorMessage) {
+               }
+           };
+           Dropbox.save(options);
+       };
+       $scope.deleteTempImage = function (idx, x) {
+           var hoi = confirm("Bạn có chắc chắn muốn xóa hình ảnh này");
+           if (hoi == true) {
+               debugger;
+               var myEl = angular.element(document.querySelector('#img_box'));
+               myEl.remove();   
+               $scope.listfile.splice(idx, 1);
+               fd.delete(idx, x);
+               alert("Đã xóa");
+           }
+       }
+       
+   }]);
+</script>
+<style>
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+
+    .img_box {
+        list-style: none;
+        position: relative;
+        display: table;
+        margin: 8px;
+        height: 160px;
+        border: 1px solid #ddd;
+        box-shadow: 1px 1px 5px 0 #a2958a;
+        padding: 6px;
+        float: left;
+    }
+
+    .icon-delete {
+        display: inherit;
+        margin: 20px 0px 0px 0px;
+    }
+</style>
+<section class="content-header">
+    <h1>Thêm Công Trình</h1>
+    <ol class="breadcrumb">
+        <li><a href="/CongTrinh/Index"><i class="fa fa-dashboard"></i>Công Trình</a></li>
+        <li class="active">Thêm Công Trình</li>
+    </ol>
+</section>
+
+<section class="content" ng-app="postApp" ng-controller="postController">
+    <div class="container body-content">
+        <div class="row">
+            <form class="form-horizontal" role="form" method="post">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="">Tên công trình:</label>
+                    <div class="col-sm-10">
+                        <input type="text" ng-model="congtrinh.TenCT" class="form-control" id="TenCT" name="TenCT" placeholder="Tên công trình">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="">Mô tả:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-model="congtrinh.MoTa" id="MoTa" name="MoTa" placeholder="Mô tả">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="">Địa chỉ:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-model="congtrinh.DiaChi" id="DiaChi" name="DiaChi" placeholder="Địa chỉ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="Url_HinhAnh">Hình ảnh:</label>
+                    <div id="listImage" class="listImage_old col-sm-12" style="padding-left:200px">
+                        <div id="Images_new" class="col-sm-11" style="border-top:1px solid">
+                            <span class="closeall_images" id="closeall_images" style="padding-left:900px"><i class="fa fa-fw fa-remove"></i></span>
+                            <div id="img_box" class="img_box" ng-repeat="x in stepsModel track by $index">
+                                <div style="display:none">{{x.Name}}</div>
+                                <div style="display:none">{{x.Size}}</div>
+                                <img ng-src="{{x.Src}}" style="width:200px;height:200px">
+                                <span class="image_name"></span>
+                                <span class="icon-delete kv-file-zoom btn btn-xs btn-default"
+                                      ng-click="deleteTempImage($index,x)">
+                                    <i class="fa fa-fw fa-trash-o" aria-hidden="true">
+                                    </i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <label style="margin-left:200px" for="gallery_upload" class="custom-file-upload" id="gallery_upload_choose">
+                        <i class="fa fa-cloud-upload"></i> Chọn ảnh
+                    </label>
+                    <input id="gallery_upload" type="file" name="file" onchange="angular.element(this).scope().uploadedFile(event)" multiple accept="image/*" style="display:none" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="">Dropbox:</label>
+                    <div class="col-sm-10">
+                        <span class="btn btn-default dropbox-saver" id="btn_savetoDropbox" ng-click="savetodropbox()">
+                            <img style="width:25px;height:25px" src="~/Images/Bokehlicia-Alike-Dropbox.ico" />
+                            Save Images to Dropbox
+                        </span>
+                        <!--<a href="https://cf.dropboxstatic.com/static/images/developers/dropblox.png" id="btn_savetoDropbox" class="dropbox-saver dropbox-dropin-btn dropbox-dropin-default"><span class="dropin-btn-status"></span>Save Images to Dropbox</a>-->
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-4">
+                        <button type="submit" class="btn btn-block btn-primary btn-lg" id="btn_submit" ng-click="submit()">Lưu</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        </div>
+        <div class="row">
+            <div class="modal fade" id="Model_Zoom_Image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Hình Ảnh</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- /.box-body -->
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="btn_save_dongia" data-dismiss="modal">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+

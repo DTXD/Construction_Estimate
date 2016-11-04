@@ -1,0 +1,633 @@
+﻿@using Du_Toan_Xay_Dung.Models
+@using Du_Toan_Xay_Dung.Handlers
+@{
+    ViewBag.Title = "Index_2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var ListCongViec_DM = ViewData["DSDinhMuc"] as List<DinhMucViewModel>;
+    //var danhsachCt = ViewData["DSCongTrinh"] as List<CongTrinhCuaUser>;
+    var ListCongViec_User = ViewData["CongViec_User"] as List<CongViec_User_ViewModel>;
+    var congtrinh = ViewData["CongTrinh"] as BuildingViewModel;
+    var hangmuc = ViewData["HangMuc"] as HangMucViewModel;
+    var dscongtrinh = ViewData["DSCongTrinh"] as List<BuildingViewModel>;
+    //var dsdongia = ViewData["DSDonGia"] as List<DonGiaViewModel>;
+
+    var khuvuc = ViewData["KhuVucDG"] as List<string>;
+
+}
+
+@section Scripts{
+    <script src="~/Scripts/DuToan/index_2.js"></script>
+
+    <!--
+    <script>
+    $(document).ready(function () {
+        $('#btnSubmit').click(function () {
+            var MaCT = $("#txt_ma_congtrinh").val();
+            var MaHM = $("#txt_ma_hangmuc").val();
+            var TenHM = $("#txt_ten_hangmuc").val();
+
+            var tempmahieucv_dm = $('#formAdd input[name="txtmahieucv_dm[]"]').serializeArray();
+            var MaHieuCV_DM = "";
+            $.each(tempmahieucv_dm, function (i, field) {
+                MaHieuCV_DM = MaHieuCV_DM + field.value + ',';
+            });
+
+            console.log(list_haophi[0]);
+
+            var postData = {
+                MaCT: MaCT,
+                MaHM: MaHM,
+                TenHM: TenHM,
+                MaHieuCV_DM: MaHieuCV_DM,
+                HaoPhis: list_haophi[0]
+            };
+            
+            /*
+            $.ajax({
+                type: "POST",
+                url: '/HangMuc/Post_CongViec',
+                data: JSON.stringify(postData),
+                cache: false,
+                dataType: "json",
+                contentType: 'application/json',
+                success: function (data) {
+
+                },
+                error: function (error) {
+                }
+            });
+            */
+            
+        });
+    });
+</script>
+        -->
+
+<script>
+    // Defining angularjs application.
+    var postApp = angular.module('postApp', []);
+    // Controller function and passing $http service and $scope var.
+    postApp.controller('postController', function ($scope, $http) {
+        // create a blank object to handle form data.
+        // calling our submit function.
+
+        $scope.submitForm = function () {
+            // Posting data to controller
+            if ($scope.formAdd.$valid) {
+
+                var temp_MaHieuCV_DM = document.getElementsByName("txtmahieucv_dm[]");
+                var MaHieuCV_DM = "";
+                for (var i = 0; i < temp_MaHieuCV_DM.length; i++)
+                {
+                    MaHieuCV_DM = MaHieuCV_DM + temp_MaHieuCV_DM[i].value + ",";
+                }
+                MaHieuCV_DM = MaHieuCV_DM.substring(0, MaHieuCV_DM.length-1);
+
+                var postData = {
+                    MaHieuCV_DM : MaHieuCV_DM,
+                    HaoPhis: list_haophi[0]
+                };
+                
+                $http({
+                    method: 'POST',
+                    url: '/HangMuc/Post_CongViec',
+                    data: JSON.stringify(postData),
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                  .success(function (data) {
+                      if (data.errors) {
+                          // Showing errors.
+                          $scope.errorEmail = data.errors.email;
+                      } else {
+                          $scope.message = data.message;
+                      }
+                  });
+                  
+            }
+        };
+    });
+</script>
+}
+
+@section CSS{
+    <style>
+        body input {
+            padding: 8px;
+            display: block;
+            border: none;
+            border-bottom: 1px solid #808080;
+        }
+
+        #mytable {
+            counter-reset: serial-number; /* Set the serial number counter to 0 */
+        }
+
+            #mytable td:first-child:before {
+                counter-increment: serial-number; /* Increment the serial number counter */
+                content: counter(serial-number);
+            }
+
+            #mytable th {
+                border: 1px solid #dddddd;
+            }
+
+            #mytable td {
+                border: 1px solid #dddddd;
+            }
+
+            #mytable input {
+                padding: 8px;
+                display: block;
+                border: none;
+                border-bottom: 1px solid #808080;
+            }
+
+        /*tam tinh*/
+        #table_congviec_tamtinh {
+            counter-reset: serial-number; /* Set the serial number counter to 0 */
+        }
+
+            #table_congviec_tamtinh td:first-child:before {
+                counter-increment: serial-number; /* Increment the serial number counter */
+                content: counter(serial-number);
+            }
+
+            #table_congviec_tamtinh th {
+                border: 1px solid #dddddd;
+            }
+
+            #table_congviec_tamtinh td {
+                border: 1px solid #dddddd;
+            }
+
+            #table_congviec_tamtinh input {
+                padding: 8px;
+                display: block;
+                border: none;
+                border-bottom: 1px solid #808080;
+            }
+    </style>
+}
+
+<section class="content-header">
+    @if (congtrinh != null)
+    {
+        <h2>Công Trình: @congtrinh.TenCT</h2>
+        if (hangmuc != null)
+        {
+            <h3 class="box-title">
+                <span>
+                    &nbsp;&nbsp;&nbsp; <span id="span_tenhm">@hangmuc.TenHM</span>
+                </span>
+                <span class="btn btn-primary btn-flat btn-xs" id="btn_edit_ten_hangmuc" style="margin-bottom: 5px;">
+                    <i class="fa fa-edit"></i>Edit
+                </span>
+            </h3>
+        }
+        else
+        {
+            <h3 class="box-title">
+                <span>
+                    &nbsp;&nbsp;&nbsp; <span id="span_tenhm">Hạng Mục Mới</span>
+                </span>
+                <span class="btn btn-primary btn-flat btn-xs" id="btn_edit_ten_hangmuc" style="margin-bottom: 5px;">
+                    <i class="fa fa-edit"></i>Edit
+                </span>
+            </h3>
+
+        }
+
+
+    }
+    else
+    {
+        if (SessionHandler.User != null)
+        {
+            <select class="selectpicker" id="combb_congtrinh" data-width="200px">
+                <option value="0">--Chọn Công Trình--</option>
+                @foreach (var item in dscongtrinh)
+                {
+                    <option value="@item.ID">@item.Name</option>
+                }
+            </select>
+            <br />
+            <br />
+            <h3 class="box-title">
+                <span>
+                    &nbsp;&nbsp;&nbsp; <span id="span_tenhm">Hạng Mục Mới</span>
+                </span>
+                <span class="btn btn-primary btn-flat btn-xs" id="btn_edit_ten_hangmuc" style="margin-bottom: 5px;">
+                    <i class="fa fa-edit"></i>Edit
+                </span>
+            </h3>
+            <script>
+                $(document).ready(function () {
+                    $('#combb_congtrinh').on('change', function () {
+                        $('#txt_ma_congtrinh').val($(this).val());
+                    });
+                });
+            </script>
+        }
+    }
+    <ol class="breadcrumb">
+        <li class="active">Dự Toán</li>
+    </ol>
+</section>
+<br />
+<br />
+<br />
+<section class="content" ng-app="postApp" ng-controller="postController">
+    <div id="container" class="container" style="display:block">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="box" style="height:158px">
+                    <div class="box-header">
+                        <h3 class="box-title">Thay Đổi Đơn Giá</h3>
+                    </div>
+                    <div class="box-body">
+                        <p>Bạn có thể chọn đơn giá theo khu vực</p>
+                        <select class="selectpicker" data-width="300px" id="combobox_khuvuc">
+                            @foreach (var i in khuvuc)
+                            {
+                            <option value="@i">@i</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Chức năng hổ trợ dự toán: </h3>
+                    </div>
+                    <div class="box-body">
+                        <p>Bạn có thể thêm hạng mục mới và tạm tính cho công việc chưa có: </p>
+                        <span class="btn btn-app" data-toggle="modal" data-target="#Modal_TamTinh">
+                            <i class="fa fa-edit"></i>Tạm Tính
+                        </span>
+                        <span class="btn btn-app">
+                            <i class="fa fa-play"></i> Thay đổi đơn giá
+                        </span>
+                        <span class="btn btn-app" id="btn_dongiact">
+                            <i class="fa fa-repeat"></i> Đơn giá chi tiết
+                        </span>
+                        <span class="btn btn-app">
+                            <i class="fa fa-pause"></i> Pause
+                        </span>
+                        <span class="btn btn-app">
+                            <i class="fa fa-save"></i> Save
+                        </span>
+                    </div><!-- /.box-body -->
+                </div>
+            </div>
+
+        </div>
+
+        <!--/. Cong Viec User : Form, Table -->
+        <div class="row" style="margin-top:30px">
+            <div class="col-xs-12">
+                <form method="post" name="formAdd" id="formAdd" enctype="multipart/form-data" ng-submit="submitForm()">
+                    @if (congtrinh != null)
+                    {
+                    <input type="hidden" value="@congtrinh.MaCT" id="txt_ma_congtrinh" name="txt_ma_congtrinh" />
+                    }
+                    else
+                    {
+                    <input type="hidden" value="" id="txt_ma_congtrinh" name="txt_ma_congtrinh" />
+                    }
+                    @if (hangmuc != null)
+                    {
+                    <div>
+                        <input type="hidden" name="txt_ma_hangmuc" id="txt_ma_hangmuc" value="@hangmuc.MaHM" />
+                        <input type="hidden" name="txt_ten_hangmuc" id="txt_ten_hangmuc" value="@hangmuc.TenHM" />
+                    </div>
+                    }
+                    else
+                    {
+                    <div>
+                        <input type="hidden" name="txt_ma_hangmuc" id="txt_ma_hangmuc" value="" />
+                        <input type="hidden" name="txt_ten_hangmuc" id="txt_ten_hangmuc" value="Tên Hạng Mục Mới" />
+                    </div>
+                    }
+                    <div class="box" id="div_primary">
+                        <div class="box-header" style="background-color: #f9f9f9">
+                            <h3 class="box-title">Công Việc theo Định Mức</h3>
+                            <div style="float:right">
+                                <select id="cmbtencv" name="cmbtencv">
+                                    @if (ListCongViec_DM != null)
+                                    {
+                                    <option value="0">--Chọn Công Việc--</option>
+                                        foreach (var k in ListCongViec_DM)
+                                        {
+                                    <option value="@k.MaHieuCV_DM" data-donvi="@k.DonVi">- @k.CongTac @k.RangBuoc</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div><!-- /.box-header -->
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover" id="mytable">
+                                <tbody>
+                                    <tr>
+                                        <th style="width:15px">STT</th>
+                                        <th style="width:300px">Danh Mục Công Việc</th>
+                                        <th style="width:100px">Đơn Vị</th>
+                                        <th style="width:30px">Khối Lượng</th>
+                                        <th style="width:300px; text-align:center" colspan="4">Đơn giá</th>
+                                        <th style="width:120px">Thành Tiền</th>
+                                        <th style="width:60px"></th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4"></th>
+                                        <th>Giá Vật Liệu</th>
+                                        <th>Giá Nhân Công</th>
+                                        <th>Giá Máy Thi Công</th>
+                                        <th style="width: 50px">Chi Tiết</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    @if (ListCongViec_User != null)
+                                    {
+                                        foreach (var item in ListCongViec_User)
+                                        {
+                                    <tr class="tr_primary">
+                                        <td></td>
+                                        <td class="td_tencv">
+                                            @item.TenCongViec
+                                            <input type="hidden" value="@item.TenCongViec" name="txttencv[]" />
+                                            <input type="hidden" value="@item.MaHieuCV_DM" name="txtmahieucv_dm[]" />
+                                            <input type="hidden" value="@item.MaHieuCV_User" name="txtmahieucv_user[]" />
+                                        </td>
+                                        <td>
+                                            <input style="width:90px" type="text" value="@item.DonVi" name="txtdonvi[]" />
+                                        </td>
+                                        <td>
+                                            <input style="width:50px" type="text" value="@item.KhoiLuong" class="txt_khoiluong" name="txtkhoiluong[]" />
+                                        </td>
+                                        <td>
+                                            <input style="width:80px" type="text" value="@item.GiaVL" name="txtgiavl[]" />
+                                        </td>
+                                        <td>
+                                            <input style="width: 80px" type="text" value="@item.GiaNC" name="txtgianc[]" />
+                                        </td>
+                                        <td>
+                                            <input style="width: 80px" type="text" value="@item.GiaMTC" name="txtgiamtc[]" />
+                                        </td>
+                                        <td class="tag_a">
+                                            <span class="btn btn-primary btn-flat btn-xs btn_cthaophi" data-toggle="modal" data-target="#Modal_ChiTiet_HaoPhi">
+                                                <i class="fa fa-edit"></i> Detail
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="sum_thanhtien">@item.ThanhTien</span>
+                                            <input type="hidden" value="@item.ThanhTien" name="txtthanhtien[]" />
+                                        </td>
+                                        <td>
+                                            <span class="btn btn-danger btn-flat btn-xs btn_xoa_cv">
+                                                <i class="fa fa-edit"></i>Xóa
+                                            </span>
+                                        </td>
+                                    </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <div style="text-align:right">
+                        <span style="font-weight:bold; font-size:20px; margin-right:200px;">TỔNG:</span>
+                        @if (hangmuc != null)
+                        {
+                        <span id="span_tongtien" style="margin-right: 30px; font-weight: bold; font-size: 20px">@hangmuc.Gia</span>
+                        <input type="hidden" id="txt_tongtien" name="txt_tongtien" value="@hangmuc.Gia" />
+                        }
+                        else
+                        {
+                        <span id="span_tongtien" style="margin-right: 30px; font-weight: bold; font-size: 20px"></span>
+                        <input type="hidden" id="txt_tongtien" name="txt_tongtien" value="" />
+                        }
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="col-sm-4" style="float:right">
+            <button type="button" class="btn btn-block btn-primary btn-lg" id="btnSubmit" ng-click="submitForm()">
+                Save
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <br />
+        <br />
+    </div>
+    <div class="row">
+        <script>
+            $(document).ready(function () {
+                $('#table_tamtinh').on('click', '.btnxoa_haophitt', function () {
+                    var con_hp = confirm("Bạn có thật sự muốn xóa công việc này...!!!");
+                    if (con_hp == true) {
+                        $(this).closest('tr').remove();
+                    }
+                });
+
+                $("#btn_save_tamtinh").click(function () {
+
+                    var giavl = 0;
+                    var gianc = 0;
+                    var giamtc = 0;
+                    var mahps = "";
+
+                    var tencv = $("#txt_tencv_tamtinh").val();
+                    var donvi = $("#txt_donvi_tamtinh").val();
+                    var khoiluong = $("#txt_khoiluong_tamtinh").val();
+
+                    $('#table_tamtinh .HaoPhi_TamTinh').each(function () {
+                        var ma = $(this).find("td").eq(0).html();
+                        var temp_ma = String(ma);
+                        mahps = mahps + temp_ma + ",";
+                        var gia = $(this).find("td").eq(4).html();
+
+                        if (temp_ma.substring(0, 1) == "V") {
+                            giavl = parseFloat(giavl) + parseFloat(gia);
+                        }
+                        if (temp_ma.substring(0, 1) == "N") {
+                            gianc = parseFloat(gianc) + parseFloat(gia);
+                        }
+                        if (temp_ma.substring(0, 1) == "M") {
+                            giamtc = parseFloat(giamtc) + parseFloat(gia);
+                        }
+                    });
+
+                    mahps = mahps.substring(0, mahps.length - 1);
+
+                    var i;
+                    var _trNew_congviec = '<tr class="tr_primary">' +
+                        '<td></td>' +
+                        '<td class="td_tencv">' + tencv +
+                        '<input type="hidden" value="' + mahps + '" name="txtmahp[]" />' +
+                        '<input type="hidden" value="" name="txtmahieucv_dm[]" />' +
+                        '<input type="hidden" value="' + tencv + '" name="txttencv[]" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input style="width:50px" type="text" value="' + donvi + '" name="txtdonvi[]" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input style="width:50px" type="text" value="' + khoiluong + '" class="txt_khoiluong" name="txtkhoiluong[]" />' +
+                        '</td>' +
+                        '<td style="border-right: 1px solid #dddddd; border-left: 1px solid #dddddd">' +
+                        '<input style="width:80px" type="text" value="' + giavl + '" name="txtgiavl[]" />' +
+                        '</td>' +
+                        '<td style="border-right:1px solid #dddddd;">' +
+                        '<input style="width: 80px" type="text" value="' + gianc + '" name="txtgianc[]" />' +
+                        '</td>' +
+                        '<td style="border-right:1px solid #dddddd;">' +
+                        '<input style="width: 80px" type="text" value="' + giamtc + '" name="txtgiamtc[]" />' +
+                        '</td>' +
+                        '<td style="border-right:1px solid #dddddd;" class="tag_a">' +
+                        '<a class="btn btn-primary btn-flat btn-xs" href="/HangMuc/ChiTiet_VL_NC_MTC/?ID=" target="_blank">' +
+                        '<i class="fa fa-edit"></i> Detail' +
+                        '</a>' +
+                        '</td>' +
+                        '<td>' +
+                        '<span class="sum_thanhtien"></span>' +
+                        '<input type="hidden" value="" name="txtthanhtien[]" />' +
+                        '</td>' +
+                        '<td style="border-left:1px solid #dddddd;">' +
+                        '<span class="btn btn-danger btn-flat btn-xs btn_xoa_cv">' +
+                        '<i class="fa fa-edit"></i>Xóa' +
+                        '</span>' +
+                        '</td>' +
+                        '</tr>';
+                    $('#table_congviec_tamtinh').find('tbody').append(_trNew_congviec);
+                });
+            });
+        </script>
+
+        <!-- Modal -->
+        <div class="modal fade" id="Modal_TamTinh" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="width:800px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Tạm Tính</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" value="" placeholder="Nhập tên công việc" class="form-control" id="txt_tencv_tamtinh" />
+                        <br />
+                        <input type="text" value="" placeholder="Nhập đơn vị" class="form-control" id="txt_donvi_tamtinh" style="width:200px" />
+                        <br />
+                        <input type="text" value="" placeholder="Nhập khối lượng" class="form-control" id="txt_khoiluong_tamtinh" style="width:200px" />
+                        <br />
+                        <div class="dropdown" id="myDropdown">
+                            <button class="btn btn-default dropdown-toggle btn-block" type="button" id="cbb_haophis_1" data-toggle="dropdown">
+                                <span class="pull-left">--Chọn thành phần hao phí--</span>
+                                <span class="caret pull-right"></span>
+                            </button>
+                            <input type="hidden" class="form-control" id="select-cbb-haophis" />
+                            <div class="dropdown-menu col-lg-12" role="menu" aria-labelledby="cbb_haophis_1">
+                                <div class="col-lg-12" style="margin-bottom:10px">
+                                    <input type="text" class="form-control" id="search-cbb-haophis">
+                                </div>
+                                <ul class="list-group select-custom" id="cbb-haophis_show"></ul>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="box-header">
+                            <h3 class="box-title" id="tencvtamtinh"></h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body no-padding">
+                            <table class="table table-condensed" id="table_tamtinh">
+                                <tbody>
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>Tên</th>
+                                        <th>Số Lượng</th>
+                                        <th>Đơn Vị</th>
+                                        <th>Giá</th>
+                                        <th></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="btn_save_tamtinh" data-dismiss="modal">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="modal fade" id="Modal_ChiTiet_HaoPhi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="width:700px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Thay Đổi Đơn Giá</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- /.box-body -->
+                        <div class="box-header">
+                            <h3 class="box-title" id=""></h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body no-padding">
+                            <h5 style=" font-style: italic; font-size: large; font-weight: 600;">Vật Liệu :</h5>
+                            <table class="table table-condensed" id="table_cthaophi_vatlieu">
+                                <tbody>
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>Tên</th>
+                                        <th>Đơn Vị</th>
+                                        <th>Số Lượng</th>
+                                        <th>Giá</th>
+                                        <th>Thành Tiền</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h5 style=" font-style: italic; font-size: large; font-weight: 600;">Nhân Công :</h5>
+                            <table class="table table-condensed" id="table_cthaophi_nhancong">
+                                <tbody>
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>Tên</th>
+                                        <th>Đơn Vị</th>
+                                        <th>Số Lượng</th>
+                                        <th>Giá</th>
+                                        <th>Thành Tiền</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h5 style=" font-style: italic; font-size: large; font-weight: 600;">Máy Thi Công :</h5>
+                            <table class="table table-condensed" id="table_cthaophi_maythicong">
+                                <tbody>
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>Tên</th>
+                                        <th>Đơn Vị</th>
+                                        <th>Số Lượng</th>
+                                        <th>Giá</th>
+                                        <th>Thành Tiền</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div>
+                                <span id="span_tong_haophis"></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="btn_save_cthaophi" data-dismiss="modal">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

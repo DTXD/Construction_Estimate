@@ -16,6 +16,7 @@ namespace Du_Toan_Xay_Dung
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            BundleTable.EnableOptimizations = true;
         }
     }
 }
